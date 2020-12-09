@@ -1,2 +1,2 @@
-# Atena
+# Athena
 An application that supports the home database of books
