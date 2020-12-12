@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Athena"
         xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="580" Width="600" >
+        Title="Athena" Height="580" Width="600" >
 
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}"/>
