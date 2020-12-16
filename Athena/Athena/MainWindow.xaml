@@ -15,9 +15,7 @@
 
 
     <StackPanel>
-
         <uc:BaseWindow Title="Dodaj książkę" ButtonContent="Dodaj" />
-
     </StackPanel>
 
 </controls:AdonisWindow>
