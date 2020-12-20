@@ -16,9 +16,9 @@ namespace Athena
     /// <summary>
     /// Interaction logic for BaseWindow.xaml
     /// </summary>
-    public partial class BaseWindow : UserControl
+    public partial class BookFormControl : UserControl
     {
-        public BaseWindow()
+        public BookFormControl()
         {
             InitializeComponent();
             this.DataContext = this;

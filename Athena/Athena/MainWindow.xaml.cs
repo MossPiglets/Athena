@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AdonisUI;
 using AdonisUI.Controls;
+using Castle.Core.Logging;
 
 namespace Athena
 {
