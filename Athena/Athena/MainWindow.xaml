@@ -14,38 +14,13 @@
     </Window.Style>
 
 
-    <Border Padding="10"><Grid>
+    <Border Padding="10">
+        <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
         <ListView  Grid.Row="0" Margin="10" Name="bookList">
-                <ListViewItem>Uczeń Skrytobójcy</ListViewItem>
-                <ListViewItem>Harry Potter i Kamień Filozoficzny</ListViewItem>
-                <ListViewItem>Pan Lodowego Ogrodu</ListViewItem>
-                <ListViewItem>Uczta Dusz</ListViewItem>
-                <ListViewItem>W Pogoni Za Smokiem</ListViewItem>
-                <ListViewItem>Harry Potter i Konnata Tajemnic</ListViewItem>
-                <ListViewItem>Uczennica Maga</ListViewItem>
-                <ListViewItem>Księga Jesiennych Demonów</ListViewItem>
-                <ListViewItem>Biały Smok</ListViewItem>
-                <ListViewItem>Jeżdżcy Smoków</ListViewItem>
-                <ListViewItem>W pogoni za smokiem</ListViewItem>
-                <ListViewItem>Śpiew smoków</ListViewItem>
-                <ListViewItem>Harry Potter i Zakon Feniksa</ListViewItem>
-                <ListViewItem>Harry Potter i Czara Ognia</ListViewItem>
-                <ListViewItem>Smocze werble</ListViewItem>
-                <ListViewItem>Mitologia Nordycka</ListViewItem>
-                <ListViewItem>Koralina</ListViewItem>
-                <ListViewItem>Dziedzic Zaklinaczy</ListViewItem>
-                <ListViewItem>Dziedzic Smoka</ListViewItem>
-                <ListViewItem>Dziedzic Wojowników</ListViewItem>
-                <ListViewItem>Dziedzic Czarodziejów</ListViewItem>
-                <ListViewItem>Renegaci z Pern</ListViewItem>
-                <ListViewItem>Narodziny Smoków</ListViewItem>
-                <ListViewItem>Niebiosa Pern</ListViewItem>
-                <ListViewItem>Smocze Oko</ListViewItem>
-
                 <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Tytuł" Width="Auto"/>
@@ -57,20 +32,20 @@
                     <GridViewColumn Header="Miejce Składowania" Width="Auto" />
                     <GridViewColumn Header="ISBN" Width="Auto"  />
                     <GridViewColumn Header="Status" Width="Auto"/>
-                    </GridView>
+                </GridView>
             </ListView.View>
         </ListView>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Button Margin="10 5 5 10" Content="Dodaj książkę" Grid.Column="0"/>
-            <Button Margin="5 5 5 10" Content="Edytuj ksiażkę" Grid.Column="1"/>
-            <Button Margin="5 5 10 10" Content="Usuń ksiażkę" Grid.Column="2" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Margin="10 5 5 10" Content="Dodaj książkę" Grid.Column="0"/>
+                <Button Margin="5 5 5 10" Content="Edytuj ksiażkę" Grid.Column="1"/>
+                <Button Margin="5 5 10 10" Content="Usuń ksiażkę" Grid.Column="2" />
+            </Grid>
         </Grid>
-    </Grid>
     </Border>
 
 </controls:AdonisWindow>
