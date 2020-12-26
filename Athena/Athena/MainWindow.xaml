@@ -13,7 +13,6 @@
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
 
-
     <Border Padding="10">
         <Grid>
             <Grid.RowDefinitions>
