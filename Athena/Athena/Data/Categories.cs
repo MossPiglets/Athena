@@ -34,6 +34,5 @@
         Art,
         Turism,
         Relationship
-
     }
 }

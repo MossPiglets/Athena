@@ -8,6 +8,5 @@ namespace Athena.Data
         public string LastName { get; set; }
         public DateTime BorrowDate { get; set; }
         public DateTime ReturnDate { get; set; }
-
     }
 }
