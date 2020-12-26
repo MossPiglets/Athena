@@ -20,7 +20,7 @@
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
         <ListView  Grid.Row="0" Margin="10" Name="bookList">
-            <ListViewItem>Uczeń Skrytobójcy</ListViewItem>
+                <ListViewItem>Uczeń Skrytobójcy</ListViewItem>
                 <ListViewItem>Harry Potter i Kamień Filozoficzny</ListViewItem>
                 <ListViewItem>Pan Lodowego Ogrodu</ListViewItem>
                 <ListViewItem>Uczta Dusz</ListViewItem>
