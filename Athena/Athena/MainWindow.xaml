@@ -38,6 +38,7 @@
                         <GridViewColumn Header="Tytuł" Width="Auto"/>
                         <GridViewColumn Header="Autor" Width="Auto"/>
                         <GridViewColumn Header="Seria" Width="Auto"/>
+                        <GridViewColumn Header="Kategoria" Width="Auto"/>
                         <GridViewColumn Header="Język" Width="Auto"/>
                         <GridViewColumn Header="Wydawca" Width="Auto"/>
                         <GridViewColumn Header="Rok wydania" Width="Auto"/>
