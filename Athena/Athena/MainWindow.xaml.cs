@@ -1,5 +1,8 @@
 ﻿using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using Athena.Data;
+using Athena.Windows;
 
 namespace Athena {
     /// <summary>
@@ -8,6 +11,12 @@ namespace Athena {
     public partial class MainWindow {
         public MainWindow() {
             InitializeComponent();
+
+        }
+
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
+            var addBookWindow = new AddBookWindow();
+            addBookWindow.Show();
         }
     }
 }
