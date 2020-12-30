@@ -10,7 +10,7 @@
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Wybrana książka" FontWeight="Bold"/>
             <TextBlock Margin="0 5 0 15" Text="Tu wyświetlić tytuł i autora książki, którą się wybrało."/>
-            <TextBlock FontWeight="Bold" Margin="0 0 0 15" Text="Osoba wypożyczająca książkę"/>
+            <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Osoba wypożyczająca książkę"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
