@@ -1,29 +1,27 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Input;
+using AdonisUI.Controls;
 using Athena.Data;
 
 namespace Athena.Windows {
-    /// <summary>
-    /// Interaction logic for AddBookWindow.xaml
-    /// </summary>
-    public partial class AddBookWindow {
-        public AddBookWindow() {
+    public partial class EditBookWindow {
+        public EditBookWindow() {
             InitializeComponent();
-            var bookControl = new BookFormControl("Dodaj książkę", "Dodaj");
-            bookControl.ButtonCommand = new AddBookCommand();
+            var bookControl = new BookFormControl("Edytuj książkę", "Zapisz");
+            bookControl.ButtonCommand = new EditBookCommand();
             this.Content = bookControl;
         }
     }
 
-
-    public class AddBookCommand : ICommand {
+    public class EditBookCommand : ICommand {
         public bool CanExecute(object parameter) {
             return true;
         }
 
         public void Execute(object book) {
             using var context = new ApplicationDbContext();
-            context.Books.Add(book as Book);
+            context.Books.Update(book as Book);
             context.SaveChanges();
         }
 

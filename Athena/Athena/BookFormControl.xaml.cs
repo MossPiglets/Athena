@@ -11,7 +11,6 @@ namespace Athena {
             Title = title;
             ButtonContent = buttonContent;
             this.DataContext = this;
-
         }
 
         public string Title { get; set; }

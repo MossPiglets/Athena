@@ -15,8 +15,10 @@ namespace Athena {
         }
 
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e) {
-            var addBookWindow = new AddBookWindow();
-            addBookWindow.Show();
+            //var addBookWindow = new AddBookWindow();
+            //addBookWindow.Show();
+            var editBookWindow = new EditBookWindow();
+            editBookWindow.Show();
         }
     }
 }
