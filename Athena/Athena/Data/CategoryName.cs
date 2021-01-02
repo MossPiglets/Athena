@@ -1,6 +1,6 @@
 ﻿namespace Athena.Data
 {
-    public enum Categories
+    public enum CategoryName
     {
         Album,
         Atlas,
@@ -32,7 +32,7 @@
         Sociology,
         Recreation,
         Art,
-        Turism,
+        Tourism,
         Relationship
     }
 }
