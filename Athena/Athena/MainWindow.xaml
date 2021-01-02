@@ -19,20 +19,22 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+            
         <ListView  Grid.Row="0" Margin="10" Name="bookList">
                 <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Tytuł" Width="Auto"/>
-                    <GridViewColumn Header="Autor" Width="Auto" />
-                    <GridViewColumn Header="Seria" Width="Auto" />
-                    <GridViewColumn Header="Język" Width="Auto" />
-                    <GridViewColumn Header="Wydawca" Width="Auto" />
-                    <GridViewColumn Header="Rok wydania" Width="Auto" />
-                    <GridViewColumn Header="Miejce Składowania" Width="Auto" />
-                    <GridViewColumn Header="ISBN" Width="Auto"  />
-                    <GridViewColumn Header="Status" Width="Auto"/>
+                        <GridViewColumn Header="Tytuł" Width="Auto" DisplayMemberBinding="{Binding Title}"/>
+                        <GridViewColumn Header="Autor" Width="Auto" DisplayMemberBinding="{Binding Author}"/>
+                        <GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series}"/>
+                        <GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}"/>
+                        <GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding Publisher}"/>
+                        <GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}"/>
+                        <GridViewColumn Header="Miejce Składowania" Width="Auto" DisplayMemberBinding="{Binding StoragePlaceName}"/>
+                        <GridViewColumn Header="ISBN" Width="Auto" DisplayMemberBinding="{Binding ISBN}"/>
+                        <GridViewColumn Header="Status" Width="Auto" DisplayMemberBinding="{Binding Status}"/>
                 </GridView>
-            </ListView.View>
+                </ListView.View>
+            
         </ListView>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -40,7 +42,7 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Margin="10 5 5 10" Content="Dodaj książkę" Grid.Column="0" Click="ButtonBase_OnClick"/>
+                <Button Margin="10 5 5 10" Content="Dodaj książkę" Grid.Column="0" />
                 <Button Margin="5 5 5 10" Content="Edytuj ksiażkę" Grid.Column="1"/>
                 <Button Margin="5 5 10 10" Content="Usuń ksiażkę" Grid.Column="2" />
             </Grid>
