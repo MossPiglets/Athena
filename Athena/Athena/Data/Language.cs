@@ -1,7 +1,5 @@
-﻿namespace Athena.Data
-{
-    public enum Language
-    {
+﻿namespace Athena.Data {
+    public enum Language {
         PL,
         ENG,
         RU,

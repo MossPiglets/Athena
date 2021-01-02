@@ -8,15 +8,16 @@ namespace Athena.Data
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public List<Author> Authors { get; set; }
-        public Series Series { get; set; }
-        public List<Categories> Category { get; set; }
-        public PublishingHouse Publisher { get; set; }
         public DateTime PublishmentYear { get; set; }
         public Language Language { get; set; }
         public string ISBN { get; set; }
-        public StoragePlace StoragePlace { get; set; }
         public string Comment { get; set; }
-        public Borrowing Borrowing { get; set; }
+
+        public virtual ICollection<Author> Authors { get; set; }
+        public virtual Series Series { get; set; }
+        public virtual PublishingHouse PublishingHouse { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
+        public virtual StoragePlace StoragePlace { get; set; }
+        public virtual Borrowing Borrowing { get; set; }
     }
 }
