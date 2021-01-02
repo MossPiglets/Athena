@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
+using Athena.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
     /// <summary>

@@ -42,8 +42,13 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+<<<<<<< HEAD
                 <Button x:Name ="DodajKsiążkę" Click="Click_Dodaj_Książkę"  Margin="10 5 5 10" Content="Dodaj książkę" Grid.Column="0"/>
                 <Button x:Name ="EdytujKsiążkę" Click="Click_Edytuj_Książkę"  Margin="5 5 5 10" Content="Edytuj ksiażkę" Grid.Column="1"/>
+=======
+                <Button Margin="10 5 5 10" Content="Dodaj książkę" Grid.Column="0" Click="ButtonBase_OnClick"/>
+                <Button Margin="5 5 5 10" Content="Edytuj ksiażkę" Grid.Column="1"/>
+>>>>>>> 660100b991a6361c78b8fcc748eee74b1b384ff3
                 <Button Margin="5 5 10 10" Content="Usuń ksiażkę" Grid.Column="2" />
             </Grid>
         </Grid>
