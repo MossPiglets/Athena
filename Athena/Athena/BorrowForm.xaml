@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Athena"
         mc:Ignorable="d"
-        Title="BorrowForm" Height="580" Width="600">
+        Title="BorrowForm" Height="430" Width="330">
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Wybrana książka" FontWeight="Bold"/>
-            <TextBlock Margin="0 5 0 15" Text="Tu wyświetlić tytuł i autora książki, którą się wybrało."/>
+            <TextBlock Margin="0 5 0 15" TextWrapping="Wrap" Text="Tu wyświetlić tytuł i autora książki, którą się wybrało."/>
             <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Osoba wypożyczająca książkę"/>
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -25,6 +25,8 @@
                 <TextBox Grid.Column="1" Grid.Row="0" Margin="15 0 5 5" />
                 <TextBox Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" />
             </Grid>
+            <TextBlock Margin="0 15 0 5" Text="Data wypożyczenia" FontWeight="Bold"/>
+            <Calendar/>
             <Button Margin="10" Content="Wypożycz"/>
         </StackPanel>
     </Border>
