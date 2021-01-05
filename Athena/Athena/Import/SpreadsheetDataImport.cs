@@ -9,13 +9,15 @@ namespace Athena.Import {
     public class SpreadsheetDataImport: IDisposable {
         private ExcelPackage _package;
         private ExcelWorksheet _catalog;
-        private ExcelWorksheet _legend;
+        private ExcelWorksheet _categories;
+        private ExcelWorksheet _storagePlaces;
 
         public SpreadsheetDataImport(string path) {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             _package = new ExcelPackage(new FileInfo(path));
             _catalog= _package.Workbook.Worksheets[0];
-            _legend = _package.Workbook.Worksheets[1];
+            _categories = _package.Workbook.Worksheets[1];
+            _storagePlaces = _package.Workbook.Worksheets[2];
         }
 
         public List<Book> ImportBooksList() {

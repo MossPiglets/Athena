@@ -5,6 +5,9 @@ using System.Text;
 namespace AthenaTests.Helpers
 {
     public class TestExcelData {
+        public string FileName = "TestWorksheet";
+        public string FilePath = @"C:\Users\Kasia\Documents\Athena\Athena\AthenaTests\assets";
+        
         public string Title = "Alibi";
         public string Author = "Ryszard Szczerba";
         public string Series = "Ewa wzywa 07 - 56";
@@ -16,7 +19,10 @@ namespace AthenaTests.Helpers
         public string StoragePlace = "I";
         public string Comment = "Pęknięty grzbiet";
 
-        public string FileName = "TestWorksheet";
-        public string FilePath = @"C:\Users\Kasia\Documents\Athena\Athena\AthenaTests\assets";
+        public string Colour = "zielony";
+        public string Category = "Album";
+
+        public string BoxNumber = "IV";
+        public string BoxDescription = "Kryminał - duże i płaskie białe pudło";
     }
 }
