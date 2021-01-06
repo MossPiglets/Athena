@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using AthenaTests.Helpers.Data;
 using OfficeOpenXml;
 
 namespace AthenaTests.Helpers
@@ -9,7 +10,7 @@ namespace AthenaTests.Helpers
     public static class ExcelPackageExtension
     {
         public static void CreateTestsExcel(this ExcelPackage package, TestExcelData data) {
-            var worksheetCatalog = package.Workbook.Worksheets.Add(data.FileName);
+            var worksheetCatalog = package.Workbook.Worksheets.Add(data.WorksheetCatalog);
             worksheetCatalog.Cells[1,1].Value = "Tytuł";
             worksheetCatalog.Cells[1,2].Value = "Autor";
             worksheetCatalog.Cells[1,3].Value = "Seria";
@@ -32,13 +33,13 @@ namespace AthenaTests.Helpers
             worksheetCatalog.Cells[2,9].Value = data.StoragePlace;
             worksheetCatalog.Cells[2,10].Value = data.Comment;
 
-            var worksheetCategories = package.Workbook.Worksheets.Add(data.FileName);
+            var worksheetCategories = package.Workbook.Worksheets.Add(data.WorksheetCategories);
             worksheetCategories.Cells[1,1].Value = "Kolor";
             worksheetCategories.Cells[1,2].Value = "Kategoria";
             worksheetCategories.Cells[2,1].Value = data.Colour;
             worksheetCategories.Cells[2,2].Value = data.Category;
 
-            var worksheetStoragePlaces = package.Workbook.Worksheets.Add(data.FileName);
+            var worksheetStoragePlaces = package.Workbook.Worksheets.Add(data.WorksheetStoragePlaces);
             worksheetStoragePlaces.Cells[1,1].Value = "Nr pudła";
             worksheetStoragePlaces.Cells[1, 2].Value = "Komentarz";
             worksheetStoragePlaces.Cells[2, 1].Value = data.BoxNumber;

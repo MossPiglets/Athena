@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Athena.Import;
 using AthenaTests.Helpers;
+using AthenaTests.Helpers.Data;
 using FluentAssertions;
 using NUnit.Framework;
 using OfficeOpenXml;
@@ -14,6 +15,7 @@ namespace AthenaTests {
 
         [OneTimeSetUp]
         public void Setup() {
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             package = new ExcelPackage();
             data = new TestExcelData();
             package.CreateTestsExcel(data);
@@ -26,16 +28,21 @@ namespace AthenaTests {
         }
 
         [Test]
-        public void CreateBooksList_TestExcel_ShouldReturnBook() {
-            // Arrange 
-            //tu uzyje mojego prywatnego pola jako sciezka
-            var bookData = new SpreadsheetDataImport(data.FilePath);
+        public void SpreadsheetDataImport_ShouldCreateExcelFile() {
+            // Arrange
             // Act
-            var books = data.CreateBooksList();
-            books.Should().NotBeEmpty();
-            var book = books[0];
+            Action act = () => new SpreadsheetDataImport(data.FilePath);
             // Assert
-            //book.Title.Should().Be()
+            act.Should().NotThrow();
         }
+
+        //[Test]
+        //public void ImportAuthorsList_NotDuplicates_ShouldReturnAuthorsList() {
+        //    // Arrange
+        //    var dataImport = new SpreadsheetDataImport(data.FilePath);
+        //    // Act
+        //    dataImport.ImportAuthorsList();
+        //    // 
+        //}
     }
 }
