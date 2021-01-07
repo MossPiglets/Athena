@@ -28,11 +28,11 @@ namespace Athena.Import {
 
         public List<Author> ImportAuthorsList() {
             List<Author> authors = new List<Author>();
-            var range = _catalog.Cells.Rows;
-            for (int i = 1; i < range + 1; i++) {
-                var authorsOfOneBook = AuthorExtractor.Extract(_catalog.Cells[i,1].ToString());
+            var range = _catalog.Dimension.Rows;
+            for (int i = 2; i < range + 1; i++) {
+                var authorsOfOneBook = AuthorExtractor.Extract(_catalog.Cells[i, 2].Value.ToString());
                 foreach (var author in authorsOfOneBook) {
-                    if (IsAuthorAlreadyInList(author, authors)) {
+                    if (!IsAuthorAlreadyInList(author, authors)) {
                         authors.Add(author);
                     }
                 }

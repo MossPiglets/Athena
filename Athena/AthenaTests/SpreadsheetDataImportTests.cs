@@ -31,18 +31,54 @@ namespace AthenaTests {
         public void SpreadsheetDataImport_ShouldCreateExcelFile() {
             // Arrange
             // Act
-            Action act = () => new SpreadsheetDataImport(data.FilePath);
+            Action act = () => new SpreadsheetDataImport(data.FileName);
             // Assert
             act.Should().NotThrow();
         }
 
+        [Test]
+        public void ImportAuthorsList_NotDuplicates_ShouldReturnAuthorsList() {
+            // Arrange
+            var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var authors = dataImport.ImportAuthorsList();
+            // Assert
+            authors.Should().NotBeEmpty();
+            var author = authors[0];
+            author.Id.Should().NotBeEmpty();
+            author.FirstName.Should().Be(data.AuthorFirstName);
+            author.LastName.Should().Be(data.AuthorLastName);
+        }
+        [Test]
+        public void ImportAuthorsList_Duplicates_ShouldReturnAuthorsListWithOneAuthor() {
+            // Arrange
+            var dataImport = new SpreadsheetDataImport(data.FileName);
+            var catalog = package.Workbook.Worksheets[data.WorksheetCatalog];
+            catalog.Cells[3,2].Value = data.Author;
+            // Act
+            var authors = dataImport.ImportAuthorsList();
+            // Assert
+            authors.Should().HaveCount(1);
+            var author = authors[0];
+            author.Id.Should().NotBeEmpty();
+            author.FirstName.Should().Be(data.AuthorFirstName);
+            author.LastName.Should().Be(data.AuthorLastName);
+        }
+        // todo
         //[Test]
-        //public void ImportAuthorsList_NotDuplicates_ShouldReturnAuthorsList() {
+        //public void ImportAuthorsList_TwoRowInExcel_ShouldReturnAuthorsListWithTwoAuthors() {
         //    // Arrange
-        //    var dataImport = new SpreadsheetDataImport(data.FilePath);
+        //    var dataImport = new SpreadsheetDataImport(data.FileName);
+        //    var catalog = package.Workbook.Worksheets[data.WorksheetCatalog];
+        //    catalog.Cells[3,2].Value = "";
         //    // Act
-        //    dataImport.ImportAuthorsList();
-        //    // 
+        //    var authors = dataImport.ImportAuthorsList();
+        //    // Assert
+        //    authors.Should().HaveCount(2);
+        //    var author = authors[0];
+        //    author.Id.Should().NotBeEmpty();
+        //    author.FirstName.Should().Be(data.AuthorFirstName);
+        //    author.LastName.Should().Be(data.AuthorLastName);
         //}
     }
 }

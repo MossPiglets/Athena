@@ -12,8 +12,13 @@ namespace Athena.Import {
             var regex = new Regex(pattern);
             var matches = regex.Matches(text).ToList();
             if (matches.Count == 0) {
+                if (text == "'-" || string.IsNullOrEmpty(text)) {
+                    return authors;
+                }
+
                 throw new ExtractorException("Cannot extract data from text", text);
             }
+
             foreach (var match in matches) {
                 var author = new Author {
                     Id = Guid.NewGuid(),

@@ -1,4 +1,5 @@
-﻿using Athena.Import;
+﻿using System;
+using Athena.Import;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -131,11 +132,12 @@ namespace AthenaTests {
             author.FirstName.Should().Be(firstName);
             author.LastName.Should().Be(lastName);
         }
+
         [Test]
-        public void Extract_NameWithAllInitials_ShouldReturnAuthorsListWithOneElement() {
+        public void Extract_NameWithPause_ShouldReturnAuthorsListWithOneElement() {
             // Arrange
-            var firstName = "K. J.";
-            var lastName = "A.";
+            var firstName = "Zygmunt";
+            var lastName = "Zeydler-Zborowski";
             var fullName = $"{firstName} {lastName}";
             // Act
             var authors = AuthorExtractor.Extract(fullName);
@@ -145,6 +147,75 @@ namespace AthenaTests {
             author.Id.Should().NotBeEmpty();
             author.FirstName.Should().Be(firstName);
             author.LastName.Should().Be(lastName);
+        }
+
+        [Test]
+        public void Extract_NameWithVon_ShouldReturnAuthorsListWithOneElement() {
+            // Arrange
+            var firstName = "Henry von";
+            var lastName = "Hendler";
+            var fullName = $"{firstName} {lastName}";
+            // Act
+            var authors = AuthorExtractor.Extract(fullName);
+            // Assert
+            authors.Should().HaveCount(1);
+            var author = authors[0];
+            author.Id.Should().NotBeEmpty();
+            author.FirstName.Should().Be(firstName);
+            author.LastName.Should().Be(lastName);
+        }
+
+        [Test]
+        public void Extract_twoAuthors_ShouldReturnAuthorsListWithTwoElement() {
+            // Arrange
+            var firstNameFirstAuthor = "Anne";
+            var lastNameFirstAuthor = "Plichota";
+            var firstNameSecondAuthor = "Cendrine";
+            var lastNameSecondAuthor = "Wolf";
+            var fullName =
+                $"{firstNameFirstAuthor} {lastNameFirstAuthor}; {firstNameSecondAuthor} {lastNameSecondAuthor}";
+            // Act
+            var authors = AuthorExtractor.Extract(fullName);
+            // Assert
+            authors.Should().HaveCount(2);
+            var firstAuthor = authors[0];
+            var secondAuthor = authors[1];
+            firstAuthor.Id.Should().NotBeEmpty();
+            firstAuthor.FirstName.Should().Be(firstNameFirstAuthor);
+            firstAuthor.LastName.Should().Be(lastNameFirstAuthor);
+            secondAuthor.Id.Should().NotBeEmpty();
+            secondAuthor.FirstName.Should().Be(firstNameSecondAuthor);
+            secondAuthor.LastName.Should().Be(lastNameSecondAuthor);
+        }
+
+        [Test]
+        public void Extract_PauseArgument_ShouldReturnEmptyAuthorsList() {
+            // Arrange
+            var text = "'-";
+            // Act
+            var authors = AuthorExtractor.Extract(text);
+            // Assert
+            authors.Should().BeEmpty();
+        }
+
+        [Test]
+        public void Extract_EmptyText_ShouldReturnEmptyAuthorsList() {
+            // Arrange
+            var text = "";
+            // Act
+            var authors = AuthorExtractor.Extract(text);
+            // Assert
+            authors.Should().BeEmpty();
+        }
+
+        [Test]
+        public void Extract_OnlyOneName_ShouldReturnExtractorException() {
+            // Arrange
+            var name = "Troll";
+            // Act
+            Action act = () => AuthorExtractor.Extract(name);
+            // Assert
+            act.Should().Throw<ExtractorException>().WithMessage("Cannot extract data from text");
         }
     }
 }

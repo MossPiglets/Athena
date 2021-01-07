@@ -45,7 +45,7 @@ namespace AthenaTests.Helpers
             worksheetStoragePlaces.Cells[2, 1].Value = data.BoxNumber;
             worksheetStoragePlaces.Cells[2, 2].Value = data.BoxDescription;
 
-            package.SaveAs(new FileInfo(data.FilePath));
+            package.SaveAs(new FileInfo(data.FileName));
         }
     }
 }
