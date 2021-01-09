@@ -17,8 +17,6 @@ namespace AthenaTests {
         public void Setup() {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             package = new ExcelPackage();
-            data = new TestExcelData();
-            package.CreateTestsExcel(data);
         }
 
         [OneTimeTearDown]
@@ -39,35 +37,46 @@ namespace AthenaTests {
         [Test]
         public void ImportAuthorsList_NotDuplicates_ShouldReturnAuthorsList() {
             // Arrange
+            data = new TestExcelData();
+            package.CreateTestsExcel(data);
             var dataImport = new SpreadsheetDataImport(data.FileName);
+            var expectedAuthor = data.CatalogTestsDataList[0];
             // Act
             var authors = dataImport.ImportAuthorsList();
             // Assert
             authors.Should().NotBeEmpty();
             var author = authors[0];
             author.Id.Should().NotBeEmpty();
-            author.FirstName.Should().Be(data.AuthorFirstName);
-            author.LastName.Should().Be(data.AuthorLastName);
+            author.FirstName.Should().Be(expectedAuthor.AuthorFirstName);
+            author.LastName.Should().Be(expectedAuthor.AuthorLastName);
+
+            package.File.Delete();
         }
         [Test]
         public void ImportAuthorsList_Duplicates_ShouldReturnAuthorsListWithOneAuthor() {
             // Arrange
+            data = new TestExcelData();
+            package.CreateTestsExcel(data);
             var dataImport = new SpreadsheetDataImport(data.FileName);
             var catalog = package.Workbook.Worksheets[data.WorksheetCatalog];
-            catalog.Cells[3,2].Value = data.Author;
+            var expectedAuthor = data.CatalogTestsDataList[0];
+            catalog.Cells[3,2].Value = expectedAuthor.Author;
             // Act
             var authors = dataImport.ImportAuthorsList();
             // Assert
             authors.Should().HaveCount(1);
             var author = authors[0];
             author.Id.Should().NotBeEmpty();
-            author.FirstName.Should().Be(data.AuthorFirstName);
-            author.LastName.Should().Be(data.AuthorLastName);
+            author.FirstName.Should().Be(expectedAuthor.AuthorFirstName);
+            author.LastName.Should().Be(expectedAuthor.AuthorLastName);
+
+            package.File.Delete();
         }
-        // todo
         //[Test]
         //public void ImportAuthorsList_TwoRowInExcel_ShouldReturnAuthorsListWithTwoAuthors() {
         //    // Arrange
+        //    data = new TestExcelData();
+        //    package.CreateTestsExcel(data);
         //    var dataImport = new SpreadsheetDataImport(data.FileName);
         //    var catalog = package.Workbook.Worksheets[data.WorksheetCatalog];
         //    catalog.Cells[3,2].Value = "";
@@ -79,6 +88,8 @@ namespace AthenaTests {
         //    author.Id.Should().NotBeEmpty();
         //    author.FirstName.Should().Be(data.AuthorFirstName);
         //    author.LastName.Should().Be(data.AuthorLastName);
+
+        //    package.File.Delete();
         //}
     }
 }
