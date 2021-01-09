@@ -8,14 +8,15 @@ namespace Athena.Import {
     public class AuthorExtractor {
         public static List<Author> Extract(string text) {
             List<Author> authors = new List<Author>();
+            //todo
+            //uwzględnij rzeczy z loga
             var pattern = @"((?:\w+\.? )+)((?:\w+\-?\.?)+)";
+            if (text == "'-" || string.IsNullOrEmpty(text)) {
+                return authors;
+            }
             var regex = new Regex(pattern);
             var matches = regex.Matches(text).ToList();
             if (matches.Count == 0) {
-                if (text == "'-" || string.IsNullOrEmpty(text)) {
-                    return authors;
-                }
-
                 throw new ExtractorException("Cannot extract data from text", text);
             }
 
