@@ -24,7 +24,7 @@
                            Grid.ColumnSpan="2" Padding="10" />
                 <TextBlock Text="Tytuł:" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"
                            Margin="0 10 0 0" />
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22" />
+                <TextBox Text="{Binding Book.Title}"  Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22" />
             </Grid>
 
             <Grid Margin="5 10 10 0 ">
@@ -55,9 +55,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="Imię:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" />
                 <TextBlock Text="Nazwisko:" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="0 0 18 0 " Height="22" />
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0 "
+                <TextBox Text="{Binding Book.Author.FirstName}" Grid.Row="0" Grid.Column="1" Margin="0 0 18 0 " Height="22" />
+                <TextBox Text="{Binding Book.Author.LastName}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
+                <ComboBox Text="{Binding Book.Category.CategoryName}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
                           Height="22">
                     <ComboBoxItem>Fantasy</ComboBoxItem>
                     <ComboBoxItem>Kryminał</ComboBoxItem>
@@ -79,8 +79,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Nazwa:" />
                 <TextBlock Text="Nr tomu:" Grid.Column="2" />
-                <TextBox HorizontalAlignment="Left" Width="40" Grid.Column="3" />
-                <ComboBox IsEditable="True" Grid.Column="1" Margin="0 0 19 0">
+                <TextBox Text="{Binding Book.Series.VolumeNumber}" HorizontalAlignment="Left" Width="40" Grid.Column="3" />
+                <ComboBox Text="{Binding Book.Series.SeriesName}" IsEditable="True" Grid.Column="1" Margin="0 0 19 0">
                     <ComboBoxItem>Harry Potter</ComboBoxItem>
                     <ComboBoxItem>Wiedźmin</ComboBoxItem>
                     <ComboBoxItem>50 twarzy Greya</ComboBoxItem>
@@ -108,11 +108,11 @@
                 <TextBlock Text="Rok:" Grid.Row="1" Grid.Column="2" Margin="0 7 0 0" />
                 <TextBlock Text="ISBN:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
                 <TextBlock Text="Język:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" />
-                <TextBox Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 18 0" />
-                <TextBox Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
+                <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 18 0" />
+                <TextBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
                          Width="40" />
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0">
+                <TextBox Text="{Binding Book.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
+                <ComboBox Text="{Binding Book.Language}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0">
                     <ComboBoxItem>Polski</ComboBoxItem>
                     <ComboBoxItem>Angielski</ComboBoxItem>
                     <ComboBoxItem>Niemiecki</ComboBoxItem>
@@ -137,14 +137,14 @@
 
                 <TextBlock Text="Miejsce składowania:" Grid.Row="0" Grid.Column="0"/>
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <ComboBox IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0">
+                <ComboBox Text="{Binding Book.StoragePlace.StoragePlaceName}" IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0">
                     <ComboBoxItem>Pudło nr 4</ComboBoxItem>
                     <ComboBoxItem>Biurko Anki</ComboBoxItem>
                     <ComboBoxItem>Biblioteczka</ComboBoxItem>
                 </ComboBox>
                 <Button Content="➕" HorizontalAlignment="Right" FontSize="3" Grid.Column="2" Margin="0 0 19 0" Width="22"
                         Height="22" />
-                <TextBox Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Grid.Column="1" Height="66" Margin="0 7 19 0"/>
+                <TextBox Text="{Binding Book.StoragePlace.Comment}" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Grid.Column="1" Height="66" Margin="0 7 19 0"/>
             </Grid>
 
             <Grid Margin="5 40 0 0">
