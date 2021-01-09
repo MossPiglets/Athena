@@ -1,4 +1,5 @@
 using Athena.Data;
+using Athena.Windows;
 using System.Collections.Generic;
 
 namespace Athena {
@@ -11,5 +12,22 @@ namespace Athena {
 			this.DataContext = this;
 			BookList.ItemsSource =  new List<Book>();;
 		}
-	}
+
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			AddBookWindow AddBook = new AddBookWindow(); //dlaczego muszê to zrobiæ? czemu po prostu AddBookWindow.Show() nie dzia³a?
+			AddBook.Show();
+        }
+
+        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			EditBookWindow EditBook = new EditBookWindow(); //dlaczego muszê to zrobiæ? czemu po prostu AddBookWindow.Show() nie dzia³a?
+			EditBook.Show();
+		}
+
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+    }
 }
