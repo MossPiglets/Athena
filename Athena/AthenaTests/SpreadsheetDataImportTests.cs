@@ -10,86 +10,76 @@ using OfficeOpenXml;
 
 namespace AthenaTests {
     public class SpreadsheetDataImportTests {
-        private ExcelPackage package;
-        private TestExcelData data;
-
         [OneTimeSetUp]
         public void Setup() {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            package = new ExcelPackage();
-        }
-
-        [OneTimeTearDown]
-        public void CleanUp() {
-            package.File.Delete();
-            package.Dispose();
         }
 
         [Test]
         public void SpreadsheetDataImport_ShouldCreateExcelFile() {
             // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            package.CreateTestsExcel(data);
             // Act
             Action act = () => new SpreadsheetDataImport(data.FileName);
             // Assert
             act.Should().NotThrow();
+            package.File.Delete();
         }
 
         [Test]
-        public void ImportAuthorsList_NotDuplicates_ShouldReturnAuthorsList() {
+        public void ImportAuthorsList_ShouldReturnAuthorsList() {
             // Arrange
-            data = new TestExcelData();
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
             package.CreateTestsExcel(data);
-            var dataImport = new SpreadsheetDataImport(data.FileName);
-            var expectedAuthor = data.CatalogTestsDataList[0];
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
             var authors = dataImport.ImportAuthorsList();
             // Assert
-            authors.Should().NotBeEmpty();
-            var author = authors[0];
-            author.Id.Should().NotBeEmpty();
-            author.FirstName.Should().Be(expectedAuthor.AuthorFirstName);
-            author.LastName.Should().Be(expectedAuthor.AuthorLastName);
+            authors.Should().HaveSameCount(data.CatalogTestsDataList);
+            for (int i = 0; i < authors.Count; i++) {
+                var author = authors[i];
+                var catalogData = data.CatalogTestsDataList[i];
+                author.Id.Should().NotBeEmpty();
+                author.FirstName.Should().Be(catalogData.AuthorFirstName);
+                author.LastName.Should().Be(catalogData.AuthorLastName);
+            }
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportAuthorsList_Duplicates_ShouldReturnAuthorsListWithOneAuthor() {
             // Arrange
-            data = new TestExcelData();
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Add(data.CatalogTestsDataList[0]);
             package.CreateTestsExcel(data);
-            var dataImport = new SpreadsheetDataImport(data.FileName);
-            var catalog = package.Workbook.Worksheets[data.WorksheetCatalog];
-            var expectedAuthor = data.CatalogTestsDataList[0];
-            catalog.Cells[3,2].Value = expectedAuthor.Author;
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
             var authors = dataImport.ImportAuthorsList();
             // Assert
-            authors.Should().HaveCount(1);
-            var author = authors[0];
-            author.Id.Should().NotBeEmpty();
-            author.FirstName.Should().Be(expectedAuthor.AuthorFirstName);
-            author.LastName.Should().Be(expectedAuthor.AuthorLastName);
+            authors.Should().HaveCount(data.CatalogTestsDataList.Count-1);
+            authors.Should().OnlyHaveUniqueItems();
 
             package.File.Delete();
         }
-        //[Test]
-        //public void ImportAuthorsList_TwoRowInExcel_ShouldReturnAuthorsListWithTwoAuthors() {
-        //    // Arrange
-        //    data = new TestExcelData();
-        //    package.CreateTestsExcel(data);
-        //    var dataImport = new SpreadsheetDataImport(data.FileName);
-        //    var catalog = package.Workbook.Worksheets[data.WorksheetCatalog];
-        //    catalog.Cells[3,2].Value = "";
-        //    // Act
-        //    var authors = dataImport.ImportAuthorsList();
-        //    // Assert
-        //    authors.Should().HaveCount(2);
-        //    var author = authors[0];
-        //    author.Id.Should().NotBeEmpty();
-        //    author.FirstName.Should().Be(data.AuthorFirstName);
-        //    author.LastName.Should().Be(data.AuthorLastName);
 
-        //    package.File.Delete();
-        //}
+        [Test]
+        public void ImportAuthorList_EmptyExcel_ShouldReturnEmptyAuthorsList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var authors = dataImport.ImportAuthorsList();
+            // Assert
+            authors.Should().BeEmpty();
+        }
+        
     }
 }

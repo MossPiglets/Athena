@@ -5,20 +5,25 @@ using System.IO;
 using System.Linq;
 using Athena.Data;
 using OfficeOpenXml;
+using Serilog;
+using Serilog.Core;
 
 namespace Athena.Import {
-    public class SpreadsheetDataImport: IDisposable {
+    public class SpreadsheetDataImport : IDisposable {
         private ExcelPackage _package;
         private ExcelWorksheet _catalog;
         private ExcelWorksheet _categories;
         private ExcelWorksheet _storagePlaces;
+        private Logger _log;
 
-        public SpreadsheetDataImport(string path) {
+        public SpreadsheetDataImport(string fullFilePath) {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            _package = new ExcelPackage(new FileInfo(path));
-            _catalog= _package.Workbook.Worksheets[0];
+            _package = new ExcelPackage(new FileInfo(fullFilePath));
+            _catalog = _package.Workbook.Worksheets[0];
             _categories = _package.Workbook.Worksheets[1];
             _storagePlaces = _package.Workbook.Worksheets[2];
+            _log = new LoggerConfiguration().WriteTo.File($"./logs/ImportLog_.txt", rollingInterval: RollingInterval.Day)
+                .CreateLogger();
         }
 
         //public List<Book> ImportBooksList() {
@@ -28,15 +33,26 @@ namespace Athena.Import {
 
         public List<Author> ImportAuthorsList() {
             List<Author> authors = new List<Author>();
-            var range = _catalog.Dimension.Rows;
+            var range = 1595;
             for (int i = 2; i < range + 1; i++) {
-                var authorsOfOneBook = AuthorExtractor.Extract(_catalog.Cells[i, 2].Value.ToString());
+                List<Author> authorsOfOneBook;
+                try {
+                    authorsOfOneBook = AuthorExtractor.Extract(_catalog.Cells[i, 2].Value?.ToString());
+                }
+                catch (ExtractorException e) {
+                    _log.Error($"Author Extract Error: [{e.Text}]");
+                    continue;
+                }
+
+                //
                 foreach (var author in authorsOfOneBook) {
                     if (!IsAuthorAlreadyInList(author, authors)) {
                         authors.Add(author);
                     }
                 }
             }
+            //todo
+            // tutaj zrobić disting z użyciem GroupBy zamiast foreacha wyżej #spid
             return authors;
         }
 
@@ -46,6 +62,7 @@ namespace Athena.Import {
 
         public void Dispose() {
             _package.Dispose();
+            _log.Dispose();
         }
     }
 }

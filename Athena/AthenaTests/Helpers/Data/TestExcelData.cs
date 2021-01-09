@@ -6,8 +6,7 @@ using NUnit.Framework;
 namespace AthenaTests.Helpers.Data
 {
     public class TestExcelData {
-        //List
-        //public string FilePath = $"{Path.GetTempFileName()}";
+
         public string FileName = $"TestExcel_{Guid.NewGuid()}";
         public string WorksheetCatalog = "Catalog";
         public string WorksheetCategories = "Categories";
