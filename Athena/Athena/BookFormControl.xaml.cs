@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using Athena.Data;
 
 namespace Athena {
 
@@ -12,6 +13,8 @@ namespace Athena {
             ButtonContent = buttonContent;
             this.DataContext = this;
         }
+
+        public Book Book { get; set; } = new Book();
 
         public string Title { get; set; }
 
