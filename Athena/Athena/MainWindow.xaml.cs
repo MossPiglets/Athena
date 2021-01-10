@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows;
 using Athena.Import;
+using Athena.Windows;
+using Castle.Core.Internal;
 using Microsoft.Win32;
 
 namespace Athena {
@@ -13,7 +15,10 @@ namespace Athena {
 		public MainWindow() {
 			InitializeComponent();
 			this.DataContext = this;
-			BookList.ItemsSource =  new List<Book>();
+            BookList.ItemsSource =  new List<Book>();
+            if (!BookList.ItemsSource.IsNullOrEmpty()) {
+                ImportButton.Visibility = Visibility.Hidden;
+            }
 		}
 
         private void ImportData(object sender, RoutedEventArgs e) {
@@ -22,8 +27,7 @@ namespace Athena {
             var fileName = openFileDialog.FileName;
             using var importData = new SpreadsheetDataImport(fileName);
             var a = importData.ImportAuthorsList();
+            ImportButton.Visibility = Visibility.Hidden;
         }
-		//todo
-		//ten przycisk ma sie pojawiac tylko jesli nie ma w MainWindow rzadnych zainportowanych danych
     }
 }

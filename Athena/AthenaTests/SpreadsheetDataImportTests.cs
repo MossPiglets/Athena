@@ -79,6 +79,8 @@ namespace AthenaTests {
             var authors = dataImport.ImportAuthorsList();
             // Assert
             authors.Should().BeEmpty();
+
+            package.File.Delete();
         }
         
     }

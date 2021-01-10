@@ -8,10 +8,8 @@ namespace Athena.Import {
     public class AuthorExtractor {
         public static List<Author> Extract(string text) {
             List<Author> authors = new List<Author>();
-            //todo
-            //uwzględnij rzeczy z loga
-            var pattern = @"((?:\w+\.? )+)((?:\w+\-?\.?)+)";
-            if (text == "'-" || string.IsNullOrEmpty(text)) {
+            var pattern = @"((?:(?:\w\.?\'?\-?)+ )+)?((?:\w+\-?\.?\'?)+)";
+            if (text == "'-" || text == "-" || string.IsNullOrEmpty(text) || text == "inni") {
                 return authors;
             }
             var regex = new Regex(pattern);

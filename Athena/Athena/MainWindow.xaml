@@ -48,7 +48,7 @@
 					</GridView>
 				</ListView.View>
 			</ListView>
-			<Button Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" />
+			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         </Grid>
 
 	</Border>
