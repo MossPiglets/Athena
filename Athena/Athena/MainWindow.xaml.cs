@@ -26,7 +26,7 @@ namespace Athena {
             openFileDialog.ShowDialog();
             var fileName = openFileDialog.FileName;
             using var importData = new SpreadsheetDataImport(fileName);
-            var a = importData.ImportAuthorsList();
+            var a = importData.ImportPublishingHousesList();
             ImportButton.Visibility = Visibility.Hidden;
         }
     }

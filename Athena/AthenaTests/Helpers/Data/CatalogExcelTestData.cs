@@ -9,6 +9,8 @@ namespace AthenaTests.Helpers.Data {
         public string AuthorFirstName { get; set; }
         public string AuthorLastName { get; set; }
         public string Series { get; set; }
+        public string SeriesName { get; set; }
+        public int VolumeNumber { get; set; }
         public string PublishingHouse { get; set; }
         public string Year { get; set; }
         public string Town { get; set; }

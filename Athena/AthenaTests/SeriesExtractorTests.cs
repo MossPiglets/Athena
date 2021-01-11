@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Athena.Import;
+using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
 
