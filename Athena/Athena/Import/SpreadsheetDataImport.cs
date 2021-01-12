@@ -111,18 +111,13 @@ namespace Athena.Import {
                 indexCatalog++;
             }
 
-            //var storagePlacesWithoutDoubles = storagePlaces
-            //    .GroupBy(a => a.StoragePlaceName)
-            //    .Select(a => a.FirstOrDefault (b => 
-            //    {
-            //        if (b.Comment != null) {
-                        
-            //        }
-            //    })
-            //    .ToList();
+            var storagePlacesWithoutDoubles = storagePlaces
+                .GroupBy(a => a.StoragePlaceName)
+                .Select(a =>
+                    a.FirstOrDefault(b => !string.IsNullOrEmpty(b.Comment)) ?? a.First())
+                .ToList();
 
-            //return storagePlacesWithoutDoubles;
-            return null;
+            return storagePlacesWithoutDoubles;
         }
 
         public void Dispose() {
