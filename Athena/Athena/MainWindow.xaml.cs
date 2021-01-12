@@ -11,5 +11,6 @@ namespace Athena {
 			this.DataContext = this;
 			BookList.ItemsSource =  new List<Book>();;
 		}
-	}
+
+    }
 }
