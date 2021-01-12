@@ -1,27 +1,22 @@
-﻿namespace AthenaTests.Helpers.Data
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using NUnit.Framework;
+
+namespace AthenaTests.Helpers.Data
 {
     public class TestExcelData {
-        public string FileName = "TestWorksheet";
-        public string FilePath = @"Pulpit";
+
+        public string FileName = $"TestExcel_{Guid.NewGuid()}";
         public string WorksheetCatalog = "Catalog";
         public string WorksheetCategories = "Categories";
         public string WorksheetStoragePlaces = "StoragePlaces"; 
         
-        public string Title = "Alibi";
-        public string Author = "Ryszard Szczerba";
-        public string Series = "Ewa wzywa 07 - 56";
-        public string PublishingHouse = "ISKRY";
-        public string Year = "1973";
-        public string Town = "Warszawa";
-        public string ISBN = "978-83-246-2209-2";
-        public string Language = "PL";
-        public string StoragePlace = "I";
-        public string Comment = "Pęknięty grzbiet";
+        public List<CatalogExcelTestData> CatalogTestsDataList = CatalogExcelTestDataGenerator.Generate();
 
-        public string Colour = "zielony";
-        public string Category = "Album";
+        public List<CategoriesExcelTestData> CategoryTestsDataList = CategoriesExcelTestDataGenerator.Generate();
 
-        public string BoxNumber = "IV";
-        public string BoxDescription = "Kryminał - duże i płaskie białe pudło";
+        public List<StoragePlacesExcelTestData> StoragePlaceTestsDataList =
+            StoragePlacesExcelTestDataGenerator.Generate();
     }
 }

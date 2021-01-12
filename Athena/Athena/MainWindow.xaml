@@ -18,6 +18,7 @@
 			<Grid.RowDefinitions>
 				<RowDefinition Height="auto" />
 				<RowDefinition Height="*" />
+				<RowDefinition Height = "*"/>
 			</Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
@@ -47,7 +48,9 @@
 					</GridView>
 				</ListView.View>
 			</ListView>
-		</Grid>
+			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        </Grid>
+
 	</Border>
 
 </controls:AdonisWindow>

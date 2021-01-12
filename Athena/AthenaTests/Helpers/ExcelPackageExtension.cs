@@ -5,47 +5,57 @@ using System.Text;
 using AthenaTests.Helpers.Data;
 using OfficeOpenXml;
 
-namespace AthenaTests.Helpers
-{
-    public static class ExcelPackageExtension
-    {
+namespace AthenaTests.Helpers {
+    public static class ExcelPackageExtension {
         public static void CreateTestsExcel(this ExcelPackage package, TestExcelData data) {
             var worksheetCatalog = package.Workbook.Worksheets.Add(data.WorksheetCatalog);
-            worksheetCatalog.Cells[1,1].Value = "Tytuł";
-            worksheetCatalog.Cells[1,2].Value = "Autor";
-            worksheetCatalog.Cells[1,3].Value = "Seria";
-            worksheetCatalog.Cells[1,4].Value = "Wydawnictwo";
-            worksheetCatalog.Cells[1,5].Value = "Rok";
-            worksheetCatalog.Cells[1,6].Value = "Miejscowość";
-            worksheetCatalog.Cells[1,7].Value = "ISBN";
-            worksheetCatalog.Cells[1,8].Value = "Język";
-            worksheetCatalog.Cells[1,9].Value = "Miejsce składowania";
-            worksheetCatalog.Cells[1,10].Value = "Uwagi";
+            worksheetCatalog.Cells[1, 1].Value = "Tytuł";
+            worksheetCatalog.Cells[1, 2].Value = "Autor";
+            worksheetCatalog.Cells[1, 3].Value = "Seria";
+            worksheetCatalog.Cells[1, 4].Value = "Wydawnictwo";
+            worksheetCatalog.Cells[1, 5].Value = "Rok";
+            worksheetCatalog.Cells[1, 6].Value = "Miejscowość";
+            worksheetCatalog.Cells[1, 7].Value = "ISBN";
+            worksheetCatalog.Cells[1, 8].Value = "Język";
+            worksheetCatalog.Cells[1, 9].Value = "Miejsce składowania";
+            worksheetCatalog.Cells[1, 10].Value = "Uwagi";
 
-            worksheetCatalog.Cells[2,1].Value = data.Title;
-            worksheetCatalog.Cells[2,2].Value = data.Author;
-            worksheetCatalog.Cells[2,3].Value = data.Series;
-            worksheetCatalog.Cells[2,4].Value = data.PublishingHouse;
-            worksheetCatalog.Cells[2,5].Value = data.Year;
-            worksheetCatalog.Cells[2,6].Value = data.Town;
-            worksheetCatalog.Cells[2,7].Value = data.ISBN;
-            worksheetCatalog.Cells[2,8].Value = data.Language;
-            worksheetCatalog.Cells[2,9].Value = data.StoragePlace;
-            worksheetCatalog.Cells[2,10].Value = data.Comment;
+            for (int i = 0; i < data.CatalogTestsDataList.Count; i++) {
+                var catalogRowData = data.CatalogTestsDataList[i];
+                worksheetCatalog.Cells[i + 2, 1].Value = catalogRowData.Title;
+                worksheetCatalog.Cells[i + 2, 2].Value = catalogRowData.Author;
+                worksheetCatalog.Cells[i + 2, 3].Value = catalogRowData.Series;
+                worksheetCatalog.Cells[i + 2, 4].Value = catalogRowData.PublishingHouse;
+                worksheetCatalog.Cells[i + 2, 5].Value = catalogRowData.Year;
+                worksheetCatalog.Cells[i + 2, 6].Value = catalogRowData.Town;
+                worksheetCatalog.Cells[i + 2, 7].Value = catalogRowData.ISBN;
+                worksheetCatalog.Cells[i + 2, 8].Value = catalogRowData.Language;
+                worksheetCatalog.Cells[i + 2, 9].Value = catalogRowData.StoragePlace;
+                worksheetCatalog.Cells[i + 2, 10].Value = catalogRowData.Comment;
+            }
+
 
             var worksheetCategories = package.Workbook.Worksheets.Add(data.WorksheetCategories);
-            worksheetCategories.Cells[1,1].Value = "Kolor";
-            worksheetCategories.Cells[1,2].Value = "Kategoria";
-            worksheetCategories.Cells[2,1].Value = data.Colour;
-            worksheetCategories.Cells[2,2].Value = data.Category;
+            worksheetCategories.Cells[1, 1].Value = "Kolor";
+            worksheetCategories.Cells[1, 2].Value = "Kategoria";
+
+            for (int i = 0; i < data.CategoryTestsDataList.Count; i++) {
+                var categoryRowData = data.CategoryTestsDataList[i];
+                worksheetCategories.Cells[i + 2, 1].Value = categoryRowData.Colour;
+                worksheetCategories.Cells[i + 2, 2].Value = categoryRowData.Category;
+            }
 
             var worksheetStoragePlaces = package.Workbook.Worksheets.Add(data.WorksheetStoragePlaces);
-            worksheetStoragePlaces.Cells[1,1].Value = "Nr pudła";
+            worksheetStoragePlaces.Cells[1, 1].Value = "Nr pudła";
             worksheetStoragePlaces.Cells[1, 2].Value = "Komentarz";
-            worksheetStoragePlaces.Cells[2, 1].Value = data.BoxNumber;
-            worksheetStoragePlaces.Cells[2, 2].Value = data.BoxDescription;
 
-            package.SaveAs(new FileInfo(data.FilePath));
+            for (int i = 0; i < data.StoragePlaceTestsDataList.Count; i++) {
+                var storagePlaceRowData = data.StoragePlaceTestsDataList[i];
+                worksheetStoragePlaces.Cells[i + 2, 1].Value = storagePlaceRowData.BoxSign;
+                worksheetStoragePlaces.Cells[i + 2, 2].Value = storagePlaceRowData.Description;
+            }
+
+            package.SaveAs(new FileInfo(data.FileName));
         }
     }
 }
