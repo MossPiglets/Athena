@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using Athena.Data;
 using Athena.Import.Extractors;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using OfficeOpenXml;
 using Serilog;
 using Serilog.Core;
@@ -93,6 +91,38 @@ namespace Athena.Import {
                 .Select(a => a.First())
                 .ToList();
             return seriesWithoutDoubles;
+        }
+
+        public List<StoragePlace> ImportStoragePlacesList() {
+            var indexStoragePlace = 2;
+            List<StoragePlace> storagePlaces = new List<StoragePlace>();
+            while (_storagePlaces.Cells[indexStoragePlace, 1].Value != null) {
+                var cells = _storagePlaces.Cells;
+                var storagePlace = StoragePlaceExtractor.Extract(cells[indexStoragePlace, 1].Value.ToString(),
+                    cells[indexStoragePlace, 2].Value.ToString());
+                storagePlaces.Add(storagePlace);
+                indexStoragePlace++;
+            }
+
+            var indexCatalog = 2;
+            while (_catalog.Cells[indexCatalog, 1].Value != null) {
+                var storagePlace = StoragePlaceExtractor.Extract(_catalog.Cells[indexCatalog, 9].Value.ToString());
+                storagePlaces.Add(storagePlace);
+                indexCatalog++;
+            }
+
+            //var storagePlacesWithoutDoubles = storagePlaces
+            //    .GroupBy(a => a.StoragePlaceName)
+            //    .Select(a => a.FirstOrDefault (b => 
+            //    {
+            //        if (b.Comment != null) {
+                        
+            //        }
+            //    })
+            //    .ToList();
+
+            //return storagePlacesWithoutDoubles;
+            return null;
         }
 
         public void Dispose() {

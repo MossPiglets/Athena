@@ -185,5 +185,25 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
+        //[Test]
+        //public void ImportStoragePlacesList_ShouldReturnStoragePlacesList() {
+        //    // Arrange
+        //    using var package = new ExcelPackage();
+        //    var data = new TestExcelData();
+        //    package.CreateTestsExcel(data);
+        //    using var dataImport = new SpreadsheetDataImport(data.FileName);
+        //    // Act
+        //    var storagePlaces = dataImport.ImportStoragePlacesList();
+        //    // Assert
+        //    storagePlaces.Should().HaveSameCount(data.StoragePlaceTestsDataList);
+        //    for (int i = 0; i < storagePlaces.Count; i++) {
+        //        var storagePlace = storagePlaces[i];
+        //        var storagePlaceData = data.StoragePlaceTestsDataList[i];
+        //        storagePlace.Id.Should().NotBeEmpty();
+        //        storagePlace.StoragePlaceName.Should().Be(storagePlaceData.StoragePlaceName);
+        //    }
+
+        //    package.File.Delete();
+        //}
     }
 }

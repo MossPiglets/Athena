@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Athena.Import.Extractors;
+﻿using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -10,59 +7,59 @@ namespace AthenaTests
     public class CommentExtractorTests
     {
         [Test]
-        public void Extract_ShouldReturnTitle() {
+        public void Extract_ShouldReturnComment() {
             // Arrange 
-            var text = "Visual Basic dla Windows zabawnie i pożytecznie";
+            var text = "wypada z boku, trochę się rozkleja";
             // Act
-            var isbn = CommentExtractor.Extract(text);
+            var comment = CommentExtractor.Extract(text);
             // Assert
-            isbn.Should().Be(text);
+            comment.Should().Be(text);
         }
         [Test]
-        public void Extract_Spaces_ShouldReturnTitle() {
+        public void Extract_Spaces_ShouldReturnComment() {
             // Arrange 
-            var expectedIsbn = "Visual Basic dla Windows zabawnie i pożytecznie";
-            var text = $" {expectedIsbn} ";
+            var expectedComment = "wypada z boku, trochę się rozkleja";
+            var text = $" {expectedComment} ";
             // Act
-            var isbn = CommentExtractor.Extract(text);
+            var comment = CommentExtractor.Extract(text);
             // Assert
-            isbn.Should().Be(expectedIsbn);
+            comment.Should().Be(expectedComment);
         }
         [Test]
         public void Extract_EmptyText_ShouldReturnNull() {
             // Arrange 
             var text = string.Empty;
             // Act
-            var title = CommentExtractor.Extract(text);
+            var comment = CommentExtractor.Extract(text);
             // Assert
-            title.Should().BeNull();
+            comment.Should().BeNull();
         }
         [Test]
         public void Extract_Null_ShouldReturnNull() {
             // Arrange 
             string text = null;
             // Act
-            var isbn = CommentExtractor.Extract(text);
+            var comment = CommentExtractor.Extract(text);
             // Assert
-            isbn.Should().BeNull();
+            comment.Should().BeNull();
         }
         [Test]
         public void Extract_Pause_ShouldReturnNull() {
             // Arrange 
             string text = "-";
             // Act
-            var isbn = CommentExtractor.Extract(text);
+            var comment = CommentExtractor.Extract(text);
             // Assert
-            isbn.Should().BeNull();
+            comment.Should().BeNull();
         }
         [Test]
         public void Extract_PauseAndApostrophe_ShouldReturnNull() {
             // Arrange 
             string text = "'-";
             // Act
-            var isbn = CommentExtractor.Extract(text);
+            var comment = CommentExtractor.Extract(text);
             // Assert
-            isbn.Should().BeNull();
+            comment.Should().BeNull();
         }
     }
 }
