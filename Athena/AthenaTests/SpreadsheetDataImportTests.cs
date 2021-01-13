@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Athena.Data;
 using Athena.Import;
 using AthenaTests.Helpers;
 using AthenaTests.Helpers.Data;
@@ -61,7 +63,7 @@ namespace AthenaTests {
             // Act
             var authors = dataImport.ImportAuthorsList();
             // Assert
-            authors.Should().HaveCount(data.CatalogTestsDataList.Count-1);
+            authors.Should().HaveCount(data.CatalogTestsDataList.Count - 1);
             authors.Should().OnlyHaveUniqueItems();
 
             package.File.Delete();
@@ -82,6 +84,7 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportSeriesList_ShouldReturnSeriesList() {
             // Arrange
@@ -103,6 +106,7 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportSeriesList_Duplicates_ShouldReturnSeriesListWithoutDuplicates() {
             // Arrange
@@ -114,11 +118,12 @@ namespace AthenaTests {
             // Act
             var seriesList = dataImport.ImportSeriesList();
             // Assert
-            seriesList.Should().HaveCount(data.CatalogTestsDataList.Count-1);
+            seriesList.Should().HaveCount(data.CatalogTestsDataList.Count - 1);
             seriesList.Should().OnlyHaveUniqueItems();
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportSeriesList_EmptyExcel_ShouldReturnEmptySeriesList() {
             // Arrange
@@ -134,6 +139,7 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportPublishingHousesList_ShouldReturnPublishingHousesList() {
             // Arrange
@@ -154,6 +160,7 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportPublishingHousesList_Duplicates_ShouldReturnPublishingHouseListWithoutDuplicates() {
             // Arrange
@@ -165,11 +172,12 @@ namespace AthenaTests {
             // Act
             var publishingHouses = dataImport.ImportPublishingHousesList();
             // Assert
-            publishingHouses.Should().HaveCount(data.CatalogTestsDataList.Count-1);
+            publishingHouses.Should().HaveCount(data.CatalogTestsDataList.Count - 1);
             publishingHouses.Should().OnlyHaveUniqueItems();
 
             package.File.Delete();
         }
+
         [Test]
         public void ImportPublishingHouseList_EmptyExcel_ShouldReturnEmptyPublishingHouseList() {
             // Arrange
@@ -185,25 +193,27 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
-        //[Test]
-        //public void ImportStoragePlacesList_ShouldReturnStoragePlacesList() {
-        //    // Arrange
-        //    using var package = new ExcelPackage();
-        //    var data = new TestExcelData();
-        //    package.CreateTestsExcel(data);
-        //    using var dataImport = new SpreadsheetDataImport(data.FileName);
-        //    // Act
-        //    var storagePlaces = dataImport.ImportStoragePlacesList();
-        //    // Assert
-        //    storagePlaces.Should().HaveSameCount(data.StoragePlaceTestsDataList);
-        //    for (int i = 0; i < storagePlaces.Count; i++) {
-        //        var storagePlace = storagePlaces[i];
-        //        var storagePlaceData = data.StoragePlaceTestsDataList[i];
-        //        storagePlace.Id.Should().NotBeEmpty();
-        //        storagePlace.StoragePlaceName.Should().Be(storagePlaceData.StoragePlaceName);
-        //    }
 
-        //    package.File.Delete();
-        //}
+        [Test]
+        public void ImportStoragePlacesList_ShouldReturnStoragePlacesList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().HaveCount(data.StoragePlaceTestsDataList.Count + data.CatalogTestsDataList.Count);
+            var catalogData = data.CatalogTestsDataList;
+            var storagePlaceData = data.StoragePlaceTestsDataList;
+            foreach (var storagePlace in storagePlaces) {
+                storagePlace.Id.Should().NotBeEmpty();
+            }
+            storagePlaces.Should().OnlyContain(a => 
+                catalogData.Any(b => b.StoragePlace == a.StoragePlaceName)||
+                storagePlaceData.Any(b => b.StoragePlaceName == a.StoragePlaceName));
+            package.File.Delete();
+        }
     }
 }
