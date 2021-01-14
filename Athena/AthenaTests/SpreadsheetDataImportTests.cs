@@ -215,5 +215,115 @@ namespace AthenaTests {
                 storagePlaceData.Any(b => b.StoragePlaceName == a.StoragePlaceName));
             package.File.Delete();
         }
+        [Test]
+        public void ImportStoragePlacesList_Duplicates_ShouldReturnStoragePlacesListWithoutDuplicates() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Add(data.CatalogTestsDataList[0]);
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().HaveCount(data.CatalogTestsDataList.Count + data.StoragePlaceTestsDataList.Count - 1);
+            storagePlaces.Should().OnlyHaveUniqueItems();
+
+            package.File.Delete();
+        }
+        [Test]
+        public void ImportStoragePlacesList_BothEmptyExcel_ShouldReturnEmptyStoragePlacesList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Clear();
+            data.StoragePlaceTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().BeEmpty();
+
+            package.File.Delete();
+        }
+        [Test]
+        public void ImportStoragePlacesList_EmptyCatalogExcel_ShouldReturnStoragePlacesListFromStoragePlacesExcel() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().HaveCount(data.StoragePlaceTestsDataList.Count);
+            for (int i = 0; i < storagePlaces.Count; i++) {
+                var storagePlace = storagePlaces[i];
+                var storagePlaceData = data.StoragePlaceTestsDataList[i];
+                storagePlace.Id.Should().NotBeEmpty();
+                storagePlace.StoragePlaceName.Should().Be(storagePlaceData.StoragePlaceName);
+                storagePlace.Comment.Should().Be(storagePlaceData.Description);
+            }
+
+            package.File.Delete();
+        }
+        [Test]
+        public void ImportStoragePlacesList_EmptyStoragePlaceExcel_ShouldReturnStoragePlacesListFromCatalogExcel() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.StoragePlaceTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().HaveCount(data.CatalogTestsDataList.Count);
+            for (int i = 0; i < storagePlaces.Count; i++) {
+                var storagePlace = storagePlaces[i];
+                var storagePlaceData = data.CatalogTestsDataList[i];
+                storagePlace.Id.Should().NotBeEmpty();
+                storagePlace.StoragePlaceName.Should().Be(storagePlaceData.StoragePlace);
+                storagePlace.Comment.Should().BeNull();
+            }
+
+            package.File.Delete();
+        }
+
+        [Test]
+        public void ImportStoragePlacesList_DuplicatesWithEmptyDescription_ShouldReturnStoragePlacesListWithoutDuplicatesWithElementWithDescription() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            var catalogDataToDouble = data.CatalogTestsDataList[0];
+            var doubleData = new CatalogExcelTestData() {
+                Title = catalogDataToDouble.Title,
+                AuthorFirstName = catalogDataToDouble.AuthorFirstName,
+                AuthorLastName = catalogDataToDouble.AuthorLastName,
+                Series = catalogDataToDouble.Series,
+                SeriesName = catalogDataToDouble.SeriesName,
+                VolumeNumber = catalogDataToDouble.VolumeNumber,
+                PublishingHouse = catalogDataToDouble.PublishingHouse,
+                Town = catalogDataToDouble.Town,
+                StoragePlace = data.StoragePlaceTestsDataList[0].StoragePlaceName,
+                Year = catalogDataToDouble.Year,
+                ISBN = catalogDataToDouble.ISBN,
+                Language = catalogDataToDouble.Language,
+                Comment = catalogDataToDouble.Comment
+            };
+            data.CatalogTestsDataList.Add(doubleData);
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().HaveCount(data.CatalogTestsDataList.Count + data.StoragePlaceTestsDataList.Count - 1);
+            storagePlaces.Should().OnlyHaveUniqueItems();
+            storagePlaces.Should().Contain(a => a.Comment == data.StoragePlaceTestsDataList[0].Description);
+
+            package.File.Delete();
+        }
     }
 }
