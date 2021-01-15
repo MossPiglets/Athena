@@ -51,7 +51,7 @@ namespace AthenaTests.Helpers {
 
             for (int i = 0; i < data.StoragePlaceTestsDataList.Count; i++) {
                 var storagePlaceRowData = data.StoragePlaceTestsDataList[i];
-                worksheetStoragePlaces.Cells[i + 2, 1].Value = storagePlaceRowData.BoxSign;
+                worksheetStoragePlaces.Cells[i + 2, 1].Value = storagePlaceRowData.StoragePlaceName;
                 worksheetStoragePlaces.Cells[i + 2, 2].Value = storagePlaceRowData.Description;
             }
 

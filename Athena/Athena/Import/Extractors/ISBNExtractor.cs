@@ -1,6 +1,6 @@
 ﻿namespace Athena.Import.Extractors
 {
-    public class ISBNExtractor
+    public class IsbnExtractor
     {
         public static string Extract(string text) {
             if (text == "'-" || text == "-" || string.IsNullOrEmpty(text)) {

@@ -17,7 +17,7 @@ namespace AthenaTests.Helpers.Data {
                 Town = "Warszawa",
                 ISBN = "978-83-246-2209-2",
                 Language = "PL",
-                StoragePlace = "I",
+                StoragePlace = "biurko Anki",
                 Comment = "Pęknięty grzbiet"
             },
             new CatalogExcelTestData() {
@@ -32,7 +32,7 @@ namespace AthenaTests.Helpers.Data {
                 Town = "Warszawa",
                 ISBN = "978-83-255-4175-6",
                 Language = "PL",
-                StoragePlace = "IV",
+                StoragePlace = "T5",
                 Comment = "Filmowe wydanie"
             }
         };

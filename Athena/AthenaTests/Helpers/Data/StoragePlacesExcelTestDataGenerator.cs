@@ -8,12 +8,12 @@ namespace AthenaTests.Helpers.Data
     {
         public static List<StoragePlacesExcelTestData> Generate () => new List<StoragePlacesExcelTestData>() {
             new StoragePlacesExcelTestData() {
-                BoxSign = "V",
+                StoragePlaceName = "V",
                 Description = "Małe, czerwone pudło po sokowirówce"
             },
             new StoragePlacesExcelTestData() {
-                BoxSign = "III",
-                Description = "WIelki, typowy karton"
+                StoragePlaceName = "III",
+                Description = "Wielki, typowy karton"
             }
         };
     }
