@@ -1,4 +1,4 @@
-﻿<Window x:Class="Athena.Windows.AddSeriesWindow"
+﻿<controls:AdonisWindow  xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI" x:Class="Athena.Windows.AddSeriesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -29,4 +29,5 @@
         <Window.Style>
             <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
         </Window.Style>
-</Window>
+    
+</controls:AdonisWindow>
