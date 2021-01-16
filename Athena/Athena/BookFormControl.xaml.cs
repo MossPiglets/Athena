@@ -21,5 +21,14 @@ namespace Athena {
         public string ButtonContent { get; set; }
 
         public ICommand ButtonCommand { get; set; }
+
+        private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
+        {
+            ComboBox newCB = new ComboBox();
+
+            AuthorsStackPanel.Children.Add(newCB);
+
+            
+        }
     }
 }
