@@ -15,7 +15,7 @@ namespace Athena
     /// <summary>
     /// Interaction logic for BorrowForm.xaml
     /// </summary>
-    public partial class BorrowForm : Window
+    public partial class BorrowForm 
     {
         public BorrowForm()
         {
