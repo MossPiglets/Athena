@@ -21,7 +21,7 @@ namespace Athena {
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-			EditBookWindow EditBook = new EditBookWindow(); //dlaczego muszê to zrobiæ? czemu po prostu AddBookWindow.Show() nie dzia³a?
+			EditBookWindow EditBook = new EditBookWindow(); 
 			EditBook.Show();
 		}
 
