@@ -1,4 +1,4 @@
-﻿<Window x:Class="Athena.Windows.AddPublisherWindow"
+﻿<controls:AdonisWindow x:Class="Athena.Windows.AddPublisherWindow"
                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -31,5 +31,5 @@
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
 
-</Window>
+</controls:AdonisWindow>
 
