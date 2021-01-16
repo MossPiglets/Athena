@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:Athena"
              xmlns:Data="clr-namespace:Athena.Data"
              mc:Ignorable="d"
-             d:DesignHeight="580" d:DesignWidth="600">
+             d:DesignHeight="580" d:DesignWidth="600" SizeToContent="Height">
 
     <UserControl.Resources>
         <ObjectDataProvider
-    MethodName="GetLanguage"
+    MethodName="GetValues"
     ObjectType="{x:Type Data:Language}"
     x:Key="EnumLanguage">
             <ObjectDataProvider.MethodParameters>
@@ -64,7 +64,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <StackPanel Name="AutorsStackPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                <StackPanel Name="AuthorsStackPanel" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <ComboBox Text="{Binding Book.Author}" IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 18 0 " Height="22">
                         <ComboBoxItem>Andrzej Sapkowski</ComboBoxItem>
                         <ComboBoxItem>Jarosław Grzędowicz</ComboBoxItem>
