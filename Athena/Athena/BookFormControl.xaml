@@ -1,7 +1,6 @@
 ﻿<UserControl x:Class="Athena.BookFormControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Athena"
@@ -10,15 +9,14 @@
              d:DesignHeight="580" d:DesignWidth="600">
 
     <UserControl.Resources>
-
-        <ObjectDataProvider x:Key="LanguageFromEnum"
-                            MethodName="GetValues" 
-                            ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider
+    MethodName="GetLanguage"
+    ObjectType="{x:Type Data:Language}"
+    x:Key="EnumLanguage">
             <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Data:Language"/>
+                <x:Type TypeName="Data:Language"></x:Type>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-
     </UserControl.Resources>
     <Border Padding="10">
         <StackPanel>
@@ -65,16 +63,13 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <!--<TextBlock Text="Imię:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" />
-                <TextBlock Text="Nazwisko:" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />-->
+                
                 <ComboBox Text="{Binding Book.Author}" IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 18 0 " Height="22">
                     <ComboBoxItem>Andrzej Sapkowski</ComboBoxItem>
                     <ComboBoxItem>Jarosław Grzędowicz</ComboBoxItem>
                     <ComboBoxItem>Anne McCaffrey</ComboBoxItem>
                 </ComboBox>
                 <Button Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora"/>
-                <!--<TextBox Text="{Binding Book.Author.FirstName}" Grid.Row="0" Grid.Column="1" Margin="0 0 18 0 " Height="22" />
-                <TextBox Text="{Binding Book.Author.LastName}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />-->
                 <ComboBox Text="{Binding Book.Category.CategoryName}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
                           Height="22">
                     <ComboBoxItem>Fantasy</ComboBoxItem>
@@ -129,10 +124,8 @@
                 <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 18 0" />
                 <ComboBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
                          Width="60" />
-                <!--<TextBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
-                         Width="40" />-->
                 <TextBox Text="{Binding Book.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox Text="{Binding Book.Language}" ItemsSource="{Binding Source={StaticResource LanguageFromEnum}}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0"/>
+                <ComboBox Text="{Binding Book.Language}" ItemsSource="{Binding Source={StaticResource EnumLanguage}}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0"/>
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
