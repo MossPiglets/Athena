@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using AthenaTests.Helpers.Data;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace AthenaTests.Helpers {
     public static class ExcelPackageExtension {
@@ -43,7 +45,11 @@ namespace AthenaTests.Helpers {
                 var categoryRowData = data.CategoryTestsDataList[i];
                 worksheetCategories.Cells[i + 2, 1].Value = categoryRowData.Colour;
                 worksheetCategories.Cells[i + 2, 2].Value = categoryRowData.Category;
+                var color = System.Drawing.ColorTranslator.FromHtml(categoryRowData.ColourCode);
+                worksheetCategories.Cells[i + 2, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheetCategories.Cells[i + 2, 1].Style.Fill.BackgroundColor.SetColor(color);
             }
+            
 
             var worksheetStoragePlaces = package.Workbook.Worksheets.Add(data.WorksheetStoragePlaces);
             worksheetStoragePlaces.Cells[1, 1].Value = "Nr pudła";

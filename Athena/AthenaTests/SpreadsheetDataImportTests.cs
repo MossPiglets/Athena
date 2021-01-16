@@ -325,5 +325,39 @@ namespace AthenaTests {
 
             package.File.Delete();
         }
+        [Test]
+        public void ImportCategoriesList_ShouldReturnCategories() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var categories = dataImport.ImportCategoriesList();
+            // Assert
+            categories.Should().HaveSameCount(data.CategoryTestsDataList);
+            for (int i = 0; i < categories.Count; i++) {
+                var category = categories[i];
+                var categoryData = data.CategoryTestsDataList[i];
+                category.Should().BeEquivalentTo(categoryData.CategoryName);
+            }
+
+            package.File.Delete();
+        }
+        [Test]
+        public void ImportCategoriesList_EmptyExcel_ShouldReturnEmptyCategoriesList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CategoryTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var categories = dataImport.ImportCategoriesList();
+            // Assert
+            categories.Should().BeEmpty();
+
+            package.File.Delete();
+        }
     }
 }

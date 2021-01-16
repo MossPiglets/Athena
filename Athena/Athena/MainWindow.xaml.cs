@@ -5,6 +5,7 @@ using System.Windows;
 using Athena.Import;
 using Athena.Windows;
 using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
 
 namespace Athena {
@@ -27,6 +28,10 @@ namespace Athena {
             var fileName = openFileDialog.FileName;
             using var importData = new SpreadsheetDataImport(fileName);
             var a = importData.ImportPublishingHousesList();
+            var b = importData.ImportCategoriesList();
+            var c = importData.ImportSeriesList();
+            var d = importData.ImportAuthorsList();
+            var f = importData.ImportStoragePlacesList();
             ImportButton.Visibility = Visibility.Hidden;
         }
     }

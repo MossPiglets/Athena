@@ -120,6 +120,18 @@ namespace Athena.Import {
             return storagePlacesWithoutDoubles;
         }
 
+        public List<Category> ImportCategoriesList() {
+            var index = 2;
+            List<Category> categories = new List<Category>();
+            while (_categories.Cells[index, 1].Value != null) {
+                var category = CategoryExtractor.Extract(_categories.Cells[index, 1].Style.Fill.BackgroundColor.Rgb);
+                categories.Add(category);
+                index++;
+            }
+
+            return categories;
+        }
+
         public void Dispose() {
             _package.Dispose();
             _log.Dispose();
