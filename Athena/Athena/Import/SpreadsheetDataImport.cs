@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Athena.Data;
 using Athena.Import.Extractors;
+using Castle.Core.Internal;
 using OfficeOpenXml;
 using Serilog;
 using Serilog.Core;
@@ -26,6 +27,35 @@ namespace Athena.Import {
             _log = new LoggerConfiguration().WriteTo.File("./logs/ImportLog_.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }
+
+        public List<Book> ImportBooksList() {
+            var authors = ImportAuthorsList();
+            var series = ImportSeriesList();
+            var publishingHouses = ImportPublishingHousesList();
+            var storagePlaces = ImportStoragePlacesList();
+            var categories = ImportCategoriesList();
+
+            List<Book> books = new List<Book>();
+            var index = 2;
+            while (_catalog.Cells[index, 1].Value != null) {
+                var book = new Book {
+                    Id = Guid.NewGuid(),
+                    Title = TitleExtractor.Extract(_catalog.Cells[index, 1].Value.ToString()),
+                    Authors = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value.ToString()),
+                    Series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value.ToString()),
+                    PublishingHouse = PublishingHouseExtractor.Extract(_catalog.Cells[index, 4].Value.ToString()),
+                    PublishmentYear = YearExtractor.Extract(_catalog.Cells[index, 5].Value.ToString()),
+                    ISBN = IsbnExtractor.Extract(_catalog.Cells[index, 7].Value.ToString()),
+                    Language = LanguageExtractor.Extract(_catalog.Cells[index, 8].Value.ToString()),
+                    StoragePlace = StoragePlaceExtractor.Extract(_catalog.Cells[index, 9].Value.ToString()),
+                    Comment = CommentExtractor.Extract(_catalog.Cells[index, 10].Value.ToString()),
+                    Categories = new List<Category>()
+                        { CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb) }
+                };
+                ImportBookValidator.CheckAuthors(book.Authors, authors);
+            }
+        }
+
 
         public List<Author> ImportAuthorsList() {
             List<Author> authors = new List<Author>();
@@ -106,7 +136,16 @@ namespace Athena.Import {
 
             var indexCatalog = 2;
             while (_catalog.Cells[indexCatalog, 1].Value != null) {
-                var storagePlace = StoragePlaceExtractor.Extract(_catalog.Cells[indexCatalog, 9].Value.ToString());
+                string cell;
+                try {
+                    cell = _catalog.Cells[indexCatalog, 9].Value.ToString();
+                }
+                catch (Exception e) {
+                    indexCatalog++;
+                    continue;
+                }
+
+                var storagePlace = StoragePlaceExtractor.Extract(cell?.ToString());
                 storagePlaces.Add(storagePlace);
                 indexCatalog++;
             }

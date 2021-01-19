@@ -326,6 +326,30 @@ namespace AthenaTests {
             package.File.Delete();
         }
         [Test]
+        public void ImportStoragePlacesList_Null_ShouldReturnStoragePlacesListWithoutOneElement() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            var emptyStorageElement = data.CatalogTestsDataList[0];
+            emptyStorageElement.StoragePlace = null;
+            data.CatalogTestsDataList.Add(emptyStorageElement);
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var storagePlaces = dataImport.ImportStoragePlacesList();
+            // Assert
+            storagePlaces.Should().HaveCount(data.StoragePlaceTestsDataList.Count + data.CatalogTestsDataList.Count-2);
+            var catalogData = data.CatalogTestsDataList;
+            var storagePlaceData = data.StoragePlaceTestsDataList;
+            foreach (var storagePlace in storagePlaces) {
+                storagePlace.Id.Should().NotBeEmpty();
+            }
+            storagePlaces.Should().OnlyContain(a => 
+                catalogData.Any(b => b.StoragePlace == a.StoragePlaceName)||
+                storagePlaceData.Any(b => b.StoragePlaceName == a.StoragePlaceName));
+            package.File.Delete();
+        }
+        [Test]
         public void ImportCategoriesList_ShouldReturnCategories() {
             // Arrange
             using var package = new ExcelPackage();
