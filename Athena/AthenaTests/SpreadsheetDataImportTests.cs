@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Athena.Data;
 using Athena.Import;
 using AthenaTests.Helpers;
-using AthenaTests.Helpers.Data;
+using AthenaTests.Helpers.Data.TestExcel;
+using Castle.Core.Internal;
 using FluentAssertions;
 using NUnit.Framework;
 using OfficeOpenXml;
@@ -380,6 +378,45 @@ namespace AthenaTests {
             var categories = dataImport.ImportCategoriesList();
             // Assert
             categories.Should().BeEmpty();
+
+            package.File.Delete();
+        }
+        [Test]
+        public void ImportBooksList_ShouldReturnBooksList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var books = dataImport.ImportBooksList();
+            // Assert
+            books.Should().HaveSameCount(data.CatalogTestsDataList);
+            for (int i = 0; i < books.Count; i++) {
+                var book = books[i];
+                var catalogData = data.CatalogTestsDataList[i];
+                book.Id.Should().NotBeEmpty();
+                book.Title.Should().Be(catalogData.Title);
+                book.PublishmentYear.Should().Be(Convert.ToInt32(catalogData.Year));
+                book.ISBN.Should().Be(catalogData.ISBN);
+                book.Language.Should().Be(catalogData.LanguageEnum);
+                book.Comment.Should().Be(catalogData.Comment);
+            }
+
+            package.File.Delete();
+        }
+        [Test]
+        public void ImportBooksList_EmptyExcel_ShouldReturnEmptyBooksList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            // Act
+            var books = dataImport.ImportBooksList();
+            // Assert
+            books.Should().BeEmpty();
 
             package.File.Delete();
         }

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Athena.Data;
 
-namespace AthenaTests.Helpers.Data {
+namespace AthenaTests.Helpers.Data.TestExcel {
     public class CategoriesExcelTestDataGenerator {
         public static List<CategoriesExcelTestData> Generate() => new List<CategoriesExcelTestData>() {
             new CategoriesExcelTestData() {

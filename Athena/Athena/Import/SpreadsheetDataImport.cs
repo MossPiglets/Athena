@@ -52,8 +52,16 @@ namespace Athena.Import {
                     Categories = new List<Category>()
                         { CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb) }
                 };
-                ImportBookValidator.CheckAuthors(book.Authors, authors);
+                ImportBookValidator.CheckAuthors(authors, book.Authors);
+                ImportBookValidator.CheckSeries(series, book.Series);
+                ImportBookValidator.CheckPublishingHouse(publishingHouses, book.PublishingHouse);
+                ImportBookValidator.CheckStoragePlace(storagePlaces, book.StoragePlace);
+                ImportBookValidator.CheckCategory(categories, book.Categories);
+                books.Add(book);
+                index++;
             }
+
+            return books;
         }
 
 
@@ -140,7 +148,7 @@ namespace Athena.Import {
                 try {
                     cell = _catalog.Cells[indexCatalog, 9].Value.ToString();
                 }
-                catch (Exception e) {
+                catch (Exception) {
                     indexCatalog++;
                     continue;
                 }

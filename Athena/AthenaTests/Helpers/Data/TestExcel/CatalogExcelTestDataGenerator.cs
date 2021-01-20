@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
+using Athena.Data;
 
-namespace AthenaTests.Helpers.Data {
+namespace AthenaTests.Helpers.Data.TestExcel {
     public class CatalogExcelTestDataGenerator {
         public static List<CatalogExcelTestData> Generate() => new List<CatalogExcelTestData>() {
             new CatalogExcelTestData() {
@@ -17,8 +16,10 @@ namespace AthenaTests.Helpers.Data {
                 Town = "Warszawa",
                 ISBN = "978-83-246-2209-2",
                 Language = "PL",
+                LanguageEnum = Language.PL,
                 StoragePlace = "biurko Anki",
-                Comment = "Pęknięty grzbiet"
+                Comment = "Pęknięty grzbiet",
+                ColorCode = "#E8FCC8"
             },
             new CatalogExcelTestData() {
                 Title = "Igrzyska śmierci",
@@ -32,8 +33,10 @@ namespace AthenaTests.Helpers.Data {
                 Town = "Warszawa",
                 ISBN = "978-83-255-4175-6",
                 Language = "PL",
+                LanguageEnum = Language.PL,
                 StoragePlace = "T5",
-                Comment = "Filmowe wydanie"
+                Comment = "Filmowe wydanie",
+                ColorCode = "#ABABFF"
             }
         };
     }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Athena.Data;
+﻿using Athena.Data;
 
-namespace AthenaTests.Helpers.Data {
+namespace AthenaTests.Helpers.Data.TestExcel {
     public class CategoriesExcelTestData {
         public string Colour { get; set; }
         public string ColourCode { get; set; }

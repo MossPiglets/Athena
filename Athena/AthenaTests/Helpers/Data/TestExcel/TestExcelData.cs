@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using NUnit.Framework;
 
-namespace AthenaTests.Helpers.Data
+namespace AthenaTests.Helpers.Data.TestExcel
 {
     public class TestExcelData {
 

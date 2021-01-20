@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Athena.Data;
 
-namespace AthenaTests.Helpers.Data {
+namespace AthenaTests.Helpers.Data.TestExcel {
     public class CatalogExcelTestData {
         public string Title { get; set; }
         public string Author => $"{AuthorFirstName} {AuthorLastName}";
@@ -16,7 +14,9 @@ namespace AthenaTests.Helpers.Data {
         public string Town { get; set; }
         public string ISBN { get; set; }
         public string Language { get; set; }
+        public Language LanguageEnum { get; set; }
         public string StoragePlace { get; set; }
         public string Comment { get; set; }
+        public string ColorCode { get; set; }
     }
 }

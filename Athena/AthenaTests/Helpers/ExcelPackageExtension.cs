@@ -4,6 +4,7 @@ using System.Drawing;
 using System.IO;
 using System.Text;
 using AthenaTests.Helpers.Data;
+using AthenaTests.Helpers.Data.TestExcel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
@@ -34,6 +35,9 @@ namespace AthenaTests.Helpers {
                 worksheetCatalog.Cells[i + 2, 8].Value = catalogRowData.Language;
                 worksheetCatalog.Cells[i + 2, 9].Value = catalogRowData.StoragePlace;
                 worksheetCatalog.Cells[i + 2, 10].Value = catalogRowData.Comment;
+                var color = System.Drawing.ColorTranslator.FromHtml(catalogRowData.ColorCode);
+                worksheetCatalog.Cells[i + 2, 2].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheetCatalog.Cells[i + 2, 2].Style.Fill.BackgroundColor.SetColor(color);
             }
 
 
