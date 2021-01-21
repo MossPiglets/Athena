@@ -1,10 +1,10 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
 
-namespace Athena {
+namespace Athena
+{
 
     public partial class BookFormControl : UserControl {
         public BookFormControl(string title, string buttonContent) {
@@ -25,10 +25,34 @@ namespace Athena {
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
         {
             ComboBox newCB = new ComboBox();
+            Button newBtn = new Button();
+            DockPanel newDP = new DockPanel();
+            //Setting Combobox properties
+            newCB.IsEditable = true;
+            var CBmargins = new Thickness(0, 7, 15, 0);
+            newCB.Margin = CBmargins;
+            newCB.Height = 22;
+            //Setting button properties
+            //newCB.ItemsSource = ApplicationDbContext.Authors;
+            var BtnMargins = new Thickness(0,7,17,0);
+            newBtn.Margin = BtnMargins;
+            newBtn.Content = "-";
+            newBtn.Width = 20;
+            newBtn.Height = 20;
+            newBtn.Click += new RoutedEventHandler(newBtn_Click);
+            DockPanel.SetDock(newBtn, Dock.Right);
+            //Adding to dockpanel
+            newDP.ClipToBounds = false;
+            newDP.Children.Add(newBtn);
+            newDP.Children.Add(newCB);
+            AuthorsStackPanel.Children.Add(newDP);
+        }
+        private void newBtn_Click(object sender, RoutedEventArgs e)
 
-            AuthorsStackPanel.Children.Add(newCB);
-
+        {
+            Button btn = sender as Button;
             
+            AuthorsStackPanel.Children.Remove((UIElement)btn.Parent);
         }
     }
 }
