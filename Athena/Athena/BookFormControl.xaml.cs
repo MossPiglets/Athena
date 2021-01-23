@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena
 {
@@ -12,6 +13,10 @@ namespace Athena
             Title = title;
             ButtonContent = buttonContent;
             this.DataContext = this;
+            Author author = new Author();
+            author.FirstName = "Imię";
+            author.LastName = "Nazwisko";
+            //ApplicationDbContext.Authors.Add(author);
         }
 
         public Book Book { get; set; } = new Book();
