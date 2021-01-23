@@ -66,8 +66,16 @@
 
             </Grid>
 
-            <Grid Margin="5 10 0 0">
-                <TextBlock Text="Seria" FontWeight="Bold" />
+            <Grid Margin="5 10 10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Seria" FontWeight="Bold" Margin="0 10"/>
+                <Button Content="➕" HorizontalAlignment="Right" FontSize="3" Grid.Column="1" Margin="0 10" Width="20"
+                        Height="20" Click="AddSeries_Click" />
             </Grid>
 
             <Grid Margin="33 7 0 0">
