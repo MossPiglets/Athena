@@ -29,5 +29,15 @@ namespace AthenaTests
             storagePlace.StoragePlaceName.Should().Be(storagePlaceName);
             storagePlace.Comment.Should().BeNull();
         }
+        [Test]
+        public void Extract_BothArgumentNull_ShouldReturnNull() {
+            // Arrange
+            string storagePlaceName = null;
+            string comment = null;
+            // Act
+            var storagePlace = StoragePlaceExtractor.Extract(storagePlaceName, comment);
+            // Assert
+            storagePlace.Should().BeNull();
+        }
     }
 }

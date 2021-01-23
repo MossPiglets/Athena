@@ -7,7 +7,7 @@ namespace Athena.Import.Extractors
     {
         public static Category Extract(string color) {
             if (color.IsNullOrEmpty()) {
-                throw new ExtractorException($"Color is null or empty, [{color}]", color);
+                return null;
             }
 
             color = color.Substring(2);

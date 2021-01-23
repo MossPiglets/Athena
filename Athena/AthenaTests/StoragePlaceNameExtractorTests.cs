@@ -27,22 +27,22 @@ namespace AthenaTests
             boxName.Should().Be(expectedName);
         }
         [Test]
-        public void Extract_EmptyName_ShouldReturnExtractorException() {
+        public void Extract_EmptyName_ShouldReturnNull() {
             // Arrange 
             var text = string.Empty;
             // Act
-            Action act = () => StoragePlaceNameExtractor.Extract(text);
+            var boxName = StoragePlaceNameExtractor.Extract(text);
             // Assert
-            act.Should().Throw<ExtractorException>($"StoragePlaceName is null or empty, [{text}]");
+            boxName.Should().BeNull();
         }
         [Test]
-        public void Extract_Null_ShouldReturnExtractorException() {
+        public void Extract_Null_ShouldReturnNull() {
             // Arrange 
             string text = null;
             // Act
-            Action act = () => StoragePlaceNameExtractor.Extract(text);
+            var boxName = StoragePlaceNameExtractor.Extract(text);
             // Assert
-            act.Should().Throw<ExtractorException>($"StoragePlaceName is null or empty, [{text}]");
+            boxName.Should().BeNull();
         }
     }
 }
