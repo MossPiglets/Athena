@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
+using Athena.Windows;
 
 namespace Athena {
 
@@ -21,5 +22,11 @@ namespace Athena {
         public string ButtonContent { get; set; }
 
         public ICommand ButtonCommand { get; set; }
+
+        private void AddPublisher_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AddPublisherWindow;
+            window.Show();
+        }
     }
 }
