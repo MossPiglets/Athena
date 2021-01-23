@@ -3,15 +3,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
-using Athena.Windows;
 
-namespace Athena
-{
+namespace Athena {
 
-    public partial class BookFormControl : UserControl
-    {
-        public BookFormControl(string title, string buttonContent)
-        {
+    public partial class BookFormControl : UserControl {
+        public BookFormControl(string title, string buttonContent) {
             InitializeComponent();
             Title = title;
             ButtonContent = buttonContent;
@@ -25,11 +21,5 @@ namespace Athena
         public string ButtonContent { get; set; }
 
         public ICommand ButtonCommand { get; set; }
-
-        private void AddPublisher_Click(object sender, RoutedEventArgs e)
-        {
-            var addPublisher = new AddPublisherWindow();
-            addPublisher.Show();
-        }
     }
 }
