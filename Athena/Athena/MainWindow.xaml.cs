@@ -1,5 +1,7 @@
 using Athena.Data;
 using System.Collections.Generic;
+using System.Windows;
+using Athena.Windows;
 
 namespace Athena {
 	/// <summary>
@@ -12,5 +14,8 @@ namespace Athena {
 			BookList.ItemsSource =  new List<Book>();;
 		}
 
-    }
+		private void AddBook_OnClick(object sender, RoutedEventArgs e) {
+			new AddBookWindow().Show();
+		}
+	}
 }
