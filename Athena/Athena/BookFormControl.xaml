@@ -116,7 +116,9 @@
                 <TextBlock Text="Rok:" Grid.Row="1" Grid.Column="2" Margin="0 7 0 0" />
                 <TextBlock Text="ISBN:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
                 <TextBlock Text="Język:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" />
-                <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 18 0" />
+                <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 48 0" />
+                <Button Content="➕" HorizontalAlignment="Right" FontSize="3" Grid.Column="1" Margin="0 0 18 0" Width="20"
+                        Height="20" Click="AddPublisher_Click" />
                 <TextBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
                          Width="40" />
                 <TextBox Text="{Binding Book.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
@@ -167,8 +169,6 @@
                 <Button Content="{Binding  Path=ButtonContent}" Command ="{Binding ButtonCommand}" CommandParameter="{Binding Path=Book}" Grid.Column="2" Margin="5 0 0 0"/>
 
             </Grid>
-
-
         </StackPanel>
     </Border>
 </UserControl>

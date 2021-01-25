@@ -15,7 +15,7 @@ namespace Athena.Windows
     /// <summary>
     /// Logika interakcji dla klasy AddSeriesWindow.xaml
     /// </summary>
-    public partial class AddSeriesWindow : Window
+    public partial class AddSeriesWindow
     {
         public AddSeriesWindow()
         {

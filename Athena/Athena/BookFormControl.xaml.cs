@@ -28,5 +28,11 @@ namespace Athena {
             var window = new AddSeriesWindow();
             window.Show();
         }
+
+        private void AddPublisher_Click(object sender, RoutedEventArgs e)
+        {
+            var window = new AddPublisherWindow();
+            window.Show();
+        }
     }
 }

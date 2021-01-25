@@ -15,7 +15,7 @@ namespace Athena.Windows
     /// <summary>
     /// Logika interakcji dla klasy AddPublisherWindow.xaml
     /// </summary>
-    public partial class AddPublisherWindow : Window
+    public partial class AddPublisherWindow
     {
         public AddPublisherWindow()
         {
