@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
@@ -8,15 +9,17 @@ namespace Athena
 {
 
     public partial class BookFormControl : UserControl {
+        private ApplicationDbContext ApplicationDbContext { get; set; }
+        public ObservableCollection<Author> Authors { get; set; }
         public BookFormControl(string title, string buttonContent) {
             InitializeComponent();
             Title = title;
             ButtonContent = buttonContent;
             this.DataContext = this;
-            Author author = new Author();
-            author.FirstName = "Imię";
-            author.LastName = "Nazwisko";
-            //ApplicationDbContext.Authors.Add(author);
+          
+            ApplicationDbContext = new ApplicationDbContext();
+            ApplicationDbContext.Authors.Load();
+            Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
         }
 
         public Book Book { get; set; } = new Book();
@@ -38,7 +41,9 @@ namespace Athena
             newCB.Margin = CBmargins;
             newCB.Height = 22;
             //Setting button properties
-            //newCB.ItemsSource = ApplicationDbContext.Authors;
+            using var context = new ApplicationDbContext();
+            context.Authors.Load();
+            newCB.ItemsSource = context.Authors.Local.ToBindingList();
             var BtnMargins = new Thickness(0,7,17,0);
             newBtn.Margin = BtnMargins;
             newBtn.Content = "-";

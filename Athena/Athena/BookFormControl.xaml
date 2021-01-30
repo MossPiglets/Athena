@@ -8,6 +8,9 @@
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600" >
 
+
+
+
     <UserControl.Resources>
         <ObjectDataProvider
     MethodName="GetValues"
@@ -65,17 +68,16 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <ComboBox Text="{Binding ApplicationDbContext.Authors}" IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 18 0 " Height="22"  >
-                    <ComboBoxItem>Andrzej Sapkowski</ComboBoxItem>
-                    <ComboBoxItem>Jarosław Grzędowicz</ComboBoxItem>
-                    <ComboBoxItem>Anne McCaffrey</ComboBoxItem>
+                <ComboBox x:Name="AuthorCombobox" ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}" 
+                          IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 18 0 " Height="22">
                 </ComboBox>
+
 
                 <StackPanel Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                     
                 </StackPanel>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
-                <ComboBox Text="{Binding Book.Category.CategoryName}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
+                <ComboBox Text="{Binding Book.Categories}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
                           Height="22">
                     <ComboBoxItem>Fantasy</ComboBoxItem>
                     <ComboBoxItem>Kryminał</ComboBoxItem>
