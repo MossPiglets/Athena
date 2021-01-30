@@ -7,6 +7,7 @@ using Athena.Data;
 namespace Athena {
 
     public partial class BookFormControl : UserControl {
+
         public BookFormControl(string title, string buttonContent) {
             InitializeComponent();
             Title = title;

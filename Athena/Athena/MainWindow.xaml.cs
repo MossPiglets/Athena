@@ -15,7 +15,7 @@ namespace Athena {
 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-			AddBookWindow AddBook = new AddBookWindow(); //dlaczego muszê to zrobiæ? czemu po prostu AddBookWindow.Show() nie dzia³a?
+			AddBookWindow AddBook = new AddBookWindow();
 			AddBook.Show();
         }
 
@@ -27,7 +27,7 @@ namespace Athena {
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+        
         }
     }
 }
