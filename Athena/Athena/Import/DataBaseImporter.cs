@@ -7,41 +7,42 @@ using Athena.Data;
 
 namespace Athena.Import {
     public class DataBaseImporter : IDisposable {
-        ApplicationDbContext _db = new ApplicationDbContext();
+        ApplicationDbContext _context = new ApplicationDbContext();
 
         public void ImportFromSpreadsheet(string fileName) {
             CheckIfDatabaseIsEmpty();
             var importData = new SpreadsheetDataImport(fileName);
             var authors = importData.ImportAuthorsList();
-            _db.Authors.AddRange(authors);
+            _context.Authors.AddRange(authors);
             var seriesList = importData.ImportSeriesList();
-            _db.Series.AddRange(seriesList);
+            _context.Series.AddRange(seriesList);
             var publishingHouses = importData.ImportPublishingHousesList();
-            _db.PublishingHouses.AddRange(publishingHouses);
+            _context.PublishingHouses.AddRange(publishingHouses);
             var categories = importData.ImportCategoriesList();
-            _db.Categories.AddRange(categories);
+            _context.Categories.AddRange(categories);
             var storagePlaces = importData.ImportStoragePlacesList();
-            _db.StoragePlaces.AddRange(storagePlaces);
+            _context.StoragePlaces.AddRange(storagePlaces);
             var books = importData.ImportBooksList();
 
             // ma sprawdzac czy coś jest juz w bazie, jeśli tak - wywala wyjątek
             // używa klasy spreadsheet
             // wywołuje ją w przycisku import 
+            // jak ktos nie wybierze pliku do importu to wybucha
         }
 
         private void CheckIfDatabaseIsEmpty() {
-            if (_db.Books.Any() ||
-                _db.Authors.Any() ||
-                _db.Series.Any() ||
-                _db.Categories.Any() ||
-                _db.PublishingHouses.Any() ||
-                _db.StoragePlaces.Any()) {
+            if (_context.Books.Any() ||
+                _context.Authors.Any() ||
+                _context.Series.Any() ||
+                _context.Categories.Any() ||
+                _context.PublishingHouses.Any() ||
+                _context.StoragePlaces.Any()) {
                 throw new ImportException("Database is not empty. Remove sqlite file.");
             }
         }
 
         public void Dispose() {
-            _db.Dispose();
+            _context.Dispose();
         }
     }
 }
