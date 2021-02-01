@@ -32,30 +32,31 @@ namespace Athena
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
         {
-            ComboBox newCB = new ComboBox();
-            Button newBtn = new Button();
-            DockPanel newDP = new DockPanel();
-            //Setting Combobox properties
-            newCB.IsEditable = true;
-            var CBmargins = new Thickness(0, 7, 15, 0);
-            newCB.Margin = CBmargins;
-            newCB.Height = 22;
-            //Setting button properties
-            using var context = new ApplicationDbContext();
-            context.Authors.Load();
-            newCB.ItemsSource = context.Authors.Local.ToBindingList();
-            var BtnMargins = new Thickness(0,7,17,0);
-            newBtn.Margin = BtnMargins;
-            newBtn.Content = "-";
-            newBtn.Width = 20;
-            newBtn.Height = 20;
-            newBtn.Click += new RoutedEventHandler(newBtn_Click);
-            DockPanel.SetDock(newBtn, Dock.Right);
-            //Adding to dockpanel
-            newDP.ClipToBounds = false;
-            newDP.Children.Add(newBtn);
-            newDP.Children.Add(newCB);
-            AuthorsStackPanel.Children.Add(newDP);
+            DockPanel newDockPanel = (DockPanel)Resources["AuthorsDockPanel"];
+            AuthorsStackPanel.Children.Add(newDockPanel);
+            //ComboBox newCB = new ComboBox();
+            //Button newBtn = new Button();
+            //DockPanel newDP = new DockPanel();
+            ////Setting Combobox properties
+            
+            //var CBmargins = new Thickness(0, 7, 15, 0);
+            //newCB.Margin = CBmargins;
+            //newCB.Height = 22;
+            ////Setting button properties
+            
+            
+            //var BtnMargins = new Thickness(0,7,17,0);
+            //newBtn.Margin = BtnMargins;
+            //newBtn.Content = "-";
+            //newBtn.Width = 20;
+            //newBtn.Height = 20;
+            //newBtn.Click += new RoutedEventHandler(newBtn_Click);
+            //DockPanel.SetDock(newBtn, Dock.Right);
+            ////Adding to dockpanel
+            //newDP.ClipToBounds = false;
+            //newDP.Children.Add(newBtn);
+            //newDP.Children.Add(newCB);
+            //AuthorsStackPanel.Children.Add(newDP);
         }
         private void newBtn_Click(object sender, RoutedEventArgs e)
 

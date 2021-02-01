@@ -12,6 +12,10 @@
 
 
     <UserControl.Resources>
+        <DockPanel x:Key="AuthorsDockPanel" ClipToBounds="False" >
+            <Button Margin="0,7,17,0"  Height="20" Width="20" DockPanel.Dock="Right" Click="newBtn_Click" Content="-"/>
+            <ComboBox Margin="0, 7, 15, 0" Height="22" ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
         <ObjectDataProvider
     MethodName="GetValues"
     ObjectType="{x:Type Data:Language}"
@@ -69,13 +73,15 @@
                 </Grid.RowDefinitions>
 
                 <ComboBox x:Name="AuthorCombobox" ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}" 
-                          IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 18 0 " Height="22">
-                </ComboBox>
+                          IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 52 0 " Height="22"/>
 
 
-                <StackPanel Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    
-                </StackPanel>
+
+
+                <StackPanel Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+
+
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
                 <ComboBox Text="{Binding Book.Categories}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
                           Height="22">
