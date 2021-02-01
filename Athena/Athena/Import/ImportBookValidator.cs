@@ -60,7 +60,7 @@ namespace Athena.Import {
             }
 
             var query = storagePlaces
-                .Where(a => a.StoragePlaceName == storagePlace.StoragePlaceName && a.Comment == storagePlace.Comment)
+                .Where(a => a.StoragePlaceName == storagePlace.StoragePlaceName)
                 .Select(a => a)
                 .SingleOrDefault();
             if (query == null) {
@@ -72,10 +72,13 @@ namespace Athena.Import {
 
         public static void CheckCategory(List<Category> categories, ICollection<Category> bookCategories) {
             if (bookCategories.IsNullOrEmpty()) {
-                throw new ExtractorException("Category is null or empty", "category");
+                return;
             }
 
             foreach (var category in bookCategories) {
+                if (category == null) {
+                    continue;
+                }
                 var query = categories
                     .Where(a => a.Name == category.Name)
                     .Select(a => a)

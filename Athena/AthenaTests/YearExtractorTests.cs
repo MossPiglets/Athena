@@ -36,6 +36,15 @@ namespace AthenaTests
             year.Should().BeNull();
         }
         [Test]
+        public void Extract_DotPause_ShouldReturnYear() {
+            // Arrange
+            var text = ".-";
+            // Act
+            var year = YearExtractor.Extract(text);
+            // Assert
+            year.Should().BeNull();
+        }
+        [Test]
         public void Extract_Empty_ShouldReturnYear() {
             // Arrange
             var text = string.Empty;

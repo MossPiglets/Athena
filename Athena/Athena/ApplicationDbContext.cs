@@ -3,7 +3,7 @@ using Athena.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
-    class ApplicationDbContext : DbContext {
+    public class ApplicationDbContext : DbContext {
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Series> Series { get; set; }

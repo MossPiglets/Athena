@@ -36,8 +36,7 @@ namespace Athena.Import {
 
             List<Book> books = new List<Book>();
             var index = 2;
-            while (_catalog.Cells[index, 1].Value != null) {
-                var book = new Book {
+            while (_catalog.Cells[index, 1].Value != null) { var book = new Book {
                     Id = Guid.NewGuid(),
                     Title = TitleExtractor.Extract(_catalog.Cells[index, 1].Value.ToString()),
                     Authors = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value?.ToString()),
