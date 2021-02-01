@@ -3,7 +3,6 @@ using System.Linq;
 using Athena.Import;
 using AthenaTests.Helpers;
 using AthenaTests.Helpers.Data.TestExcel;
-using Castle.Core.Internal;
 using FluentAssertions;
 using NUnit.Framework;
 using OfficeOpenXml;

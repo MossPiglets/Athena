@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using Athena.Data;
 using Athena.Import.Extractors;
-using Castle.Core.Internal;
 using OfficeOpenXml;
 using Serilog;
 using Serilog.Core;
@@ -41,14 +40,14 @@ namespace Athena.Import {
                 var book = new Book {
                     Id = Guid.NewGuid(),
                     Title = TitleExtractor.Extract(_catalog.Cells[index, 1].Value.ToString()),
-                    Authors = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value.ToString()),
-                    Series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value.ToString()),
-                    PublishingHouse = PublishingHouseExtractor.Extract(_catalog.Cells[index, 4].Value.ToString()),
-                    PublishmentYear = YearExtractor.Extract(_catalog.Cells[index, 5].Value.ToString()),
-                    ISBN = IsbnExtractor.Extract(_catalog.Cells[index, 7].Value.ToString()),
+                    Authors = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value?.ToString()),
+                    Series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString()),
+                    PublishingHouse = PublishingHouseExtractor.Extract(_catalog.Cells[index, 4].Value?.ToString()),
+                    PublishmentYear = YearExtractor.Extract(_catalog.Cells[index, 5].Value?.ToString()),
+                    ISBN = IsbnExtractor.Extract(_catalog.Cells[index, 7].Value?.ToString()),
                     Language = LanguageExtractor.Extract(_catalog.Cells[index, 8].Value.ToString()),
-                    StoragePlace = StoragePlaceExtractor.Extract(_catalog.Cells[index, 9].Value.ToString()),
-                    Comment = CommentExtractor.Extract(_catalog.Cells[index, 10].Value.ToString()),
+                    StoragePlace = StoragePlaceExtractor.Extract(_catalog.Cells[index, 9].Value?.ToString()),
+                    Comment = CommentExtractor.Extract(_catalog.Cells[index, 10].Value?.ToString()),
                     Categories = new List<Category>()
                         { CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb) }
                 };
@@ -153,7 +152,7 @@ namespace Athena.Import {
                     continue;
                 }
 
-                var storagePlace = StoragePlaceExtractor.Extract(cell?.ToString());
+                var storagePlace = StoragePlaceExtractor.Extract(cell.ToString());
                 storagePlaces.Add(storagePlace);
                 indexCatalog++;
             }

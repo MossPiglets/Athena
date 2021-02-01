@@ -6,7 +6,7 @@ namespace Athena.Import.Extractors
     {
         public static string Extract(string text) {
             if (text.IsNullOrEmpty()) {
-                throw new ExtractorException($"StoragePlaceName is null or empty, [{text}]", text);
+                return null;
             }
 
             return text.Trim();
