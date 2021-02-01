@@ -26,7 +26,9 @@ namespace Athena {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
             var fileName = openFileDialog.FileName;
-
+            if (fileName == "") {
+                throw new ImportException("File is not choose. Please, choose a file to import.");
+            }
             var dataImporter = new DataBaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
 
