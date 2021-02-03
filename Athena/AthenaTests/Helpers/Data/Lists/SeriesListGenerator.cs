@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using Athena.Data;
+
+namespace AthenaTests.Helpers.Data.Lists {
+    public class SeriesListGenerator {
+        public static List<Series> Generate() {
+            return new List<Series> {
+                new Series {
+                    Id = Guid.NewGuid(),
+                    SeriesName = "Igrzyska śmierci",
+                    VolumeNumber = 3
+                },
+                new Series {
+                    Id = Guid.NewGuid(),
+                    SeriesName = "Harry Potter",
+                    VolumeNumber = 5
+                }
+            };
+        }
+    }
+}

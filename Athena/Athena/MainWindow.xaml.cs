@@ -1,42 +1,38 @@
 using Athena.Data;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
+using Athena.Import;
 using Athena.Windows;
-using System.Collections.ObjectModel;
-using Microsoft.EntityFrameworkCore;
+using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.Win32;
 
 namespace Athena {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class MainWindow {
-		private ApplicationDbContext ApplicationDbContext { get; set; }
-        public ObservableCollection<Book> Books { get; set; }
-		public MainWindow() {
-			InitializeComponent();
-			this.DataContext = this;
-			//BookList.ItemsSource =  new List<Book>();
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow {
+        public MainWindow() {
+            InitializeComponent();
+            this.DataContext = this;
+            BookList.ItemsSource = new List<Book>();
+            if (!BookList.ItemsSource.IsNullOrEmpty()) {
+                ImportButton.Visibility = Visibility.Hidden;
+            }
+        }
 
-			Book book = new Book();
-			Author author = new Author() { FirstName = "Test", LastName = "Testowy" };
-			book.Title = "Tyty³ testowy";
+        private void ImportData(object sender, RoutedEventArgs e) {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.ShowDialog();
+            var fileName = openFileDialog.FileName;
+            if (fileName == "") {
+                throw new ImportException("File is not choose. Please, choose a file to import.");
+            }
+            var dataImporter = new DataBaseImporter();
+            dataImporter.ImportFromSpreadsheet(fileName);
 
-
-			ApplicationDbContext = new ApplicationDbContext();
-			//book.Authors.Add(author);
-			ApplicationDbContext.Books.Add(book);
-			ApplicationDbContext.Books.Load();
-			Books = ApplicationDbContext.Books.Local.ToObservableCollection();
-		}
-
-		private void AddBook_OnClick(object sender, RoutedEventArgs e) {
-			new AddBookWindow().Show();
-		}
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-			var w = new AddBookWindow();
-			w.Show();
+            ImportButton.Visibility = Visibility.Hidden;
         }
     }
 }
