@@ -17,17 +17,23 @@ namespace Athena.Import {
             var importData = new SpreadsheetDataImport(fileName);
             var authors = importData.ImportAuthorsList();
             _context.Authors.AddRange(authors);
+            _context.SaveChanges();
             var seriesList = importData.ImportSeriesList();
             _context.Series.AddRange(seriesList);
+            _context.SaveChanges();
             var publishingHouses = importData.ImportPublishingHousesList();
             _context.PublishingHouses.AddRange(publishingHouses);
+            _context.SaveChanges();
             var categories = importData.ImportCategoriesList();
             _context.Categories.AddRange(categories);
+            _context.SaveChanges();
             var storagePlaces = importData.ImportStoragePlacesList();
             _context.StoragePlaces.AddRange(storagePlaces);
+            _context.SaveChanges();
             var books = ImportBooksFromSpreadsheet(importData, authors, seriesList, publishingHouses, categories,
                 storagePlaces);
             _context.Books.AddRange(books);
+            _context.SaveChanges();
         }
 
         private List<Book> ImportBooksFromSpreadsheet(SpreadsheetDataImport importData, List<Author> authors,
@@ -53,11 +59,18 @@ namespace Athena.Import {
                     publishingHouse = publishingHouses.First(a => a.PublisherName == publishingHouse.PublisherName);
                 }
 
-                if (book.Categories != null) {
+                if (!book.Categories.IsNullOrEmpty()) {
                     for (int i = 0; i < book.Categories.Count; i++) {
                         var category = book.Categories.ToList()[i];
-                        category = categories.First(a => a.Name == category.Name);
+                        if (category != null) {
+                            category = categories.First(a => a.Name == category.Name);
+                        }
                     }
+                }
+
+                if (book.StoragePlace != null) {
+                    var storagePlace = book.StoragePlace;
+                    storagePlace = storagePlaces.First(a => a.StoragePlaceName == storagePlace.StoragePlaceName);
                 }
             }
 
