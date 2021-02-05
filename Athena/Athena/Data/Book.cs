@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Athena.Data
@@ -19,5 +20,15 @@ namespace Athena.Data
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
+
+        //public override string ToString()
+        //{
+        //    string result="";
+        //    foreach (Author author in Authors)
+        //    {
+        //        result = result + "author" + ',';
+        //    }
+        //    return result;
+        //}
     }
 }

@@ -9,5 +9,10 @@ namespace Athena.Data {
         public string Comment { get; set; }
 
         public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
+
+        public override string ToString()
+        {
+            return StoragePlaceName;
+        }
     }
 }

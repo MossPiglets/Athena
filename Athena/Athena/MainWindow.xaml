@@ -25,7 +25,7 @@
 				<ColumnDefinition Width="auto" />
 			</Grid.ColumnDefinitions>
 			<TextBox Grid.Row="0" Grid.Column="0" />
-			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" Click="Button_Click"/>
+			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" />
             <ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
@@ -35,9 +35,9 @@
 					</ContextMenu>
 				</ListView.ContextMenu>
 				<ListView.View>
-					<GridView >
-						<GridViewColumn Header="Tytuł" Width="Auto" DisplayMemberBinding="{Binding Books.Title}" />
-						<GridViewColumn Header="Autorzy" Width="Auto" DisplayMemberBinding="{Binding Book.Authors}" />
+					<GridView  >
+						<GridViewColumn Header="Tytuł" Width="Auto"  DisplayMemberBinding="{Binding Title}" />
+						<GridViewColumn Header="Autorzy" Width="Auto" DisplayMemberBinding="{Binding Authors}" />
 						<GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series}" />
 						<GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
 						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding Publisher}" />
@@ -48,7 +48,7 @@
 					</GridView>
 				</ListView.View>
 			</ListView>
-			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			<Button x:Name ="ImportButton"  Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         </Grid>
 
 	</Border>
