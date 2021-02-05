@@ -4,8 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Athena.Windows"
+        xmlns:Data="clr-namespace:Athena.Data"
         mc:Ignorable="d"
         Title="Dodaj serię" Height="200" Width="300">
+    <Window.Resources>
+        <Data:Series x:Key="SeriesInstance" />
+    </Window.Resources>
     
         <Border Padding="10">
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -20,8 +24,18 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwa:"/>
-                    <TextBox Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="150"/>
-                </Grid>
+                <TextBox  Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="150">
+                    <TextBox.Text>
+                        <Binding Path="SeriesName" Source="{StaticResource SeriesInstance}"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule></ExceptionValidationRule>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
                 <Button Margin="10" Content="Dodaj"/>
             </StackPanel>
         </Border>
