@@ -17,6 +17,7 @@ namespace Athena.Import {
         private ExcelWorksheet _storagePlaces;
         private Logger _log;
 
+
         public SpreadsheetDataImport(string fullFilePath) {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             _package = new ExcelPackage(new FileInfo(fullFilePath));
@@ -37,6 +38,10 @@ namespace Athena.Import {
             List<Book> books = new List<Book>();
             var index = 2;
             while (_catalog.Cells[index, 1].Value != null) {
+                var bookCategories = new List<Category>() {
+                    CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb)
+                };
+                bookCategories = bookCategories.Where(a => a != null).ToList();
                 var book = new Book {
                     Id = Guid.NewGuid(),
                     Title = TitleExtractor.Extract(_catalog.Cells[index, 1].Value.ToString()),
@@ -48,8 +53,7 @@ namespace Athena.Import {
                     Language = LanguageExtractor.Extract(_catalog.Cells[index, 8].Value.ToString()),
                     StoragePlace = StoragePlaceExtractor.Extract(_catalog.Cells[index, 9].Value?.ToString()),
                     Comment = CommentExtractor.Extract(_catalog.Cells[index, 10].Value?.ToString()),
-                    Categories = new List<Category>()
-                        { CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb) }
+                    Categories = bookCategories
                 };
                 ImportBookValidator.CheckAuthors(authors, book.Authors);
                 ImportBookValidator.CheckSeries(series, book.Series);

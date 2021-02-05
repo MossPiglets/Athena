@@ -10,6 +10,6 @@ namespace Athena.Data {
         public DateTime BorrowDate { get; set; }
         public DateTime ReturnDate { get; set; }
 
-        public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
+        public virtual ICollection<Book> Books { get; set; }
     }
 }

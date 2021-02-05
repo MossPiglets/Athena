@@ -8,6 +8,6 @@ namespace Athena.Data {
         public string StoragePlaceName { get; set; }
         public string Comment { get; set; }
 
-        public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
+        public  ICollection<Book> Books { get; set; } 
     }
 }

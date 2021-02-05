@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Controls;
 using Athena.Data;
 using Castle.Core.Internal;
 
@@ -32,7 +34,11 @@ namespace Athena.Import {
             _context.SaveChanges();
             var books = ImportBooksFromSpreadsheet(importData, authors, seriesList, publishingHouses, categories,
                 storagePlaces);
-            _context.Books.AddRange(books);
+            foreach (var book in books) {
+                _context.Books.Add(book);
+                _context.SaveChanges();
+            }
+
             _context.SaveChanges();
         }
 
@@ -60,12 +66,10 @@ namespace Athena.Import {
                 }
 
                 if (!book.Categories.IsNullOrEmpty()) {
-                    for (int i = 0; i < book.Categories.Count; i++) {
-                        var category = book.Categories.ToList()[i];
-                        if (category != null) {
-                            category = categories.First(a => a.Name == category.Name);
-                        }
-                    }
+           
+                    var bookCategories = book.Categories.ToList();
+                    var collection = categories.Where(a => bookCategories.Select(c => c.Name).Contains(a.Name));
+                    book.Categories = new List<Category>(collection);
                 }
 
                 if (book.StoragePlace != null) {
