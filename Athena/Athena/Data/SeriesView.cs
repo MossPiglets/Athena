@@ -34,8 +34,11 @@ namespace Athena.Data
 
         public Series ToSeries()
         {
-            
-            return null;
+            Series series = new Series();
+            series.SeriesName = SeriesName;
+            series.VolumeNumber = VolumeNumber;
+            series.Id = Id;
+            return series;
         }
     }
 }
