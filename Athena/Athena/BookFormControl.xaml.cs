@@ -8,11 +8,12 @@ namespace Athena {
 
     public partial class BookFormControl : UserControl {
 
-        public BookFormControl(string title, string buttonContent) {
+        public BookFormControl(string title, string buttonContent, Book book) {
             InitializeComponent();
             Title = title;
             ButtonContent = buttonContent;
             this.DataContext = this;
+            Book = book;
         }
 
         public Book Book { get; set; } = new Book();

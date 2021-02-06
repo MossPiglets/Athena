@@ -2,6 +2,7 @@ using Athena.Data;
 using Athena.Windows;
 using System.Collections.Generic;
 
+
 namespace Athena {
 	/// <summary>
 	/// Interaction logic for MainWindow.xaml
@@ -10,7 +11,7 @@ namespace Athena {
 		public MainWindow() {
 			InitializeComponent();
 			this.DataContext = this;
-			BookList.ItemsSource =  new List<Book>();;
+			BookList.ItemsSource = new List<Book>() { new Book() {Title = "coœ", ISBN = "10" }, new Book() { Title = "coœ2", ISBN = "12" } };
 		}
 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -21,7 +22,8 @@ namespace Athena {
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-			EditBookWindow EditBook = new EditBookWindow(); 
+			Book book = (Book)BookList.SelectedItem;
+			EditBookWindow EditBook = new EditBookWindow(book); 
 			EditBook.Show();
 		}
 
