@@ -12,7 +12,7 @@ namespace AthenaTests {
             var number = 3;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -23,7 +23,7 @@ namespace AthenaTests {
             // Arrange
             var text = "Igrzyska śmierci";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(text);
@@ -35,7 +35,7 @@ namespace AthenaTests {
             var text = "Tom 4";
             var number = 4;
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().BeEmpty();
@@ -48,7 +48,7 @@ namespace AthenaTests {
             var number = 13;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -61,7 +61,7 @@ namespace AthenaTests {
             var number = 1;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -74,7 +74,7 @@ namespace AthenaTests {
             var number = 1;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -87,7 +87,7 @@ namespace AthenaTests {
             var number = 1;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -100,7 +100,7 @@ namespace AthenaTests {
             var number = 1;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -111,7 +111,7 @@ namespace AthenaTests {
             // Arrange
             var text = "Bajki-rozkladanki";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(text);
@@ -124,7 +124,7 @@ namespace AthenaTests {
             var number = 1;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -137,7 +137,7 @@ namespace AthenaTests {
             var number = 2;
             var text = $"{name} - {number}/3";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
@@ -150,18 +150,31 @@ namespace AthenaTests {
             var number = 1;
             var text = $"{name} - tom {number}";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().NotBeEmpty();
             series.SeriesName.Should().Be(name);
             series.VolumeNumber.Should().Be(number);
         }
         [Test]
+        public void Extractor_OnlyVolumeWithSmallFirstLetter_ShouldReturnSeries() {
+            // Arrange
+            var name = "tom 1";
+            var number = 1;
+            // Act 
+            var series = SeriesInfoExtractor.Extract(name);
+            // Assert
+            series.Id.Should().NotBeEmpty();
+            series.SeriesName.Should().BeEmpty();
+            series.VolumeNumber.Should().Be(number);
+        }
+        
+        [Test]
         public void Extractor_PauseAndApostrophe_ShouldReturnSeriesEmptySeries() {
             // Arrange
             var text = "'-";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().BeEmpty();
             series.SeriesName.Should().BeNull();
@@ -172,7 +185,7 @@ namespace AthenaTests {
             // Arrange
             var text = "-";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().BeEmpty();
             series.SeriesName.Should().BeNull();
@@ -183,7 +196,7 @@ namespace AthenaTests {
             // Arrange
             var text = "";
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().BeEmpty();
             series.SeriesName.Should().BeNull();
@@ -194,7 +207,7 @@ namespace AthenaTests {
             // Arrange
             string text = null;
             // Act 
-            var series = SeriesExtractor.Extract(text);
+            var series = SeriesInfoExtractor.Extract(text);
             // Assert
             series.Id.Should().BeEmpty();
             series.SeriesName.Should().BeNull();
@@ -205,7 +218,7 @@ namespace AthenaTests {
             // Arrange
             string text = " - tom 5 - tom 6";
             // Act 
-            Action act = () => SeriesExtractor.Extract(text);
+            Action act = () => SeriesInfoExtractor.Extract(text);
             // Assert
             act.Should().Throw<ExtractorException>("Cannot extract data from text");
         }

@@ -27,7 +27,7 @@ namespace Athena.Import {
             }
 
             var query = seriesList
-                .SingleOrDefault(a => a.SeriesName == series.SeriesName && a.VolumeNumber == series.VolumeNumber);
+                .SingleOrDefault(a => a.SeriesName == series.SeriesName);
             if (query == null) {
                 throw new ExtractorException($"Cannot find series on ImportSeriesList, series [{series}]", $"{series}");
             }
