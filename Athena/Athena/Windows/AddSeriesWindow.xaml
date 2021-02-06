@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Title="Dodaj serię" Height="200" Width="300">
     <Window.Resources>
-        <Data:Series x:Key="SeriesInstance" />
+        <Data:SeriesView x:Key="SeriesInstance" />
     </Window.Resources>
     
         <Border Padding="10">
