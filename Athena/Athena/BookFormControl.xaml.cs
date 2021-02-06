@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
+using Athena.Windows;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena
@@ -32,10 +33,16 @@ namespace Athena
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
         {
-
             var myUserControl = new AuthorAdding();
             AuthorsStackPanel.Children.Add(myUserControl);
         }
 
+        private void AddSeries_Click(object sender, RoutedEventArgs e) {
+            new AddSeriesWindow().Show();
+        }
+
+        private void AddPublisher_Click(object sender, RoutedEventArgs e) {
+            new AddPublisherWindow().Show();
+        }
     }
 }
