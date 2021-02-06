@@ -6,11 +6,11 @@ using Athena.Data;
 
 namespace Athena.Windows {
     public partial class EditBookWindow {
-        public EditBookWindow() {
+        public EditBookWindow(Book book) {
             InitializeComponent();
-            var bookControl = new BookFormControl("Edytuj książkę", "Zapisz");
+            var bookControl = new BookFormControl("Edytuj książkę", "Zapisz", book);
             bookControl.ButtonCommand = new EditBookCommand();
-            this.Content = bookControl;
+            Content = bookControl;
         }
     }
 
