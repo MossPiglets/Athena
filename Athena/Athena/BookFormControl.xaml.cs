@@ -1,18 +1,25 @@
-﻿using System;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
-using Athena.Windows;
+using Microsoft.EntityFrameworkCore;
 
-namespace Athena {
+namespace Athena
+{
 
     public partial class BookFormControl : UserControl {
+        private ApplicationDbContext ApplicationDbContext { get; set; }
+        public ObservableCollection<Author> Authors { get; set; }
         public BookFormControl(string title, string buttonContent) {
             InitializeComponent();
             Title = title;
             ButtonContent = buttonContent;
             this.DataContext = this;
+          
+            ApplicationDbContext = new ApplicationDbContext();
+            ApplicationDbContext.Authors.Load();
+            Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
         }
 
         public Book Book { get; set; } = new Book();
@@ -23,16 +30,12 @@ namespace Athena {
 
         public ICommand ButtonCommand { get; set; }
 
-        private void AddSeries_Click(object sender, RoutedEventArgs e)
+        private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
         {
-            var window = new AddSeriesWindow();
-            window.Show();
+
+            var myUserControl = new AuthorAdding();
+            AuthorsStackPanel.Children.Add(myUserControl);
         }
 
-        private void AddPublisher_Click(object sender, RoutedEventArgs e)
-        {
-            var window = new AddPublisherWindow();
-            window.Show();
-        }
     }
 }

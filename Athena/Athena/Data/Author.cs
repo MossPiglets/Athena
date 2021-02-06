@@ -9,5 +9,14 @@ namespace Athena.Data {
         public string LastName { get; set; }
 
         public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
+        public override string ToString()
+        {
+            if (string.IsNullOrWhiteSpace(FirstName))
+                return LastName;
+            else
+                return $"{FirstName} {LastName}";
+        }
     }
+
+    
 }
