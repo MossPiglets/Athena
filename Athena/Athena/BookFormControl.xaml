@@ -4,10 +4,24 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Athena"
+             xmlns:Data="clr-namespace:Athena.Data"
              mc:Ignorable="d"
-             d:DesignHeight="580" d:DesignWidth="600">
-    
-    
+             d:DesignHeight="580" d:DesignWidth="600" >
+
+
+
+
+    <UserControl.Resources>
+        
+        <ObjectDataProvider
+            MethodName="GetValues"
+            ObjectType="{x:Type Data:Language}"
+            x:Key="EnumLanguage">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="Data:Language"></x:Type>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Border Padding="10">
         <StackPanel>
             <!-- Book Info-->
@@ -51,13 +65,15 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
+                    <RowDefinition Height="auto"/>
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="Imię:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="0" />
-                <TextBlock Text="Nazwisko:" HorizontalAlignment="Left" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <TextBox Text="{Binding Book.Author.FirstName}" Grid.Row="0" Grid.Column="1" Margin="0 0 18 0 " Height="22" />
-                <TextBox Text="{Binding Book.Author.LastName}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox Text="{Binding Book.Category.CategoryName}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
+
+                <ComboBox x:Name="AuthorCombobox" ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}" 
+                          IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 52 0 " Height="22"/>
+                <StackPanel x:Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
+                <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
+                <ComboBox Text="{Binding Book.Categories}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
                           Height="22">
                     <ComboBoxItem>Fantasy</ComboBoxItem>
                     <ComboBoxItem>Kryminał</ComboBoxItem>
@@ -66,8 +82,16 @@
 
             </Grid>
 
-            <Grid Margin="5 10 0 0">
-                <TextBlock Text="Seria" FontWeight="Bold" />
+            <Grid Margin="5 10 10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Seria" FontWeight="Bold" Margin="0 10"/>
+                <Button Content="➕" HorizontalAlignment="Right" FontSize="3" Grid.Column="1" Margin="0 10" Width="20"
+                        Height="20" Click="AddSeries_Click" />
             </Grid>
 
             <Grid Margin="33 7 0 0">
@@ -108,16 +132,13 @@
                 <TextBlock Text="Rok:" Grid.Row="1" Grid.Column="2" Margin="0 7 0 0" />
                 <TextBlock Text="ISBN:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
                 <TextBlock Text="Język:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" />
-                <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 18 0" />
+                <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 48 0" />
+                <Button Content="➕" HorizontalAlignment="Right" FontSize="3" Grid.Column="1" Margin="0 0 18 0" Width="20"
+                        Height="20" Click="AddPublisher_Click" />
                 <TextBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
-                         Width="40" />
+                         Width="60" />
                 <TextBox Text="{Binding Book.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox Text="{Binding Book.Language}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0">
-                    <ComboBoxItem>Polski</ComboBoxItem>
-                    <ComboBoxItem>Angielski</ComboBoxItem>
-                    <ComboBoxItem>Niemiecki</ComboBoxItem>
-                </ComboBox>
-
+                <ComboBox Text="{Binding Book.Language}" ItemsSource="{Binding Source={StaticResource EnumLanguage}}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0"/>
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
@@ -159,8 +180,6 @@
                 <Button Content="{Binding  Path=ButtonContent}" Command ="{Binding ButtonCommand}" CommandParameter="{Binding Path=Book}" Grid.Column="2" Margin="5 0 0 0"/>
 
             </Grid>
-
-
         </StackPanel>
     </Border>
 </UserControl>

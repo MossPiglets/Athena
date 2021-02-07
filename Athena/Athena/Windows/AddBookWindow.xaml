@@ -6,7 +6,7 @@
                        xmlns:local="clr-namespace:Athena.Windows"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Dodaj książkę" Height="580" Width="600">
+                       Title="Dodaj książkę" Height="580" Width="600" SizeToContent="Height">
     
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />

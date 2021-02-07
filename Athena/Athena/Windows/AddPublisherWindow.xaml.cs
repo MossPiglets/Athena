@@ -10,14 +10,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Athena
+namespace Athena.Windows
 {
     /// <summary>
-    /// Interaction logic for BorrowForm.xaml
+    /// Logika interakcji dla klasy AddPublisherWindow.xaml
     /// </summary>
-    public partial class BorrowForm 
+    public partial class AddPublisherWindow
     {
-        public BorrowForm()
+        public AddPublisherWindow()
         {
             InitializeComponent();
         }
