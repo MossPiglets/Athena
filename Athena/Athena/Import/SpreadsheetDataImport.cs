@@ -36,10 +36,12 @@ namespace Athena.Import {
             var storagePlaces = ImportStoragePlacesList();
             var categories = ImportCategoriesList();
 
-            var seriesList = seriesInfos.GroupBy(a => a.SeriesName)
+            var seriesList = seriesInfos
+                .GroupBy(a => a.SeriesName)
                 .Select(a => a.First())
-                .Select(a => a.ToSeries()).ToList();
-
+                .Where(a => !string.IsNullOrEmpty(a.SeriesName))
+                .Select(a => a.ToSeries())
+                .ToList();
             List<Book> books = new List<Book>();
             var index = 2;
             while (_catalog.Cells[index, 1].Value != null) {

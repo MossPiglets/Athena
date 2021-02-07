@@ -4,7 +4,7 @@ using FluentAssertions;
 using NUnit.Framework;
 
 namespace AthenaTests {
-    public class SeriesExtractorTests {
+    public class SeriesInfoExtractorTests {
         [Test]
         public void Extractor_NameAndVolumeNumber_ShouldReturnSeries() {
             // Arrange
@@ -176,9 +176,7 @@ namespace AthenaTests {
             // Act 
             var series = SeriesInfoExtractor.Extract(text);
             // Assert
-            series.Id.Should().BeEmpty();
-            series.SeriesName.Should().BeNull();
-            series.VolumeNumber.Should().Be(0);
+            series.Should().BeNull();
         }
         [Test]
         public void Extractor_Pause_ShouldReturnSeriesEmptySeries() {
@@ -187,9 +185,7 @@ namespace AthenaTests {
             // Act 
             var series = SeriesInfoExtractor.Extract(text);
             // Assert
-            series.Id.Should().BeEmpty();
-            series.SeriesName.Should().BeNull();
-            series.VolumeNumber.Should().Be(0);
+            series.Should().BeNull();
         }
         [Test]
         public void Extractor_Empty_ShouldReturnSeriesEmptySeries() {
@@ -198,9 +194,7 @@ namespace AthenaTests {
             // Act 
             var series = SeriesInfoExtractor.Extract(text);
             // Assert
-            series.Id.Should().BeEmpty();
-            series.SeriesName.Should().BeNull();
-            series.VolumeNumber.Should().Be(0);
+            series.Should().BeNull();
         }
         [Test]
         public void Extractor_Null_ShouldReturnSeriesEmptySeries() {
@@ -209,9 +203,7 @@ namespace AthenaTests {
             // Act 
             var series = SeriesInfoExtractor.Extract(text);
             // Assert
-            series.Id.Should().BeEmpty();
-            series.SeriesName.Should().BeNull();
-            series.VolumeNumber.Should().Be(0);
+            series.Should().BeNull();
         }
         [Test]
         public void Extractor_TwoMatches_ShouldReturnExtractorException() {

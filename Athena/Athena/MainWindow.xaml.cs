@@ -29,7 +29,7 @@ namespace Athena {
             if (fileName == "") {
                 return;
             }
-            var dataImporter = new DataBaseImporter();
+            var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
 
             ImportButton.Visibility = Visibility.Hidden;

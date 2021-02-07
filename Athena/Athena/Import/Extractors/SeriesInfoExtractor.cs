@@ -22,7 +22,7 @@ namespace Athena.Import.Extractors {
             }
 
             if (matches.Count == 0) {
-                seriesName = text;
+                seriesName = text.Trim();
                 volumeNumber = 0;
             }
             else {

@@ -26,6 +26,10 @@ namespace Athena.Import {
                 return;
             }
 
+            if (string.IsNullOrEmpty(series.SeriesName)) {
+                return;
+            }
+
             var query = seriesList
                 .SingleOrDefault(a => a.SeriesName == series.SeriesName);
             if (query == null) {
@@ -75,7 +79,8 @@ namespace Athena.Import {
                 var query = categories
                     .SingleOrDefault(a => a.Name == category.Name);
                 if (query == null) {
-                    throw new ExtractorException($"Cannot find category on ImportCategoriesList, category [{bookCategories}]",
+                    throw new ExtractorException(
+                        $"Cannot find category on ImportCategoriesList, category [{bookCategories}]",
                         $"{bookCategories}");
                 }
             }
