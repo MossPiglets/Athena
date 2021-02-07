@@ -27,6 +27,10 @@ namespace Athena
             entity
                 .HasOne(a => a.Borrowing)
                 .WithMany(a => a.Books);
+            entity
+                .HasMany(a => a.Categories)
+                .WithMany(a => a.Books)
+                .UsingEntity(a => a.ToTable("BooksCategories"));
         }
     }
 }

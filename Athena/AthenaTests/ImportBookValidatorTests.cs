@@ -220,7 +220,7 @@ namespace AthenaTests
             act.Should().NotThrow();
         }
         [Test]
-        public void CheckCategory_Null_ShouldThrowExtractorException() {
+        public void CheckCategory_Null_ShouldNotThrowExtractorException() {
             // Arrange
             var data = new TestListsData();
             var categories = data.Categories;
@@ -228,10 +228,10 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckCategory(categories, bookCategories);
             // Assert
-            act.Should().Throw<ExtractorException>("Category is null or empty");
+            act.Should().NotThrow();
         }
         [Test]
-        public void CheckCategory_EmptyList_ShouldThrowExtractorException() {
+        public void CheckCategory_EmptyList_ShouldNotThrowExtractorException() {
             // Arrange
             var data = new TestListsData();
             var categories = data.Categories;
@@ -239,7 +239,7 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckCategory(categories, bookCategories);
             // Assert
-            act.Should().Throw<ExtractorException>("Category is null or empty");
+            act.Should().NotThrow();
         }
         [Test]
         public void CheckCategory_CategoryNotAtList_ShouldThrowExtractorException() {

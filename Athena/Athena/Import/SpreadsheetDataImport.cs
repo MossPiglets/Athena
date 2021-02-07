@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Athena.Data;
+using Athena.Datia;
 using Athena.Import.Extractors;
-using Castle.Core.Internal;
 using OfficeOpenXml;
 using Serilog;
 using Serilog.Core;
@@ -18,6 +18,7 @@ namespace Athena.Import {
         private ExcelWorksheet _storagePlaces;
         private Logger _log;
 
+
         public SpreadsheetDataImport(string fullFilePath) {
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             _package = new ExcelPackage(new FileInfo(fullFilePath));
@@ -30,29 +31,42 @@ namespace Athena.Import {
 
         public List<Book> ImportBooksList() {
             var authors = ImportAuthorsList();
-            var series = ImportSeriesList();
+            var seriesInfos = ImportSeriesListInfo();
             var publishingHouses = ImportPublishingHousesList();
             var storagePlaces = ImportStoragePlacesList();
             var categories = ImportCategoriesList();
 
+            var seriesList = seriesInfos
+                .GroupBy(a => a.SeriesName)
+                .Select(a => a.First())
+                .Where(a => !string.IsNullOrEmpty(a.SeriesName))
+                .Select(a => a.ToSeries())
+                .ToList();
             List<Book> books = new List<Book>();
             var index = 2;
-            while (_catalog.Cells[index, 1].Value != null) { var book = new Book {
+            while (_catalog.Cells[index, 1].Value != null) {
+                var bookCategories = new List<Category>() {
+                    CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb)
+                };
+                bookCategories = bookCategories.Where(a => a != null).ToList();
+                var bookSeriesInfo = SeriesInfoExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString());
+
+                var book = new Book {
                     Id = Guid.NewGuid(),
                     Title = TitleExtractor.Extract(_catalog.Cells[index, 1].Value.ToString()),
                     Authors = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value?.ToString()),
-                    Series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString()),
+                    Series = bookSeriesInfo?.ToSeries(),
                     PublishingHouse = PublishingHouseExtractor.Extract(_catalog.Cells[index, 4].Value?.ToString()),
                     PublishmentYear = YearExtractor.Extract(_catalog.Cells[index, 5].Value?.ToString()),
                     ISBN = IsbnExtractor.Extract(_catalog.Cells[index, 7].Value?.ToString()),
                     Language = LanguageExtractor.Extract(_catalog.Cells[index, 8].Value.ToString()),
                     StoragePlace = StoragePlaceExtractor.Extract(_catalog.Cells[index, 9].Value?.ToString()),
                     Comment = CommentExtractor.Extract(_catalog.Cells[index, 10].Value?.ToString()),
-                    Categories = new List<Category>()
-                        { CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb) }
+                    Categories = bookCategories,
+                    VolumeNumber = bookSeriesInfo?.VolumeNumber
                 };
                 ImportBookValidator.CheckAuthors(authors, book.Authors);
-                ImportBookValidator.CheckSeries(series, book.Series);
+                ImportBookValidator.CheckSeries(seriesList, book.Series);
                 ImportBookValidator.CheckPublishingHouse(publishingHouses, book.PublishingHouse);
                 ImportBookValidator.CheckStoragePlace(storagePlaces, book.StoragePlace);
                 ImportBookValidator.CheckCategory(categories, book.Categories);
@@ -89,13 +103,13 @@ namespace Athena.Import {
             return authorWithoutDoubles;
         }
 
-        public List<Series> ImportSeriesList() {
+        public List<SeriesInfo> ImportSeriesListInfo() {
             var index = 2;
-            List<Series> seriesList = new List<Series>();
+            List<SeriesInfo> seriesInfoList = new List<SeriesInfo>();
             while (_catalog.Cells[index, 1].Value != null) {
-                Series series;
+                SeriesInfo seriesInfo;
                 try {
-                    series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString());
+                    seriesInfo = SeriesInfoExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString());
                 }
                 catch (ExtractorException e) {
                     _log.Error($"Series Extract Error: [{e.Text}]");
@@ -103,15 +117,18 @@ namespace Athena.Import {
                     continue;
                 }
 
-                seriesList.Add(series);
+                if (seriesInfo != null) {
+                    seriesInfoList.Add(seriesInfo);
+                }
+
                 index++;
             }
 
-            var seriesWithoutDoubles = seriesList
+            var seriesInfoWithoutDoubles = seriesInfoList
                 .GroupBy(a => new { a.SeriesName, a.VolumeNumber })
                 .Select(a => a.First())
                 .ToList();
-            return seriesWithoutDoubles;
+            return seriesInfoWithoutDoubles;
         }
 
         public List<PublishingHouse> ImportPublishingHousesList() {
@@ -152,7 +169,7 @@ namespace Athena.Import {
                     continue;
                 }
 
-                var storagePlace = StoragePlaceExtractor.Extract(cell?.ToString());
+                var storagePlace = StoragePlaceExtractor.Extract(cell.ToString());
                 storagePlaces.Add(storagePlace);
                 indexCatalog++;
             }
@@ -171,7 +188,10 @@ namespace Athena.Import {
             List<Category> categories = new List<Category>();
             while (_categories.Cells[index, 1].Value != null) {
                 var category = CategoryExtractor.Extract(_categories.Cells[index, 1].Style.Fill.BackgroundColor.Rgb);
-                categories.Add(category);
+                if (category != null) {
+                    categories.Add(category);
+                }
+
                 index++;
             }
 

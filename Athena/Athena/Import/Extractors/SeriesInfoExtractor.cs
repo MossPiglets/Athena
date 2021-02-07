@@ -2,15 +2,15 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Athena.Data;
+using Athena.Datia;
 
 namespace Athena.Import.Extractors {
-    public class SeriesExtractor {
-        public static Series Extract(string text) {
-            var pattern = @"(?:(?:(?![a-z])(?: ?-? ?[Tt]om ))(?<volumeNumber>\d+))| - (\d+)\/\d+";
+    public class SeriesInfoExtractor {
+        public static SeriesInfo Extract(string text) {
+            var pattern = @"(?:(?:(?![a-z])?(?: ?-? ?[Tt]om ))(?<volumeNumber>\d+))| - (\d+)\/\d+";
+
             if (text == "'-" || text == "-" || string.IsNullOrEmpty(text)) {
-                return new Series {
-                    SeriesName = null,
-                };
+                 return null;
             }
 
             var regex = new Regex(pattern);
@@ -20,8 +20,9 @@ namespace Athena.Import.Extractors {
             if (matches.Count > 1) {
                 throw new ExtractorException("Cannot extract data from text", text);
             }
-            if (matches.Count == 0 ) {
-                seriesName = text;
+
+            if (matches.Count == 0) {
+                seriesName = text.Trim();
                 volumeNumber = 0;
             }
             else {
@@ -31,7 +32,8 @@ namespace Athena.Import.Extractors {
                 seriesName = text.Replace(matchText, "").Trim();
             }
 
-            return new Series {
+
+            return new SeriesInfo() {
                 Id = Guid.NewGuid(),
                 SeriesName = seriesName,
                 VolumeNumber = volumeNumber
