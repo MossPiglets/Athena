@@ -31,28 +31,17 @@
                                  ValidatesOnDataErrors="True"
                                  UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
-                                <ExceptionValidationRule></ExceptionValidationRule>
+                                <ExceptionValidationRule/>
                             </Binding.ValidationRules>
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <!--Style="{DynamicResource {x:Static adonisUi:Styles.AccentButtonStyle}}"-->
-            <Button Margin="10" Content="Dodaj" >
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="IsEnabled" Value="false" />
-                        <Style.Triggers>
-                            <MultiDataTrigger>
-                                <Setter Property="IsEnabled" Value="true" />
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=SeriesNameTextBox,
-                                                        Path=(Validation.HasError)}" Value="false" />
-                                </MultiDataTrigger.Conditions>
-                            </MultiDataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+            <Button Margin="10" Content="Dodaj" Command="Save" >
+                <Button.CommandBindings>
+                    <CommandBinding Command="Save" 
+                        Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                </Button.CommandBindings>
             </Button>
         </StackPanel>
         </Border>
