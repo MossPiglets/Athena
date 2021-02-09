@@ -1,4 +1,5 @@
 using Athena.Data;
+using Athena.Windows;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -49,6 +50,21 @@ namespace Athena {
                 ImportButton.Visibility = Visibility.Hidden;
             }
         }
+
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			AddBookWindow addBook = new AddBookWindow();
+			addBook.Show();
+        }
+
+        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			Book book = (Book)BookList.SelectedItem;
+			EditBookWindow editBook = new EditBookWindow(book); 
+			editBook.Show();
+		}
+
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) { }
 
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();

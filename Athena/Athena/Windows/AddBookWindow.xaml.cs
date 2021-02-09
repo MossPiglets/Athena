@@ -9,7 +9,7 @@ namespace Athena.Windows {
     public partial class AddBookWindow {
         public AddBookWindow() {
             InitializeComponent();
-            var bookControl = new BookFormControl("Dodaj książkę", "Dodaj");
+            var bookControl = new BookFormControl("Dodaj książkę", "Dodaj", new Book());
             bookControl.ButtonCommand = new AddBookCommand();
             this.Content = bookControl;
         }
