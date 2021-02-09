@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using static System.Collections.IEnumerable;
 
 namespace Athena.Data
 {
@@ -8,7 +9,7 @@ namespace Athena.Data
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
-        public DateTime PublishmentYear { get; set; }
+        public int? PublishmentYear { get; set; }
         public Language Language { get; set; }
         public string ISBN { get; set; }
         public string Comment { get; set; }
