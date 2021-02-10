@@ -23,7 +23,9 @@ namespace Athena.Windows {
 
         public void Execute(object book) {
             using var context = new ApplicationDbContext();
-            context.Books.Add(book as Book);
+            Book bookModel = book as Book;
+            bookModel.Id = Guid.NewGuid();
+            context.Books.Add(bookModel);
             context.SaveChanges();
         }
 

@@ -8,7 +8,8 @@ using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
-
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Athena {
 	/// <summary>
@@ -37,7 +38,13 @@ namespace Athena {
 			editBook.Show();
 		}
 
-        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) { }
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+			Book book = (Book)BookList.SelectedItem;
+			ApplicationDbContext context = new ApplicationDbContext();
+            context.Books.Remove(book);
+			context.SaveChanges();
+		}
 
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
