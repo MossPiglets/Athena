@@ -21,31 +21,6 @@ namespace Athena
             InitializeComponent();
             this.DataContext = this;
             ApplicationDbContext = new ApplicationDbContext();
-
-            #region
-            //To be delated
-            Book book = new Book();
-            book.Title = "Tytu³";
-            book.ISBN = "23";
-            var publisher = new PublishingHouse();
-            publisher.PublisherName = "Wydawca";
-            Author author = new Author() { FirstName = "Test", LastName = "Testowy" };
-            Author author2 = new Author() { FirstName = "Test2", LastName = "Testowy2" };
-            Author author3 = new Author() { FirstName = "Test3", LastName = "Testowy3"};
-            StoragePlace storagePlace = new StoragePlace() { StoragePlaceName = "Miejsce przehcowywania" };
-            Series seria = new Series() { SeriesName = "Seria" };
-            book.Series = seria;
-            var wyp = new Borrowing();
-            book.Borrowing = wyp;
-            book.StoragePlace = storagePlace;
-            book.Authors = new List<Author>();
-            book.PublishingHouse = publisher;
-            book.Authors.Add(author2);
-            book.Authors.Add(author);
-            book.Authors.Add(author3);
-            ApplicationDbContext.Books.Add(book);
-            #endregion
-
             ApplicationDbContext.Books.Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
 
