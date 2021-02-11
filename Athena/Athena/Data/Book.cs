@@ -21,19 +21,5 @@ namespace Athena.Data
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
-
-        public override string ToString()
-        {
-            string result = "";
-            foreach (Author author in Authors)
-            {
-                //if (string.IsNullOrWhiteSpace(author.FirstName))
-                //    result = author.LastName;
-                //else
-                //    result = $"{author.FirstName} {author.LastName}";
-                result = result + author.FirstName + author.LastName + ',';
-            }
-            return result;
-        }
     }
 }

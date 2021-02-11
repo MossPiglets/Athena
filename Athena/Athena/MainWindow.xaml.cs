@@ -34,6 +34,8 @@ namespace Athena {
             Author author2 = new Author() { FirstName = "Test2", LastName = "Testowy2" };
             Author author3 = new Author() { FirstName = "Test3", LastName = "Testowy3", Id = new System.Guid()};
             StoragePlace storagePlace = new StoragePlace() { StoragePlaceName = "Miejsce przehcowywania" };
+            Series seria = new Series() { SeriesName = "Seria" };
+            book.Series = seria;
             book.StoragePlace = storagePlace;
             book.Authors = new List<Author>();
             book.PublishingHouse = publisher;

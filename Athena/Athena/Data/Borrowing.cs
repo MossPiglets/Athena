@@ -11,5 +11,16 @@ namespace Athena.Data {
         public DateTime ReturnDate { get; set; }
 
         public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
+        public override string ToString()
+        {
+            if(String.IsNullOrEmpty(FirstName) && String.IsNullOrEmpty(LastName))
+            {
+                return "Niewypożyczone";
+            }
+            else
+            {
+                return "Wypożyczone";
+            }
+        }
     }
 }
