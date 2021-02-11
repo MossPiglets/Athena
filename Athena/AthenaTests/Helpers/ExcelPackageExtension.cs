@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
-using AthenaTests.Helpers.Data;
+﻿using System.IO;
 using AthenaTests.Helpers.Data.TestExcel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;

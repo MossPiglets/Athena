@@ -47,26 +47,29 @@ namespace Athena {
                 return;
             }
 
-            var dataImporter = new DatabaseImporter();
-            dataImporter.ImportFromSpreadsheet(fileName);
-
-            ImportButton.Visibility = Visibility.Hidden;
-        }
-
-        private void Window_ContentRendered(object sender, EventArgs e) {
             BackgroundWorker worker = new BackgroundWorker { WorkerReportsProgress = true };
+            ImportButton.Visibility = Visibility.Hidden;
+            ImportText.Visibility = Visibility.Visible;
+            ProgressBarStatus.Visibility = Visibility.Visible;
             worker.DoWork += worker_DoWork;
             worker.ProgressChanged += worker_ProgressChanged;
-
-            worker.RunWorkerAsync();
+            worker.RunWorkerCompleted += (o, args) => {
+                ImportText.Visibility = Visibility.Hidden;
+                ProgressBarStatus.Visibility = Visibility.Hidden;
+            };
+            worker.RunWorkerAsync(argument: fileName);
         }
+
 
         private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e) {
             ProgressBarStatus.Value = e.ProgressPercentage;
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
-            throw new NotImplementedException();
+            // podepnê siê do eventu z klasy DatabaseImporter
+            var fileName = (string) e.Argument;
+            var dataImporter = new DatabaseImporter();
+            dataImporter.ImportFromSpreadsheet(fileName);
         }
     }
 }
