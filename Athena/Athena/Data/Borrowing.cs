@@ -15,11 +15,11 @@ namespace Athena.Data {
         {
             if(String.IsNullOrEmpty(FirstName) && String.IsNullOrEmpty(LastName))
             {
-                return "Niewypożyczone";
+                return "Nie";
             }
             else
             {
-                return "Wypożyczone";
+                return "Tak";
             }
         }
     }

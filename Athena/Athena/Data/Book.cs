@@ -21,5 +21,30 @@ namespace Athena.Data
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
+
+        public override string ToString()
+        {
+            string authorsList="";
+            int authorsCount = Authors.Count - 1;
+            foreach (var author in Authors)
+            {
+                if (string.IsNullOrWhiteSpace(author.FirstName))
+                {
+                    authorsList += author.LastName;
+                }
+                else
+                {
+                    authorsList += $"{author.FirstName} {author.LastName}";
+                }
+                if (authorsCount > 0)
+                {
+                    authorsList += ", ";
+                    authorsCount--;
+                }
+            }
+            
+            return authorsList;
+        }
+
     }
 }

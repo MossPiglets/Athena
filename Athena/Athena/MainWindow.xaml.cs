@@ -1,17 +1,15 @@
 using Athena.Data;
 using Athena.Windows;
 using System.Collections.Generic;
-using System.IO;
 using System.Windows;
 using Athena.Import;
-using Athena.Windows;
 using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
 using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
 
-namespace Athena {
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -24,6 +22,7 @@ namespace Athena {
             this.DataContext = this;
             ApplicationDbContext = new ApplicationDbContext();
 
+            #region
             //To be delated
             Book book = new Book();
             book.Title = "Tytu³";
@@ -32,10 +31,12 @@ namespace Athena {
             publisher.PublisherName = "Wydawca";
             Author author = new Author() { FirstName = "Test", LastName = "Testowy" };
             Author author2 = new Author() { FirstName = "Test2", LastName = "Testowy2" };
-            Author author3 = new Author() { FirstName = "Test3", LastName = "Testowy3", Id = new System.Guid()};
+            Author author3 = new Author() { FirstName = "Test3", LastName = "Testowy3"};
             StoragePlace storagePlace = new StoragePlace() { StoragePlaceName = "Miejsce przehcowywania" };
             Series seria = new Series() { SeriesName = "Seria" };
             book.Series = seria;
+            var wyp = new Borrowing();
+            book.Borrowing = wyp;
             book.StoragePlace = storagePlace;
             book.Authors = new List<Author>();
             book.PublishingHouse = publisher;
@@ -43,6 +44,7 @@ namespace Athena {
             book.Authors.Add(author);
             book.Authors.Add(author3);
             ApplicationDbContext.Books.Add(book);
+            #endregion
 
             ApplicationDbContext.Books.Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
