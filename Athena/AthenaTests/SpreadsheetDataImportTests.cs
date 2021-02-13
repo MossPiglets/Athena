@@ -3,7 +3,6 @@ using System.Linq;
 using Athena.Import;
 using AthenaTests.Helpers;
 using AthenaTests.Helpers.Data.TestExcel;
-using Castle.Core.Internal;
 using FluentAssertions;
 using NUnit.Framework;
 using OfficeOpenXml;
@@ -91,7 +90,7 @@ namespace AthenaTests {
             package.CreateTestsExcel(data);
             using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
-            var seriesList = dataImport.ImportSeriesList();
+            var seriesList = dataImport.ImportSeriesListInfo();
             // Assert
             seriesList.Should().HaveSameCount(data.CatalogTestsDataList);
             for (int i = 0; i < seriesList.Count; i++) {
@@ -114,7 +113,7 @@ namespace AthenaTests {
             package.CreateTestsExcel(data);
             using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
-            var seriesList = dataImport.ImportSeriesList();
+            var seriesList = dataImport.ImportSeriesListInfo();
             // Assert
             seriesList.Should().HaveCount(data.CatalogTestsDataList.Count - 1);
             seriesList.Should().OnlyHaveUniqueItems();
@@ -131,7 +130,7 @@ namespace AthenaTests {
             package.CreateTestsExcel(data);
             using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
-            var seriesList = dataImport.ImportSeriesList();
+            var seriesList = dataImport.ImportSeriesListInfo();
             // Assert
             seriesList.Should().BeEmpty();
 

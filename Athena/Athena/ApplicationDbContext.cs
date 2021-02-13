@@ -3,7 +3,7 @@ using Athena.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
-    class ApplicationDbContext : DbContext {
+    public class ApplicationDbContext : DbContext {
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Series> Series { get; set; }
@@ -14,7 +14,8 @@ namespace Athena {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlite("Data Source=athena.sqlite");
-            optionsBuilder.UseLazyLoadingProxies();
+            // optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -33,7 +34,7 @@ namespace Athena {
                 .HasKey(a => a.Id);
 
             builder.Entity<StoragePlace>()
-                .HasKey(a => a.StoragePlaceName);
+                .HasKey(a => a.Id);
 
             builder.Entity<Borrowing>()
                 .HasKey(a => a.Id);

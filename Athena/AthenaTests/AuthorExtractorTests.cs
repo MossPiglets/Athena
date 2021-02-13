@@ -360,5 +360,21 @@ namespace AthenaTests {
             author.FirstName.Should().Be(firstName);
             author.LastName.Should().Be(lastName);
         }
+        [Test]
+        public void Extract_AndOthers_ShouldReturnAuthorsListWithOneElement() {
+            // Arrange
+            var firstName = "Anna";
+            var lastName = "Kwiatek";
+            var extraText = " i inni";
+            var fullName = $"{firstName} {lastName}{extraText}";
+            // Act
+            var authors = AuthorExtractor.Extract(fullName);
+            // Assert
+            authors.Should().HaveCount(1);
+            var author = authors[0];
+            author.Id.Should().NotBeEmpty();
+            author.FirstName.Should().Be(firstName);
+            author.LastName.Should().Be(lastName);
+        }
     }
 }
