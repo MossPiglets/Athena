@@ -24,14 +24,14 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="auto" />
 			</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" />
-			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" />
-			<ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" Name="BookList" Grid.Column="0">
+			<TextBox Grid.Row="0" Grid.Column="0" x:Name="FindTextBox" />
+			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" Click="AddBook_Click"/>
+			<ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0">
 				<ListView.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header="Wypożycz" />
-						<MenuItem Header="Edytuj" />
-						<MenuItem Header="Usuń" />
+						<MenuItem Header="Wypożycz"/>
+                        <MenuItem Header="Edytuj" Click="MenuItemEdit_Click"/>
+						<MenuItem Header="Usuń" Click="MenuItemDelete_Click" />
 					</ContextMenu>
 				</ListView.ContextMenu>
 				<ListView.View>
