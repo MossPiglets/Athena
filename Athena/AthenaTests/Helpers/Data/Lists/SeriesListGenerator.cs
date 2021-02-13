@@ -9,12 +9,10 @@ namespace AthenaTests.Helpers.Data.Lists {
                 new Series {
                     Id = Guid.NewGuid(),
                     SeriesName = "Igrzyska śmierci",
-                    VolumeNumber = 3
                 },
                 new Series {
                     Id = Guid.NewGuid(),
                     SeriesName = "Harry Potter",
-                    VolumeNumber = 5
                 }
             };
         }

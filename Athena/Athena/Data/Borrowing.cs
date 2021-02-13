@@ -10,17 +10,7 @@ namespace Athena.Data {
         public DateTime BorrowDate { get; set; }
         public DateTime ReturnDate { get; set; }
 
-        public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
-        public override string ToString()
-        {
-            if(String.IsNullOrEmpty(FirstName) && String.IsNullOrEmpty(LastName))
-            {
-                return "Nie";
-            }
-            else
-            {
-                return "Tak";
-            }
-        }
+        public virtual ICollection<Book> Books { get; set; }
+
     }
 }

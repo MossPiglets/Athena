@@ -1,12 +1,15 @@
+using System;
 using Athena.Data;
 using Athena.Windows;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Windows;
 using Athena.Import;
 using Castle.Core.Internal;
 using Microsoft.Win32;
-using System.Collections.ObjectModel;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Athena
 {
@@ -30,32 +33,56 @@ namespace Athena
             }
         }
 
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-			AddBookWindow addBook = new AddBookWindow();
-			addBook.Show();
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
+            AddBookWindow addBook = new AddBookWindow();
+            addBook.Show();
         }
 
-        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            EditBookWindow editBook = new EditBookWindow(book);
+            editBook.Show();
+        }
+
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
         {
 			Book book = (Book)BookList.SelectedItem;
-			EditBookWindow editBook = new EditBookWindow(book); 
-			editBook.Show();
+			ApplicationDbContext context = new ApplicationDbContext();
+            context.Books.Remove(book);
+			context.SaveChanges();
 		}
-
-        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) { }
 
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
             var fileName = openFileDialog.FileName;
             if (fileName == "") {
-                throw new ImportException("File is not choose. Please, choose a file to import.");
+                return;
             }
-            var dataImporter = new DataBaseImporter();
-            dataImporter.ImportFromSpreadsheet(fileName);
 
+            BackgroundWorker worker = new BackgroundWorker { WorkerReportsProgress = true };
             ImportButton.Visibility = Visibility.Hidden;
+            ImportText.Visibility = Visibility.Visible;
+            ProgressBarStatus.Visibility = Visibility.Visible;
+            worker.DoWork += worker_DoWork;
+            worker.ProgressChanged += worker_ProgressChanged;
+            worker.RunWorkerCompleted += (o, args) => {
+                ImportText.Visibility = Visibility.Hidden;
+                ProgressBarStatus.Visibility = Visibility.Hidden;
+            };
+            worker.RunWorkerAsync(argument: fileName);
+        }
+
+
+        private void worker_ProgressChanged(object sender, ProgressChangedEventArgs e) {
+            ProgressBarStatus.Value = e.ProgressPercentage;
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e) {
+            // podepn? si? do eventu z klasy DatabaseImporter
+            var fileName = (string) e.Argument;
+            var dataImporter = new DatabaseImporter();
+            dataImporter.ImportFromSpreadsheet(fileName);
         }
     }
 }

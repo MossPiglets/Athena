@@ -1,5 +1,4 @@
-﻿using System;
-using Athena.Data;
+﻿using Athena.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
@@ -14,7 +13,8 @@ namespace Athena {
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlite("Data Source=athena.sqlite");
-            optionsBuilder.UseLazyLoadingProxies();
+            // optionsBuilder.UseLazyLoadingProxies();
+            optionsBuilder.EnableSensitiveDataLogging();
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -33,7 +33,7 @@ namespace Athena {
                 .HasKey(a => a.Id);
 
             builder.Entity<StoragePlace>()
-                .HasKey(a => a.StoragePlaceName);
+                .HasKey(a => a.Id);
 
             builder.Entity<Borrowing>()
                 .HasKey(a => a.Id);

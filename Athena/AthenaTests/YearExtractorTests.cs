@@ -1,5 +1,4 @@
-﻿using Athena.Import;
-using Athena.Import.Extractors;
+﻿using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
 

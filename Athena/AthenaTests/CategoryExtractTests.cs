@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Data;
 using Athena.Import.Extractors;
 using FluentAssertions;
@@ -400,18 +398,18 @@ namespace AthenaTests {
             // Arrange
             var text = string.Empty;
             // Act
-            Action act = () => CategoryExtractor.Extract(text);
+            var category = CategoryExtractor.Extract(text);
             // Assert
-            act.Should().Throw<ExtractorException>($"Color is null or empty, [{text}]");
+            category.Should().BeNull();
         }
         [Test]
         public void Extract_Null_ShouldReturnExtractorException() {
             // Arrange
             string text = null;
             // Act
-            Action act = () => CategoryExtractor.Extract(text);
+            var category = CategoryExtractor.Extract(text);
             // Assert
-            act.Should().Throw<ExtractorException>($"Color is null or empty, [{text}]");
+            category.Should().BeNull();
         }
     }
 }
