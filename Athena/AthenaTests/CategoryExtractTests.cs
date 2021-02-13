@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Data;
 using Athena.Import.Extractors;
 using FluentAssertions;

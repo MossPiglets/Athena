@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using Athena.Data;
-using Athena.Datia;
 
 namespace Athena.Import.Extractors {
     public class SeriesInfoExtractor {

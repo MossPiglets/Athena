@@ -48,7 +48,9 @@
 					</GridView>
 				</ListView.View>
 			</ListView>
-			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
+			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" Visibility="Hidden" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
         </Grid>
 
 	</Border>

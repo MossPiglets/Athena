@@ -1,5 +1,4 @@
-﻿using System;
-using Athena.Data;
+﻿using Athena.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {

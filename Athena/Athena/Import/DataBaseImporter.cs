@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Controls;
 using Athena.Data;
-using Athena.Import.Extractors;
 using Castle.Core.Internal;
 
 namespace Athena.Import {
@@ -17,6 +14,7 @@ namespace Athena.Import {
             }
 
             IfDatabaseIsNotEmpty();
+
             var importData = new SpreadsheetDataImport(fileName);
             var authors = importData.ImportAuthorsList();
             _context.Authors.AddRange(authors);
