@@ -13,6 +13,7 @@ namespace Athena.Data
         public Language Language { get; set; }
         public string ISBN { get; set; }
         public string Comment { get; set; }
+        public int? VolumeNumber { get; set; }
 
         public virtual ICollection<Author> Authors { get; set; }
         public virtual Series Series { get; set; }
