@@ -10,6 +10,7 @@ using Castle.Core.Internal;
 using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Athena
 {
@@ -26,6 +27,17 @@ namespace Athena
             ApplicationDbContext = new ApplicationDbContext();
             ApplicationDbContext.Books.Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
+
+            #region
+            Book b = new Book();
+            var w = new Borrowing() { FirstName = "Imiê", LastName = "Nazwisko" };
+            b.Borrowing = w;
+            Book b2 = new Book();
+            var w2 = new Borrowing();
+            b2.Borrowing = w2;
+            ApplicationDbContext.Books.Add(b);
+            ApplicationDbContext.Books.Add(b2);
+            #endregion
 
             //BookList.ItemsSource = new List<Book>();
             if (!BookList.ItemsSource.IsNullOrEmpty()) {

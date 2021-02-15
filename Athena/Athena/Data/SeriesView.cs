@@ -32,7 +32,6 @@ namespace Athena.Data
         {
             Series series = new Series();
             series.SeriesName = SeriesName;
-            series.VolumeNumber = VolumeNumber;
             series.Id = Id;
             return series;
         }
