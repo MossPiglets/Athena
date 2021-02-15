@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Athena"
              xmlns:Data="clr-namespace:Athena.Data"
+             xmlns:books="clr-namespace:Athena.Data.Books"
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600" >
-
+    
 
 
 
     <UserControl.Resources>
+        <books:BookView x:Key="BookView" />
         
         <ObjectDataProvider
             MethodName="GetValues"
@@ -34,11 +36,21 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Path=Title}"  HorizontalAlignment="Center" FontSize="20" Grid.Row="0"
+                <TextBlock Text="{Binding Path=Title}" HorizontalAlignment="Center" FontSize="20" Grid.Row="0"
                            Grid.ColumnSpan="2" Padding="10" />
                 <TextBlock Text="Tytuł:" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"
                            Margin="0 10 0 0" />
-                <TextBox Text="{Binding Book.Title}"  Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22" />
+                <TextBox   Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22" >
+                    <TextBox.Text>
+                        <Binding Path = "Title" Source="{StaticResource BookView}"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </Grid>
 
             <Grid Margin="5 10 10 0 ">
@@ -136,8 +148,18 @@
                 <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="1" Margin="0 0 18 0" Width="20"
                         Height="20" Click="AddPublisher_Click">
                 </Button>
-                <TextBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
-                         Width="60" />
+                <TextBox Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
+                         Width="60" >
+                    <TextBox.Text>
+                        <Binding Path="PublishmentYear" Source="{StaticResource BookView}"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBox Text="{Binding Book.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
                 <ComboBox Text="{Binding Book.Language}" ItemsSource="{Binding Source={StaticResource EnumLanguage}}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0"/>
             </Grid>

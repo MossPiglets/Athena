@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using AdonisUI.Controls;
 using Athena.Data;
+using Athena.Data.Books;
 
 namespace Athena.Windows {
     public partial class EditBookWindow {

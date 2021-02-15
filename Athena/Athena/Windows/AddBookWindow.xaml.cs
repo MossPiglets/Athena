@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Athena.Data;
+using Athena.Data.Books;
 
 namespace Athena.Windows {
     /// <summary>

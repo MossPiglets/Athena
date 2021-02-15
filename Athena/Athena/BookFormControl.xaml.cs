@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
+using Athena.Data.Books;
 using Athena.Windows;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,13 +18,14 @@ namespace Athena
             Title = title;
             ButtonContent = buttonContent;
             this.DataContext = this;
-            Book = book;
+            //Book = book;
+            // tu będę mapować book na BookView za pomocą automapera
             ApplicationDbContext = new ApplicationDbContext();
             ApplicationDbContext.Authors.Load();
             Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
         }
 
-        public Book Book { get; set; } = new Book();
+        public BookView Book { get; set; } = new BookView();
 
         public string Title { get; set; }
 
@@ -44,5 +46,9 @@ namespace Athena
         private void AddPublisher_Click(object sender, RoutedEventArgs e) {
             new AddPublisherWindow().Show();
         }
+        // zrób maping z Book na BookView 
+        // Uzyj automapera
+        // Wyszukaj czy jest wsparcie dla wpf automapera, jak nie to domyślny
+
     }
 }
