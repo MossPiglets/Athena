@@ -17,5 +17,7 @@ namespace Athena.Data.Books {
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
+
+        
     }
 }
