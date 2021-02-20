@@ -22,7 +22,7 @@ namespace Athena.Windows {
 
         public void Execute(object book) {
             using var context = new ApplicationDbContext();
-            context.Books.Update(book as Book);
+            context.Books.Update(Mapper.Instance.Map<Book>(book));
             context.SaveChanges();
         }
 

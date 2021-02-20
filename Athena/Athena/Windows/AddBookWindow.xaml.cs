@@ -19,17 +19,23 @@ namespace Athena.Windows {
 
     public class AddBookCommand : ICommand {
         public bool CanExecute(object parameter) {
-            return true;
+            var validator = new BookViewValidator();
+            var result = validator.Validate(parameter as BookView);
+            return result.IsValid;
+            // return true;
         }
 
         public void Execute(object book) {
             using var context = new ApplicationDbContext();
-            Book bookModel = book as Book;
+            Book bookModel = Mapper.Instance.Map<Book>(book);
             bookModel.Id = Guid.NewGuid();
             context.Books.Add(bookModel);
             context.SaveChanges();
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
     }
 }

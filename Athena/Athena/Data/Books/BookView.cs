@@ -21,7 +21,7 @@ namespace Athena.Data.Books {
         public int? PublishmentYear {
             get => _year;
             set {
-                _year = (int) value;
+                _year = value;
                 OnPropertyChanged(nameof(PublishmentYear));
             }
         }
@@ -38,18 +38,18 @@ namespace Athena.Data.Books {
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
 
-        private BookValidator _bookValidator;
+        private BookViewValidator _bookViewValidator;
         private string _title;
-        private int _year;
+        private int? _year;
 
         public BookView() {
-            _bookValidator = new BookValidator();
+            _bookViewValidator = new BookViewValidator();
         }
 
         public string Error {
             get {
-                if (_bookValidator != null) {
-                    var results = _bookValidator.Validate(this);
+                if (_bookViewValidator != null) {
+                    var results = _bookViewValidator.Validate(this);
                     if (results != null && results.Errors.Any()) {
                         var errors = string.Join(Environment.NewLine,
                             results.Errors.Select(x => x.ErrorMessage).ToArray());
@@ -63,10 +63,10 @@ namespace Athena.Data.Books {
 
         public string this[string columnName] {
             get {
-                var firstOrDefault = _bookValidator.Validate(this).Errors
+                var firstOrDefault = _bookViewValidator.Validate(this).Errors
                     .FirstOrDefault(a => a.PropertyName == columnName);
                 if (firstOrDefault != null) {
-                    return _bookValidator != null ? firstOrDefault.ErrorMessage : null;
+                    return _bookViewValidator != null ? firstOrDefault.ErrorMessage : null;
                 }
 
                 return null;
