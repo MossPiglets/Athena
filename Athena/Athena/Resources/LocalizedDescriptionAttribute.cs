@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Resources;
-using System.Text;
 
 namespace Athena.Resources {
     public class LocalizedDescriptionAttribute : DescriptionAttribute {
