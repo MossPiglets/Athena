@@ -2,6 +2,7 @@
 using Athena.Resources;
 
 namespace Athena.Data {
+    [TypeConverter (typeof(EnumDescriptionTypeConverter))]
     public enum CategoryName {
         [LocalizedDescription("Album", typeof(Categories))]
         Album,
@@ -12,8 +13,7 @@ namespace Athena.Data {
         [LocalizedDescription("Audiobook", typeof(Categories))]
         Audiobook,
 
-        [Description ("Pluuuuuuuuuuum")]
-        //[LocalizedDescription("Biography", typeof(Categories))]
+        [LocalizedDescription("Biography", typeof(Categories))]
         Biography,
 
         [LocalizedDescription("Economy", typeof(Categories))]

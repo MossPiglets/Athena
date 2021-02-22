@@ -85,7 +85,7 @@
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 52 0 " Height="22"/>
                 <StackPanel x:Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
-                <ComboBox Text="{Binding BookView.Categories}"  ItemsSource="{Binding Source={local:EnumBindingSource {x:Type Data:CategoryName}}, UpdateSourceTrigger=PropertyChanged}" 
+                <ComboBox x:Name="Categories" Text="{Binding BookView.Categories}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type Data:CategoryName}}, UpdateSourceTrigger=PropertyChanged}" 
                           IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0" Height="22"/>
             </Grid>
 
