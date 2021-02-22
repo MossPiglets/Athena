@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -44,6 +46,23 @@ namespace Athena
             new AddPublisherWindow().Show();
         }
 
+        private void AllowOnlyNumbers(object sender, TextCompositionEventArgs e) {
+            e.Handled = e.Text.Any(a => !char.IsDigit(a));
+        }
 
+        private void AllowPastOnlyNumbers(object sender, DataObjectPastingEventArgs e) {
+            if (e.DataObject.GetDataPresent(typeof(String)))
+            {
+                String text = (String)e.DataObject.GetData(typeof(String));
+                if (text.Any(a => !char.IsDigit(a)))
+                {
+                    e.CancelCommand();
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
+        }
     }
 }
