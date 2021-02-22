@@ -1,7 +1,10 @@
-﻿namespace Athena.Data
+﻿using Athena.Resources;
+
+namespace Athena.Data
 {
     public enum CategoryName
     {
+        [LocalizedDescription("Album", typeof(Categories))]
         Album,
         Atlas,
         Audiobook,
