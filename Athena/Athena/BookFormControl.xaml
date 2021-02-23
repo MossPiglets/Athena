@@ -182,11 +182,7 @@
 
                 <TextBlock Text="Miejsce składowania:" Grid.Row="0" Grid.Column="0"/>
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <ComboBox Text="{Binding BookView.StoragePlace}" IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0">
-                    <ComboBoxItem>Pudło nr 4</ComboBoxItem>
-                    <ComboBoxItem>Biurko Anki</ComboBoxItem>
-                    <ComboBoxItem>Biblioteczka</ComboBoxItem>
-                </ComboBox>
+                <ComboBox  ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0" />
                 <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="2" Margin="0 0 19 0" Width="22"
                         Height="22" />
                 <TextBox Text="{Binding BookView.Comment}" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Grid.Column="1" Height="66" Margin="0 7 19 0"/>

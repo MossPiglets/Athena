@@ -17,7 +17,8 @@ namespace Athena
         public ICommand ButtonCommand { get; set; }
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
-        
+        public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
+
 
         public BookFormControl(string title, string buttonContent, Book book) {
             InitializeComponent();
@@ -44,6 +45,12 @@ namespace Athena
             new AddPublisherWindow().Show();
         }
 
-
+        public void StoragePlacesAdding()
+        {
+            InitializeComponent();
+            ApplicationDbContext = new ApplicationDbContext();
+            ApplicationDbContext.StoragePlaces.Load();
+            StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
+        }
     }
 }
