@@ -10,8 +10,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Athena
 {
 
-    public partial class BookFormControl : UserControl {
-        public BookView BookView { get; set; } 
+    public partial class BookFormControl : UserControl
+    {
+        public BookView BookView { get; set; }
         public string Title { get; set; }
         public string ButtonContent { get; set; }
         public ICommand ButtonCommand { get; set; }
@@ -20,7 +21,8 @@ namespace Athena
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
 
 
-        public BookFormControl(string title, string buttonContent, Book book) {
+        public BookFormControl(string title, string buttonContent, Book book)
+        {
             InitializeComponent();
             Title = title;
             ButtonContent = buttonContent;
@@ -29,6 +31,8 @@ namespace Athena
             ApplicationDbContext = new ApplicationDbContext();
             ApplicationDbContext.Authors.Load();
             Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
+            ApplicationDbContext.StoragePlaces.Load();
+            StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
@@ -37,20 +41,14 @@ namespace Athena
             AuthorsStackPanel.Children.Add(authorAddingUserControl);
         }
 
-        private void AddSeries_Click(object sender, RoutedEventArgs e) {
+        private void AddSeries_Click(object sender, RoutedEventArgs e)
+        {
             new AddSeriesWindow().Show();
         }
 
-        private void AddPublisher_Click(object sender, RoutedEventArgs e) {
-            new AddPublisherWindow().Show();
-        }
-
-        public void StoragePlacesAdding()
+        private void AddPublisher_Click(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-            ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.StoragePlaces.Load();
-            StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
+            new AddPublisherWindow().Show();
         }
     }
 }

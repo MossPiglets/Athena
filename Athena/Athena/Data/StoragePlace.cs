@@ -15,5 +15,4 @@ namespace Athena.Data {
             return StoragePlaceName;
         }
     }
-   
 }
