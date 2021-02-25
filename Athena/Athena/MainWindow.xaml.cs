@@ -1,16 +1,15 @@
-using System;
 using Athena.Data;
 using Athena.Windows;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using Athena.Import;
 using Castle.Core.Internal;
 using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using System.Collections.ObjectModel;
+using Athena.Data.Books;
+
 
 namespace Athena
 {

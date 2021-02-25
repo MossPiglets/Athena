@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
-using static System.Collections.IEnumerable;
 
-namespace Athena.Data
+
+namespace Athena.Data.Books
 {
-    public class Book
-    {
+    public class Book {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public int? PublishmentYear { get; set; }
@@ -22,8 +19,6 @@ namespace Athena.Data
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
-
-        
 
     }
 }
