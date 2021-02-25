@@ -37,7 +37,20 @@
 				<ListView.View>
 					<GridView >
 						<GridViewColumn Header="Tytuł" Width="Auto"  DisplayMemberBinding="{Binding Title}" />
-                        <GridViewColumn Header="Autorzy" Width="Auto" DisplayMemberBinding="{Binding}" />
+                        <GridViewColumn Header="Autorzy" Width="Auto" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Authors[0].FirstName" />
+                                                <Binding Path="Authors[0].LastName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                         <GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series.SeriesName}" />
 						<GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
 						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
