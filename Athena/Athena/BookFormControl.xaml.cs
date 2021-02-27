@@ -47,6 +47,12 @@ namespace Athena {
         {
             new AddPublisherWindow().Show();
         }
+
+        private void ButtonContent_Click(object sender, RoutedEventArgs e) {
+            var myWindow = Window.GetWindow(this);
+            myWindow.Close();
+        }
+
         private void AllowOnlyNumbers(object sender, TextCompositionEventArgs e) {
             e.Handled = e.Text.Any(a => !char.IsDigit(a));
         }
