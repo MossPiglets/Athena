@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -7,11 +9,9 @@ using Athena.Data.Books;
 using Athena.Windows;
 using Microsoft.EntityFrameworkCore;
 
-namespace Athena
-{
 
-    public partial class BookFormControl : UserControl
-    {
+namespace Athena {
+    public partial class BookFormControl : UserControl {
         public BookView BookView { get; set; }
         public string Title { get; set; }
         public string ButtonContent { get; set; }
@@ -19,7 +19,6 @@ namespace Athena
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
-
 
         public BookFormControl(string title, string buttonContent, Book book)
         {
@@ -35,20 +34,33 @@ namespace Athena
             StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
         }
 
-        private void AddingAuthorCombobox(object sender, RoutedEventArgs e)
-        {
+        private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
             var authorAddingUserControl = new AuthorAdding();
             AuthorsStackPanel.Children.Add(authorAddingUserControl);
         }
 
-        private void AddSeries_Click(object sender, RoutedEventArgs e)
-        {
+        private void AddSeries_Click(object sender, RoutedEventArgs e) {
             new AddSeriesWindow().Show();
         }
 
         private void AddPublisher_Click(object sender, RoutedEventArgs e)
         {
             new AddPublisherWindow().Show();
+        }
+        private void AllowOnlyNumbers(object sender, TextCompositionEventArgs e) {
+            e.Handled = e.Text.Any(a => !char.IsDigit(a));
+        }
+
+        private void AllowPastOnlyNumbers(object sender, DataObjectPastingEventArgs e) {
+            if (e.DataObject.GetDataPresent(typeof(string))) {
+                string text = (string) e.DataObject.GetData(typeof(string));
+                if (text.Any(a => !char.IsDigit(a))) {
+                    e.CancelCommand();
+                }
+            }
+            else {
+                e.CancelCommand();
+            }
         }
     }
 }
