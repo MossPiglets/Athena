@@ -35,6 +35,7 @@ namespace Athena {
             AuthorsStackPanel.Children.Add(authorAddingUserControl);
         }
 
+
         private void AddSeries_Click(object sender, RoutedEventArgs e) {
             new AddSeriesWindow().Show();
         }
