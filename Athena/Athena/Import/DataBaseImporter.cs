@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Athena.Data;
+using Athena.Data.Books;
 using Castle.Core.Internal;
 
 namespace Athena.Import {

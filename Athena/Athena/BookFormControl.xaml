@@ -5,13 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Athena"
              xmlns:Data="clr-namespace:Athena.Data"
+             xmlns:books="clr-namespace:Athena.Data.Books"
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600" >
-
+    
 
 
 
     <UserControl.Resources>
+        <books:BookView x:Key="BookView" />
         
         <ObjectDataProvider
             MethodName="GetValues"
@@ -34,11 +36,21 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock Text="{Binding Path=Title}"  HorizontalAlignment="Center" FontSize="20" Grid.Row="0"
+                <TextBlock Text="{Binding Path=Title}" HorizontalAlignment="Center" FontSize="20" Grid.Row="0"
                            Grid.ColumnSpan="2" Padding="10" />
                 <TextBlock Text="Tytuł:" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"
                            Margin="0 10 0 0" />
-                <TextBox Text="{Binding Book.Title}"  Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22" />
+                <TextBox   Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22">
+                    <TextBox.Text >
+                        <Binding Path = "BookView.Title"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </Grid>
 
             <Grid Margin="5 10 10 0 ">
@@ -73,13 +85,8 @@
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 52 0 " Height="22"/>
                 <StackPanel x:Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
-                <ComboBox Text="{Binding Book.Categories}" IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0"
-                          Height="22">
-                    <ComboBoxItem>Fantasy</ComboBoxItem>
-                    <ComboBoxItem>Kryminał</ComboBoxItem>
-                    <ComboBoxItem>Młodzieżowa</ComboBoxItem>
-                </ComboBox>
-
+                <ComboBox x:Name="Categories" Text="{Binding BookView.Categories}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type Data:CategoryName}}, UpdateSourceTrigger=PropertyChanged}" 
+                          IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0" Height="22"/>
             </Grid>
 
             <Grid Margin="5 10 10 0">
@@ -103,8 +110,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Nazwa:" />
                 <TextBlock Text="Nr tomu:" Grid.Column="2" />
-                <TextBox Text="{Binding Book.Series.VolumeNumber}" HorizontalAlignment="Left" Width="40" Grid.Column="3" />
-                <ComboBox Text="{Binding Book.Series.SeriesName}" IsEditable="True" Grid.Column="1" Margin="0 0 19 0">
+                <TextBox Text="{Binding BookView.Series.VolumeNumber}" PreviewTextInput="AllowOnlyNumbers" DataObject.Pasting="AllowPastOnlyNumbers" HorizontalAlignment="Left" Width="40" Grid.Column="3" />
+                <ComboBox Text="{Binding BookView.Series.SeriesName}" IsEditable="True" Grid.Column="1" Margin="0 0 19 0">
                     <ComboBoxItem>Harry Potter</ComboBoxItem>
                     <ComboBoxItem>Wiedźmin</ComboBoxItem>
                     <ComboBoxItem>50 twarzy Greya</ComboBoxItem>
@@ -132,14 +139,25 @@
                 <TextBlock Text="Rok:" Grid.Row="1" Grid.Column="2" Margin="0 7 0 0" />
                 <TextBlock Text="ISBN:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
                 <TextBlock Text="Język:" HorizontalAlignment="Left" Grid.Row="0" Grid.Column="2" />
-                <TextBox Text="{Binding Book.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 48 0" />
+                <TextBox Text="{Binding BookView.PublishingHouse.PublisherName}" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 48 0" />
                 <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="1" Margin="0 0 18 0" Width="20"
                         Height="20" Click="AddPublisher_Click">
                 </Button>
-                <TextBox Text="{Binding Book.PublishmentYear}" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
-                         Width="60" />
-                <TextBox Text="{Binding Book.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox Text="{Binding Book.Language}" ItemsSource="{Binding Source={StaticResource EnumLanguage}}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0"/>
+                <TextBox PreviewTextInput="AllowOnlyNumbers" DataObject.Pasting="AllowPastOnlyNumbers" Grid.Row="1" Grid.Column="3" Height="22" Margin="0 7 18 0" HorizontalAlignment="Left"
+                         Width="60" >
+                    <TextBox.Text>
+                        <Binding Path="BookView.PublishmentYear"
+                                 TargetNullValue="" 
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Text="{Binding BookView.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
+                <ComboBox Text="{Binding BookView.Language}" ItemsSource="{Binding Source={StaticResource EnumLanguage}}" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0"/>
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
@@ -159,14 +177,10 @@
 
                 <TextBlock Text="Miejsce składowania:" Grid.Row="0" Grid.Column="0"/>
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <ComboBox Text="{Binding Book.StoragePlace.StoragePlaceName}" IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0">
-                    <ComboBoxItem>Pudło nr 4</ComboBoxItem>
-                    <ComboBoxItem>Biurko Anki</ComboBoxItem>
-                    <ComboBoxItem>Biblioteczka</ComboBoxItem>
-                </ComboBox>
+                <ComboBox ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0" />
                 <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="2" Margin="0 0 19 0" Width="22"
                         Height="22" />
-                <TextBox Text="{Binding Book.StoragePlace.Comment}" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Grid.Column="1" Height="66" Margin="0 7 19 0"/>
+                <TextBox Text="{Binding BookView.Comment}" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Grid.Column="1" Height="66" Margin="0 7 19 0"/>
             </Grid>
 
             <Grid Margin="5 40 0 0">
@@ -178,8 +192,8 @@
 
                 <Button Content="Wróć"  Grid.Column="0" Margin="0 0 5 0"/>
                 <Button Content="Wyczyść" Grid.Column="1" Margin="5 0 5 0"/>
-                <Button Content="{Binding  Path=ButtonContent}" Command ="{Binding ButtonCommand}" CommandParameter="{Binding Path=Book}" Grid.Column="2" Margin="5 0 0 0" Click="ButtonContent_Click"/>
-
+                <Button Name ="ConfirmButton"  Content="{Binding  Path=ButtonContent}" CommandParameter="{Binding BookView, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" Command ="{Binding ButtonCommand}"  Click="ButtonContent_Click"
+                        Grid.Column="2" Margin="5 0 0 0"/>
             </Grid>
         </StackPanel>
     </Border>

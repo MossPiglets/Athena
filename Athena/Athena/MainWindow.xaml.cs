@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Athena.Data.Books;
 
 namespace Athena {
     /// <summary>
