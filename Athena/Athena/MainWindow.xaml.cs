@@ -19,15 +19,21 @@ namespace Athena {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
+        private ApplicationDbContext ApplicationDbContext { get; set; }
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
-            BookList.ItemsSource = new List<Book>();
+
+            ApplicationDbContext = new ApplicationDbContext();
+            ApplicationDbContext.Books.Load();
+            BookList.ItemsSource = ApplicationDbContext.Books.Local.ToObservableCollection();
+
+            //BookList.ItemsSource = new List<Book>();
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
             }
         }
-
+ 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
             AddBookWindow addBook = new AddBookWindow();
             addBook.Show();
@@ -78,6 +84,17 @@ namespace Athena {
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
+        }
+
+        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            IEnumerable<Book> books = (IEnumerable<Book>)BookList.ItemsSource;
+            var searchresult = books.Where(b => b.Title.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
+                                                (b.Series ?? new Series {SeriesName=""}).SeriesName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
+                                                (b.PublishingHouse ?? new PublishingHouse{ PublisherName= ""}).PublisherName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
+                                                (b.Authors ?? new List<Author> { new Author { FirstName = "", LastName = "" } }).First().ToString().ToLower().Contains(SearchTextBox.Text.ToLower())
+                                                 );
+            BookList.ItemsSource = searchresult;
         }
     }
 }
