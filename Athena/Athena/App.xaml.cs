@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using Athena.Data;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +16,9 @@ namespace Athena {
             base.OnStartup(e);
             using var context = new ApplicationDbContext();
             context.Database.EnsureCreated();
+            CultureInfo info = new CultureInfo("pl-PL");
+            Thread.CurrentThread.CurrentCulture = info;
+            Thread.CurrentThread.CurrentUICulture = info;
         }
     }
 }
