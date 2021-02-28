@@ -43,7 +43,10 @@ namespace Athena
         private void AddPublisher_Click(object sender, RoutedEventArgs e) {
             new AddPublisherWindow().Show();
         }
-
+        private void AddStoragePlace_Click (object sender, RoutedEventArgs e)
+        {
+            new AddStoragePlaceWindow().Show();
+        }
 
     }
 }
