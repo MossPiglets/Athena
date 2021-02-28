@@ -97,7 +97,6 @@ namespace Athena {
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
-            // podepnê siê do eventu z klasy DatabaseImporter
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
