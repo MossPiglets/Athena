@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Windows.Documents;
 using Athena.Data.Books;
 
 namespace Athena {
@@ -22,10 +23,33 @@ namespace Athena {
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
-            BookList.ItemsSource = new List<Book>();
+            List<Book> items = new List<Book>() {
+                new Book {
+                    Title = "Igrzyska",
+                    Authors = new List<Author>() {
+                        new Author {
+                            FirstName = "Suzzanne",
+                            LastName = "Collins"
+                        },
+                        new Author {
+                            FirstName = "J. K.",
+                            LastName = "Rowlling"
+                        }
+                    }
+                }
+            };
+            BookList.ItemsSource = items;
+            //BookList.ItemsSource = new List<Book>();
+
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            BorrowForm borrowForm = new BorrowForm(book);
+            borrowForm.Show();
         }
 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -39,13 +63,12 @@ namespace Athena {
             editBook.Show();
         }
 
-        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-			Book book = (Book)BookList.SelectedItem;
-			ApplicationDbContext context = new ApplicationDbContext();
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            ApplicationDbContext context = new ApplicationDbContext();
             context.Books.Remove(book);
-			context.SaveChanges();
-		}
+            context.SaveChanges();
+        }
 
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
