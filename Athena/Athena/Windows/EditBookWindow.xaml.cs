@@ -17,7 +17,9 @@ namespace Athena.Windows {
 
     public class EditBookCommand : ICommand {
         public bool CanExecute(object parameter) {
-            return true;
+            var validator = new BookViewValidator();
+            var result = validator.Validate(parameter as BookView);
+            return result.IsValid;;
         }
 
         public void Execute(object book) {
@@ -26,6 +28,9 @@ namespace Athena.Windows {
             context.SaveChanges();
         }
 
-        public event EventHandler CanExecuteChanged;
+        public event EventHandler CanExecuteChanged {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
     }
 }

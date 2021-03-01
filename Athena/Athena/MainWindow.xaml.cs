@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Windows.Documents;
 using Athena.Data.Books;
 
 namespace Athena {
@@ -22,6 +23,7 @@ namespace Athena {
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
+
             List<Book> items = new List<Book>() {
                 new Book {
                     Title = "Igrzyska",
@@ -39,9 +41,17 @@ namespace Athena {
             };
             BookList.ItemsSource = items;
             //BookList.ItemsSource = new List<Book>();
+
+
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            BorrowForm borrowForm = new BorrowForm(book);
+            borrowForm.Show();
         }
 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -55,13 +65,12 @@ namespace Athena {
             editBook.Show();
         }
 
-        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-			Book book = (Book)BookList.SelectedItem;
-			ApplicationDbContext context = new ApplicationDbContext();
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            ApplicationDbContext context = new ApplicationDbContext();
             context.Books.Remove(book);
-			context.SaveChanges();
-		}
+            context.SaveChanges();
+        }
 
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -90,16 +99,10 @@ namespace Athena {
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
-            // podepnê siê do eventu z klasy DatabaseImporter
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
         }
 
-        private void Borrow_onClick(object sender, RoutedEventArgs e) {
-            Book book = (Book) BookList.SelectedItem;
-            BorrowForm window = new BorrowForm();
-            window.Show();
-        }
     }
 }
