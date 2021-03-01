@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using Athena.Data;
 using Athena.Data.Books;
@@ -25,20 +26,19 @@ namespace Athena {
         }
 
         public string ToAuthorsNames(Book book) {
-            string authors = string.Empty;
+            StringBuilder builder = new StringBuilder();
             if (book.Authors.Count > 0) {
                 for (int i = 0; i < book.Authors.Count; i++) {
                     var authorsList = book.Authors.ToList();
                     if (i == 0) {
-                        authors = $"{authorsList[i].FirstName} {authorsList[i].LastName}";
+                        builder.Append($"{authorsList[i].FirstName} {authorsList[i].LastName}");
                         continue;
                     }
-
-                    authors = $"{authors} \n {authorsList[i].FirstName} {authorsList[i].LastName}";
+                    builder.Append($"\n {authorsList[i].FirstName} {authorsList[i].LastName}");
                 }
             }
 
-            return authors;
+            return builder.ToString();
         }
 
         private void Borrow_OnClick(object sender, RoutedEventArgs e) {
