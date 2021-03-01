@@ -22,7 +22,23 @@ namespace Athena {
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
-            BookList.ItemsSource = new List<Book>();
+            List<Book> items = new List<Book>() {
+                new Book {
+                    Title = "Igrzyska",
+                    Authors = new List<Author>() {
+                        new Author {
+                            FirstName = "Suzzanne",
+                            LastName = "Collins"
+                        },
+                        new Author {
+                            FirstName = "J. K.",
+                            LastName = "Rowlling"
+                        }
+                    }
+                }
+            };
+            BookList.ItemsSource = items;
+            //BookList.ItemsSource = new List<Book>();
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
             }
@@ -78,6 +94,12 @@ namespace Athena {
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
+        }
+
+        private void Borrow_onClick(object sender, RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            BorrowForm window = new BorrowForm();
+            window.Show();
         }
     }
 }

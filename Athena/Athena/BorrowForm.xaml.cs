@@ -10,16 +10,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Athena
-{
+namespace Athena {
     /// <summary>
     /// Interaction logic for BorrowForm.xaml
     /// </summary>
-    public partial class BorrowForm 
-    {
-        public BorrowForm()
-        {
+    public partial class BorrowForm {
+        public BorrowForm() {
             InitializeComponent();
         }
+
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = !Validation.GetHasError(FirstName);
+        }
+
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) { }
     }
 }

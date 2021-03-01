@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using Athena.Data.Books;
 
-namespace Athena.Data {
+namespace Athena.Data.Borrowing {
     public class Borrowing {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
