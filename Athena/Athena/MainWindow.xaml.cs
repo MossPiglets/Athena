@@ -23,23 +23,7 @@ namespace Athena {
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
-            List<Book> items = new List<Book>() {
-                new Book {
-                    Title = "Igrzyska",
-                    Authors = new List<Author>() {
-                        new Author {
-                            FirstName = "Suzzanne",
-                            LastName = "Collins"
-                        },
-                        new Author {
-                            FirstName = "J. K.",
-                            LastName = "Rowlling"
-                        }
-                    }
-                }
-            };
-            BookList.ItemsSource = items;
-            //BookList.ItemsSource = new List<Book>();
+            BookList.ItemsSource = new List<Book>();
 
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
