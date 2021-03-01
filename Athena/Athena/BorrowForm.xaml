@@ -4,12 +4,12 @@
                        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:local="clr-namespace:Athena"
-                       xmlns:borrowing="clr-namespace:Athena.Data.Borrowing"
+                       xmlns:borrowings="clr-namespace:Athena.Data.Borrowings"
                        mc:Ignorable="d"
                        Title="Wypożycz" Width="330" SizeToContent="Height">
 
     <Window.Resources>
-        <borrowing:BorrowingView x:Key="BorrowingInstance" />
+        <borrowings:BorrowingView x:Key="BorrowingInstance" />
     </Window.Resources>
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
@@ -35,7 +35,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwisko:" />
                 <TextBox Name="FirstName" Grid.Column="1" Grid.Row="0" Margin="15 0 5 5">
                     <TextBox.Text>
-                        <Binding Path="FirstName" Source="{StaticResource BorrowingInstance}"
+                        <Binding Path="BorrowingView.FirstName"
                                  ValidatesOnDataErrors="True"
                                  UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -44,10 +44,20 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox Text="{Binding Path=Borrowing.LastName}" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" />
+                <TextBox Text="{Binding Path=BorrowingView.LastName}" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" />
             </Grid>
             <TextBlock Margin="0 15 0 5" Text="Data wypożyczenia" FontWeight="Bold" />
-            <Calendar Name="Calendar" />
+            <Calendar Name="Calendar" >
+                <Calendar.CalendarDayButtonStyle>
+                    <Style TargetType="CalendarDayButton" BasedOn="{StaticResource {x:Type CalendarDayButton}}">
+                        <Style.Triggers>
+                            <Trigger Property="IsBlackedOut" Value="True">
+                                <Setter Property="Foreground" Value="#505451"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Calendar.CalendarDayButtonStyle>
+            </Calendar>
             <Button Margin="10" Content="Wypożycz" Click="Borrow_OnClick" Command="Save">
                 <Button.CommandBindings>
                     <CommandBinding Command="Save"

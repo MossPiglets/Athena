@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Athena.Data.Borrowings;
 
 namespace Athena.Data.Books {
     public class Book {
@@ -16,7 +17,7 @@ namespace Athena.Data.Books {
         public virtual PublishingHouse PublishingHouse { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
-        public virtual Borrowing.Borrowing Borrowing { get; set; }
+        public virtual ICollection<Borrowing> Borrowing { get; set; }
 
         
     }

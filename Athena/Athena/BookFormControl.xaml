@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Athena"
              xmlns:Data="clr-namespace:Athena.Data"
-             xmlns:books="clr-namespace:Athena.Data.Books"
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600" >
     
@@ -13,7 +12,6 @@
 
 
     <UserControl.Resources>
-        <books:BookView x:Key="BookView" />
         
         <ObjectDataProvider
             MethodName="GetValues"
