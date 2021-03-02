@@ -26,6 +26,8 @@ namespace Athena {
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
             }
+
+            this.Closed += (sender, args) =>  Application.Current.Shutdown();
         }
 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
