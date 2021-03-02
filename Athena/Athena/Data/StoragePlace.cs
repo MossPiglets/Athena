@@ -9,6 +9,10 @@ namespace Athena.Data {
         public string StoragePlaceName { get; set; }
         public string Comment { get; set; }
 
-        public  ICollection<Book> Books { get; set; } 
+        public  ICollection<Book> Books { get; set; }
+        public override string ToString()
+        {
+            return StoragePlaceName;
+        }
     }
 }
