@@ -24,37 +24,9 @@ namespace Athena
             InitializeComponent();
             this.DataContext = this;
             ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Books.Load();
+            ApplicationDbContext.Books.Include("Series").Include("Authors").Include("PublishingHouse").Include("StoragePlace").Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
-
-            #region
-            Book b = new Book();
-            var w = new Borrowing() { FirstName = "Imiê", LastName = "Nazwisko" };
-            var wyd = new PublishingHouse() { PublisherName = "Wydawca" };
-            var seria = new Series() { SeriesName = "Seria1" };
-            var m = new StoragePlace() { StoragePlaceName = "Przech1" };
-            var a = new Author() { FirstName = "Auto", LastName = "Autor" };
-            b.Authors = new List<Author>() { a };
-            b.StoragePlace = m;
-            b.Series = seria;
-            b.PublishingHouse = wyd;
-            b.PublishmentYear = 1;
-            b.Borrowing = w;
-            Book b2 = new Book();
-            var w2 = new Borrowing();
-            var wyd2 = new PublishingHouse() { PublisherName = "Wydawca" };
-            var seria2 = new Series() { SeriesName = "Seria2" };
-            var m2 = new StoragePlace() { StoragePlaceName = "Przech2" };
-            b2.StoragePlace = m;
-            b2.Series = seria;
-            b2.PublishingHouse = wyd2;
-            b2.Borrowing = w2;
-            b2.PublishmentYear = 2;
-            ApplicationDbContext.Books.Add(b);
-            ApplicationDbContext.Books.Add(b2);
-            #endregion
-
-            //BookList.ItemsSource = new List<Book>();
+            
             if (!BookList.ItemsSource.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Hidden;
             }

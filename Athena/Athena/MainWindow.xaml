@@ -37,7 +37,7 @@
 				<ListView.View>
 					<GridView >
 						<GridViewColumn Header="Tytuł" Width="Auto"  DisplayMemberBinding="{Binding Title}" />
-                        <GridViewColumn Header="Autorzy" Width="Auto" >
+                        <GridViewColumn Header="Autor" Width="Auto" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
