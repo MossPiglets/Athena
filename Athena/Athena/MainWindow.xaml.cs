@@ -24,7 +24,12 @@ namespace Athena
             InitializeComponent();
             this.DataContext = this;
             ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Books.Include("Series").Include("Authors").Include("PublishingHouse").Include("StoragePlace").Load();
+            ApplicationDbContext.Books
+                .Include(b => b.Series)
+                .Include(b => b.PublishingHouse)
+                .Include(b => b.StoragePlace)
+                .Include(b => b.Authors)
+                .Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
             
             if (!BookList.ItemsSource.IsNullOrEmpty()) {

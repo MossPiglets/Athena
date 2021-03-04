@@ -77,7 +77,7 @@ namespace Athena.Data.Books {
             return new Book {
                 Id = Id,
                 Title = Title,
-                Authors = Authors,
+                Authors = Authors.ToList(),
                 Series = Series,
                 PublishingHouse = PublishingHouse,
                 PublishmentYear = PublishmentYear,
