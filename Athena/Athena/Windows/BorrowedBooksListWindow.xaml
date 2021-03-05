@@ -25,24 +25,16 @@
                 <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
             <ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0">
-                <ListView.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Wypożycz"/>
-                        <MenuItem Header="Edytuj"/>
-                        <MenuItem Header="Usuń"/>
-                    </ContextMenu>
-                </ListView.ContextMenu>
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Tytuł" Width="Auto" />
                         <GridViewColumn Header="Autor" Width="Auto" />
-                        <GridViewColumn Header="Seria" Width="Auto" />
-                        <GridViewColumn Header="Język" Width="Auto" />
                         <GridViewColumn Header="Wydawca" Width="Auto" />
                         <GridViewColumn Header="Rok wydania" Width="Auto" />
                         <GridViewColumn Header="Miejce Składowania" Width="Auto" />
-                        <GridViewColumn Header="ISBN" Width="Auto" />
-                        <GridViewColumn Header="Wypożyczono" Width="Auto" />
+                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" />
+                        <GridViewColumn Header="Data wypożyczenia" Width="Auto" />
+
                     </GridView>
                 </ListView.View>
                 <!--dodać przycisk zwróc-->
