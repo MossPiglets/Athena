@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Athena.Data.Books {
+
+namespace Athena.Data.Books
+{
     public class Book {
         public Guid Id { get; set; }
         public string Title { get; set; }
@@ -11,13 +13,12 @@ namespace Athena.Data.Books {
         public string Comment { get; set; }
         public int? VolumeNumber { get; set; }
 
-        public virtual ICollection<Author> Authors { get; set; }
+        public virtual IList<Author> Authors { get; set; }
         public virtual Series Series { get; set; }
         public virtual PublishingHouse PublishingHouse { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
         public virtual Borrowing Borrowing { get; set; }
 
-        
     }
 }
