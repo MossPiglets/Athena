@@ -47,8 +47,12 @@ namespace Athena {
         {
             new AddPublisherWindow().Show();
         }
+        private void AddStoragePlace_Click(object sender, RoutedEventArgs e)
+        {
+            new AddStoragePlaceWindow().Show();
+        }
 
-        private void ButtonContent_Click(object sender, RoutedEventArgs e) {
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e) {
             var myWindow = Window.GetWindow(this);
             myWindow.Close();
         }
