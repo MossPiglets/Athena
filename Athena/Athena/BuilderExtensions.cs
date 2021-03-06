@@ -23,8 +23,8 @@ namespace Athena
                 .HasOne(a => a.StoragePlace)
                 .WithMany(a => a.Books);
             entity
-                .HasOne(a => a.Borrowing)
-                .WithMany(a => a.Books);
+                .HasMany(a => a.Borrowing)
+                .WithOne(a => a.Book);
             entity
                 .HasMany(a => a.Categories)
                 .WithMany(a => a.Books)

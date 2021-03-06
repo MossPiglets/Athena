@@ -22,7 +22,6 @@ namespace Athena.Windows {
             var validator = new BookViewValidator();
             var result = validator.Validate(parameter as BookView);
             return result.IsValid;
-            // return true;
         }
 
         public void Execute(object book) {

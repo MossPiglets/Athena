@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Athena.Data.Books;
 
-namespace Athena.Data {
+namespace Athena.Data.Series {
     public class Series 
     {
         public Guid Id { get; set; }

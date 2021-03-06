@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Athena.Data;
+using Athena.Data.Series;
 using Athena.Import.Extractors;
 using Castle.Core.Internal;
 

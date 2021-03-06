@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Athena.Data.Borrowings;
 
 
 namespace Athena.Data.Books
@@ -14,11 +15,11 @@ namespace Athena.Data.Books
         public int? VolumeNumber { get; set; }
 
         public virtual IList<Author> Authors { get; set; }
-        public virtual Series Series { get; set; }
+        public virtual Series.Series Series { get; set; }
         public virtual PublishingHouse PublishingHouse { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
-        public virtual Borrowing Borrowing { get; set; }
+        public virtual ICollection<Borrowing> Borrowing { get; set; }
 
     }
 }

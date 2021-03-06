@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using Athena.Data.Books;
 
-namespace Athena.Data {
+namespace Athena.Data.Series {
     public class SeriesView : IDataErrorInfo {
         public Guid Id { get; set; }
         public string SeriesName { get; set; }
-        public int VolumeNumber { get; set; }
 
-        public string Error {
-            get { return null; }
-        }
+        public string Error => null;
 
         public string this[string columnName] {
             get {

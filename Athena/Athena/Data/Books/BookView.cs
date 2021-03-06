@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Athena.Annotations;
+using Athena.Data.Borrowings;
 
 namespace Athena.Data.Books {
     public class BookView : IDataErrorInfo, INotifyPropertyChanged {
@@ -32,11 +33,11 @@ namespace Athena.Data.Books {
         public int? VolumeNumber { get; set; }
 
         public virtual ICollection<Author> Authors { get; set; }
-        public virtual Series Series { get; set; }
+        public virtual Series.Series Series { get; set; }
         public virtual PublishingHouse PublishingHouse { get; set; }
         public virtual ICollection<Category> Categories { get; set; }
         public virtual StoragePlace StoragePlace { get; set; }
-        public virtual Borrowing Borrowing { get; set; }
+        public virtual ICollection<Borrowing> Borrowing { get; set; }
 
         private BookViewValidator _bookViewValidator;
         private string _title;
@@ -71,24 +72,6 @@ namespace Athena.Data.Books {
 
                 return null;
             }
-        }
-
-        public Book ToBook() {
-            return new Book {
-                Id = Id,
-                Title = Title,
-                Authors = Authors.ToList(),
-                Series = Series,
-                PublishingHouse = PublishingHouse,
-                PublishmentYear = PublishmentYear,
-                VolumeNumber = VolumeNumber,
-                Language = Language,
-                ISBN = ISBN,
-                StoragePlace = StoragePlace,
-                Categories = Categories,
-                Comment = Comment,
-                Borrowing = Borrowing
-            };
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

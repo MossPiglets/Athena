@@ -39,6 +39,12 @@ namespace Athena
             this.Closed += (sender, args) =>  Application.Current.Shutdown();
         }
 
+        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            BorrowForm borrowForm = new BorrowForm(book);
+            borrowForm.Show();
+        }
+
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
             AddBookWindow addBook = new AddBookWindow();
             addBook.Show();
@@ -50,13 +56,12 @@ namespace Athena
             editBook.Show();
         }
 
-        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-			Book book = (Book)BookList.SelectedItem;
-			ApplicationDbContext context = new ApplicationDbContext();
+        private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
+            Book book = (Book) BookList.SelectedItem;
+            ApplicationDbContext context = new ApplicationDbContext();
             context.Books.Remove(book);
-			context.SaveChanges();
-		}
+            context.SaveChanges();
+        }
 
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -85,10 +90,10 @@ namespace Athena
         }
 
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
-            // podepn? si? do eventu z klasy DatabaseImporter
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
         }
+
     }
 }
