@@ -32,8 +32,8 @@ namespace Athena
                 .Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
             
-            if (!BookList.ItemsSource.IsNullOrEmpty()) {
-                ImportButton.Visibility = Visibility.Hidden;
+            if (!Books.IsNullOrEmpty()) {
+                ImportButton.Visibility = Visibility.Collapsed;
             }
         }
 
