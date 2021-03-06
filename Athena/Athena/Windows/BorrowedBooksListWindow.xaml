@@ -7,8 +7,7 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Wypożyczone książki" Height="580" Width="600">
-
+                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight">
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
@@ -22,11 +21,11 @@
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0">
+
+            <ListView Grid.Row="1" Margin="10" x:Name="BorrowedBookList" Grid.Column="0" HorizontalAlignment="Stretch" Width="Auto">
                 <ListView.View>
-                    <GridView>
+                    <GridView >
                         <GridViewColumn Header="Tytuł" Width="Auto" />
                         <GridViewColumn Header="Autor" Width="Auto" />
                         <GridViewColumn Header="Wydawca" Width="Auto" />
@@ -34,10 +33,17 @@
                         <GridViewColumn Header="Miejce Składowania" Width="Auto" />
                         <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" />
                         <GridViewColumn Header="Data wypożyczenia" Width="Auto" />
-
+                        <GridViewColumn Header="" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Button Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
                     </GridView>
                 </ListView.View>
-                <!--dodać przycisk zwróc-->
             </ListView>
         </Grid>
 

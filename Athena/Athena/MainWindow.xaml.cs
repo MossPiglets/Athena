@@ -28,8 +28,14 @@ namespace Athena {
             }
         }
 
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
-            AddBookWindow addBook = new AddBookWindow();
+        //private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
+        //    AddBookWindow addBook = new AddBookWindow();
+        //    addBook.Show();
+        //}
+
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            BorrowedBooksListWindow addBook = new BorrowedBooksListWindow();
             addBook.Show();
         }
 

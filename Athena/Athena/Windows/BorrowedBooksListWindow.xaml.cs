@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Athena.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -12,14 +13,14 @@ using System.Windows.Shapes;
 
 namespace Athena.Windows
 {
-    /// <summary>
-    /// Logika interakcji dla klasy BorroewdBooksListWindow.xaml
-    /// </summary>
     public partial class BorrowedBooksListWindow
     {
         public BorrowedBooksListWindow()
         {
             InitializeComponent();
+            BorrowedBookList.ItemsSource = new List<Borrowing>() {new Borrowing()};
         }
+
+
     }
 }
