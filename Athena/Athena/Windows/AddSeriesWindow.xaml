@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:Athena.Windows"
         xmlns:Data="clr-namespace:Athena.Data"
         xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:series="clr-namespace:Athena.Data.Series"
         mc:Ignorable="d"
         Title="Dodaj serię" Height="200" Width="300">
     <Window.Resources>
-        <Data:SeriesView x:Key="SeriesInstance" />
+        <series:SeriesView x:Key="SeriesInstance" />
     </Window.Resources>
     
         <Border Padding="10">
@@ -37,10 +38,9 @@
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <Button Margin="10" Content="Dodaj" Command="Save" >
+            <Button Margin="10" Content="Dodaj" Command="Save" IsEnabled="{Binding ElementName=SeriesNameTextBox, Path=Text.Length, Mode=OneWay}">
                 <Button.CommandBindings>
-                    <CommandBinding Command="Save" 
-                        Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                    <CommandBinding Command="Save" Executed="Save_Executed" CanExecute="Save_CanExecute"/>
                 </Button.CommandBindings>
             </Button>
         </StackPanel>

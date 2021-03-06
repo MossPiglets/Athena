@@ -19,6 +19,7 @@ namespace Athena {
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
+        public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
 
         public BookFormControl(string title, string buttonContent, Book book)
         {
@@ -32,6 +33,8 @@ namespace Athena {
             Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
             ApplicationDbContext.StoragePlaces.Load();
             StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
+            ApplicationDbContext.PublishingHouses.Load();
+            PublishingHouses = ApplicationDbContext.PublishingHouses.Local.ToObservableCollection();
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
@@ -47,8 +50,12 @@ namespace Athena {
         {
             new AddPublisherWindow().Show();
         }
+        private void AddStoragePlace_Click(object sender, RoutedEventArgs e)
+        {
+            new AddStoragePlaceWindow().Show();
+        }
 
-        private void ButtonContent_Click(object sender, RoutedEventArgs e) {
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e) {
             var myWindow = Window.GetWindow(this);
             myWindow.Close();
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Athena.Data {
+namespace Athena.Data.Series {
     public class SeriesInfo {
         public Guid Id { get; set; }
         public string SeriesName { get; set; }
