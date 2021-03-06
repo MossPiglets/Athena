@@ -92,7 +92,10 @@ namespace Athena {
             var searchresult = books.Where(b => b.Title.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
                                                 (b.Series ?? new Series { SeriesName = "" }).SeriesName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
                                                 (b.PublishingHouse ?? new PublishingHouse { PublisherName = "" }).PublisherName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
-                                                b.Authors.Where(a => !a.LastName.IsNullOrEmpty()).Select(a => a.ToString()).Contains(SearchTextBox.Text.ToLower())
+                                                (from author in b.Authors
+                                                where !author.LastName.IsNullOrEmpty()
+                                                select author.ToString())
+                                                //b.Authors.Where(a => !a.LastName.IsNullOrEmpty()).Select(a => a.ToString()).Contains(SearchTextBox.Text.ToLower())
                                                  );
             BookList.ItemsSource = searchresult;
         }
