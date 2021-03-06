@@ -45,7 +45,8 @@ namespace Athena
             borrowForm.Show();
         }
 
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
             AddBookWindow addBook = new AddBookWindow();
             addBook.Show();
         }

@@ -1,0 +1,52 @@
+﻿<controls:AdonisWindow x:Class="Athena.Windows.BorrowedBooksListWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:uc="clr-namespace:Athena"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:local="clr-namespace:Athena"
+                       xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       mc:Ignorable="d"
+                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight">
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+    </Window.Style>
+
+    <Border Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height = "*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ListView Grid.Row="1" Margin="10" x:Name="BorrowedBookList" Grid.Column="0" HorizontalAlignment="Stretch" Width="Auto">
+                <ListView.View>
+                    <GridView >
+                        <GridViewColumn Header="Tytuł" Width="Auto" />
+                        <GridViewColumn Header="Autor" Width="Auto" />
+                        <GridViewColumn Header="Wydawca" Width="Auto" />
+                        <GridViewColumn Header="Rok wydania" Width="Auto" />
+                        <GridViewColumn Header="Miejce Składowania" Width="Auto" />
+                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" />
+                        <GridViewColumn Header="Data wypożyczenia" Width="Auto" />
+                        <GridViewColumn Header="" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Button Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
+
+    </Border>
+
+</controls:AdonisWindow>
