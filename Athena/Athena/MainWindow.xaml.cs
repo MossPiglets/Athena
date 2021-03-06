@@ -1,32 +1,42 @@
-using System;
 using Athena.Data;
 using Athena.Windows;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
 using System.Windows;
 using Athena.Import;
-using Athena.Windows;
 using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using System.Windows.Documents;
+using System.Collections.ObjectModel;
 using Athena.Data.Books;
 
-namespace Athena {
+
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
+        private ApplicationDbContext ApplicationDbContext { get; set; }
+        public ObservableCollection<Book> Books { get; set; }
         public MainWindow() {
+
             InitializeComponent();
             this.DataContext = this;
-            BookList.ItemsSource = new List<Book>();
-            if (!BookList.ItemsSource.IsNullOrEmpty()) {
-                ImportButton.Visibility = Visibility.Hidden;
+            ApplicationDbContext = new ApplicationDbContext();
+            ApplicationDbContext.Books
+                .Include(b => b.Series)
+                .Include(b => b.PublishingHouse)
+                .Include(b => b.StoragePlace)
+                .Include(b => b.Authors)
+                .Load();
+            Books = ApplicationDbContext.Books.Local.ToObservableCollection();
+            
+            if (!Books.IsNullOrEmpty()) {
+                ImportButton.Visibility = Visibility.Collapsed;
             }
+
+            this.Closed += (sender, args) =>  Application.Current.Shutdown();
         }
 
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
