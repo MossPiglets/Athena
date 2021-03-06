@@ -1,5 +1,7 @@
 ﻿using Athena.Data;
 using Athena.Data.Books;
+using Athena.Data.Borrowings;
+using Athena.Data.Series;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {

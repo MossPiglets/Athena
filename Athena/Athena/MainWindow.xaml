@@ -7,9 +7,9 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Athena" Height="580" Width="600">
+                       Title="Athena" Height="580" SizeToContent="Width">
 
-	<Window.Style>
+    <Window.Style>
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
 	</Window.Style>
 
@@ -26,31 +26,60 @@
 			</Grid.ColumnDefinitions>
 			<TextBox Grid.Row="0" Grid.Column="0" x:Name="FindTextBox" />
 			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" Click="AddBook_Click"/>
-			<ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0">
+			<ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header="Wypożycz"/>
+
+						<MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>
                         <MenuItem Header="Edytuj" Click="MenuItemEdit_Click"/>
 						<MenuItem Header="Usuń" Click="MenuItemDelete_Click" />
 					</ContextMenu>
 				</ListView.ContextMenu>
 				<ListView.View>
-					<GridView>
-						<GridViewColumn Header="Tytuł" Width="Auto" DisplayMemberBinding="{Binding Title}" />
-						<GridViewColumn Header="Autor" Width="Auto" DisplayMemberBinding="{Binding Author}" />
-						<GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series}" />
+					<GridView >
+						<GridViewColumn Header="Tytuł" Width="Auto"  DisplayMemberBinding="{Binding Title}" />
+                        <GridViewColumn Header="Autor" Width="Auto" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Authors[0].FirstName" />
+                                                <Binding Path="Authors[0].LastName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series.SeriesName}" />
 						<GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
-						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding Publisher}" />
+						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
 						<GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}" />
-						<GridViewColumn Header="Miejce Składowania" Width="Auto" DisplayMemberBinding="{Binding StoragePlaceName}" />
-						<GridViewColumn Header="ISBN" Width="Auto" DisplayMemberBinding="{Binding ISBN}" />
-						<GridViewColumn Header="Status" Width="Auto" DisplayMemberBinding="{Binding Status}" />
-					</GridView>
+						<GridViewColumn Header="Miejce Składowania" Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" />
+                        <GridViewColumn Header="Wypożyczone" Width="Auto"  >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Borrowing.FirstName" />
+                                                <Binding Path="Borrowing.LastName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+
 				</ListView.View>
 			</ListView>
+
 			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
 			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" Visibility="Hidden" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
+
         </Grid>
 
 	</Border>
