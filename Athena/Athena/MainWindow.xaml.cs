@@ -25,7 +25,7 @@ namespace Athena {
             this.DataContext = this;
 
             ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Books.Load();
+            ApplicationDbContext.Books.Include("Series").Include(b => b.Authors).Load();
             BookList.ItemsSource = ApplicationDbContext.Books.Local.ToObservableCollection();
 
             //BookList.ItemsSource = new List<Book>();
@@ -90,9 +90,9 @@ namespace Athena {
         {
             IEnumerable<Book> books = (IEnumerable<Book>)BookList.ItemsSource;
             var searchresult = books.Where(b => b.Title.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
-                                                (b.Series ?? new Series {SeriesName=""}).SeriesName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
-                                                (b.PublishingHouse ?? new PublishingHouse{ PublisherName= ""}).PublisherName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
-                                                (b.Authors ?? new List<Author> { new Author { FirstName = "", LastName = "" } }).First().ToString().ToLower().Contains(SearchTextBox.Text.ToLower())
+                                                (b.Series ?? new Series { SeriesName = "" }).SeriesName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
+                                                (b.PublishingHouse ?? new PublishingHouse { PublisherName = "" }).PublisherName.ToLower().Contains(SearchTextBox.Text.ToLower()) ||
+                                                b.Authors.Where(a => !a.LastName.IsNullOrEmpty()).Select(a => a.ToString()).Contains(SearchTextBox.Text.ToLower())
                                                  );
             BookList.ItemsSource = searchresult;
         }
