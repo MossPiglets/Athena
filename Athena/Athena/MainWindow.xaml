@@ -12,30 +12,34 @@
     <Window.Style>
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
 	</Window.Style>
-
-	<Border Padding="10">
-
-        <Grid>
-            <Grid.RowDefinitions>
+    
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="36" GlassFrameThickness="0 0 0 1" ResizeBorderThickness="5" />
+    </WindowChrome.WindowChrome>
+    
+    <Grid>
+        <Grid.RowDefinitions>
                 <RowDefinition Height = "auto"/>
                 <RowDefinition Height="auto" />
-				<RowDefinition Height="*" />
+            <RowDefinition Height="*" />
 				<RowDefinition Height = "*"/>
-			</Grid.RowDefinitions>
+            </Grid.RowDefinitions>
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="auto" />
-			</Grid.ColumnDefinitions>
-            <Grid Grid.Row="0" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
+
+        <ToolBarTray Grid.Row="0">
+            <ToolBar Band="1" BandIndex="1">
+                <Border Padding="10"/>
                 <Button Margin="20 0 10 0" Content="Dodaj nową książkę" Grid.Row="0" Grid.Column="0" Click="AddBook_Click"/>
                 <Button Margin="10 0 10 0" Content="Wyświetl listę wypożyczonych książek" Grid.Row="0" Grid.Column="1" />
-            </Grid>
-            <TextBox Grid.Row="1" Grid.Column="0" x:Name="FindTextBox" Margin="20 10 20 5"/>
-            <ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
+            </ToolBar>
+        </ToolBarTray>
+            
+        <TextBox Grid.Row="1" Grid.Column="0" x:Name="FindTextBox" Margin="20 10 20 5" Grid.ColumnSpan="3"/>
+
+        <ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
                         <MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>
@@ -83,10 +87,8 @@
 
 				</ListView.View>
 			</ListView>
-			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
+            <Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
 			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" Visibility="Hidden" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" />
         </Grid>
-    </Border>
-
 </controls:AdonisWindow>
