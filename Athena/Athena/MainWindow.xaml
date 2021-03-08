@@ -14,9 +14,11 @@
 	</Window.Style>
 
 	<Border Padding="10">
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="auto" />
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "auto"/>
+                <RowDefinition Height="auto" />
 				<RowDefinition Height="*" />
 				<RowDefinition Height = "*"/>
 			</Grid.RowDefinitions>
@@ -24,13 +26,19 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="auto" />
 			</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" x:Name="FindTextBox" />
-			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" Click="AddBook_Click"/>
-			<ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+                <Button Margin="20 0 10 0" Content="Dodaj nową książkę" Grid.Row="0" Grid.Column="0" Click="AddBook_Click"/>
+                <Button Margin="10 0 10 0" Content="Wyświetl listę wypożyczonych książek" Grid.Row="0" Grid.Column="1" />
+            </Grid>
+            <TextBox Grid.Row="1" Grid.Column="0" x:Name="FindTextBox" Margin="20 10 20 5"/>
+            <ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
-
-						<MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>
+                        <MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>
                         <MenuItem Header="Edytuj" Click="MenuItemEdit_Click"/>
 						<MenuItem Header="Usuń" Click="MenuItemDelete_Click" />
 					</ContextMenu>
@@ -75,13 +83,10 @@
 
 				</ListView.View>
 			</ListView>
-
-			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
-			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" Visibility="Hidden" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" />
-
+			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
+			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" Visibility="Hidden" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" />
         </Grid>
-
-	</Border>
+    </Border>
 
 </controls:AdonisWindow>
