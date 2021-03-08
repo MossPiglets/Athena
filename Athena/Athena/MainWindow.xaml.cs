@@ -45,12 +45,6 @@ namespace Athena
             borrowForm.Show();
         }
 
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            AddBookWindow addBook = new AddBookWindow();
-            addBook.Show();
-        }
-
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = (Book) BookList.SelectedItem;
             EditBookWindow editBook = new EditBookWindow(book);
@@ -96,5 +90,10 @@ namespace Athena
             dataImporter.ImportFromSpreadsheet(fileName);
         }
 
+        private void OpenBorrowedBooksListWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            BorrowedBooksListWindow borrowBook = new BorrowedBooksListWindow();
+            borrowBook.Show();
+        }
     }
 }

@@ -4,7 +4,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Athena.Data;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
 using Castle.Core.Internal;
@@ -25,6 +24,7 @@ namespace Athena {
             if (!authors.IsNullOrEmpty()) {
                 Author.Text = authors;
             }
+
             BorrowingView = new BorrowingView();
             BorrowingView.Book = book;
             Calendar.SelectedDate = DateTime.Today;

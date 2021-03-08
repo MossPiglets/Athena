@@ -33,11 +33,12 @@
                         <GridViewColumn Header="Miejce Składowania" Width="Auto" />
                         <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" />
                         <GridViewColumn Header="Data wypożyczenia" Width="Auto" />
+                        <GridViewColumn Header="Data zwrotu" Width="Auto" />
                         <GridViewColumn Header="" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Button Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center"/>
+                                        <Button Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center" Click="OpenReturnBookWindow_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
