@@ -28,6 +28,10 @@ namespace Athena {
             ButtonContent = buttonContent;
             this.DataContext = this;
             BookView = Mapper.Instance.Map<BookView>(book);
+            this.Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e) {
             ApplicationDbContext = new ApplicationDbContext();
             ApplicationDbContext.Authors.Load();
             Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
@@ -35,6 +39,11 @@ namespace Athena {
             StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
             ApplicationDbContext.PublishingHouses.Load();
             PublishingHouses = ApplicationDbContext.PublishingHouses.Local.ToObservableCollection();
+            if (BookView.Authors.Count > 0) {
+                AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
+            }
+            // w tym ifie powinien być for który idzie przez resztę autorów i dodaje za każdego autora AddingAuthorUserCOntrol do StackPanelu
+            // i ustawia selectedIndex
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {

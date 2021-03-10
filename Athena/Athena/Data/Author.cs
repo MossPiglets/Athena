@@ -17,6 +17,15 @@ namespace Athena.Data {
             else
                 return $"{FirstName} {LastName}";
         }
+
+        public override bool Equals(object? obj) {
+            var author = obj as Author;
+            if (author == null) {
+                return false;
+            }
+
+            return this.Id.Equals(author.Id);
+        }
     }
 
     
