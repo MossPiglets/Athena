@@ -73,28 +73,6 @@ namespace Athena.Data.Books {
                 return null;
             }
         }
-
-<<<<<<< HEAD
-        public Book ToBook() {
-            return new Book {
-                Id = Id,
-                Title = Title,
-                Authors = Authors.ToList(),
-                Series = Series,
-                PublishingHouse = PublishingHouse,
-                PublishmentYear = PublishmentYear,
-                VolumeNumber = VolumeNumber,
-                Language = Language,
-                ISBN = ISBN,
-                StoragePlace = StoragePlace,
-                Categories = Categories,
-                Comment = Comment,
-                Borrowing = Borrowing
-            };
-        }
-
-=======
->>>>>>> 69d9c17518b8a2d462dc6274e8a2264147131c39
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
