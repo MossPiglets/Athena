@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Athena.Data;
 using Athena.Data.Books;
@@ -41,6 +42,15 @@ namespace Athena {
             PublishingHouses = ApplicationDbContext.PublishingHouses.Local.ToObservableCollection();
             if (BookView.Authors.Count > 0) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
+                if (BookView.Authors.Count > 1) {
+                    for (int i = 1; i < BookView.Authors.Count; i++) {
+                        AddingAuthorCombobox(this, new RoutedEventArgs());
+                        var authorAdding = (AuthorAdding) AuthorsStackPanel.Children[i - 1];
+                        var combobox = authorAdding.AuthorComboBox;
+                        combobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[i]);
+                    }
+                }
+                
             }
             // w tym ifie powinien być for który idzie przez resztę autorów i dodaje za każdego autora AddingAuthorUserCOntrol do StackPanelu
             // i ustawia selectedIndex
