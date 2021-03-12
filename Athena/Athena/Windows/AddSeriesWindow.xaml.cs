@@ -19,19 +19,19 @@ namespace Athena.Windows
     /// </summary>
     public partial class AddSeriesWindow
     {
-        ApplicationDbContext _context = new ApplicationDbContext();
-
         public AddSeriesWindow()
         {
             InitializeComponent();
         }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!_context.Series.Any(s => s.SeriesName == SeriesNameTextBox.Text))
+            using var context = new ApplicationDbContext();
+            if (!context.Series.Any(s => s.SeriesName == SeriesNameTextBox.Text))
             {
-                _context.Series.Add(new Data.Series.Series { SeriesName = SeriesNameTextBox.Text });
-                _context.SaveChanges();
+                context.Series.Add(new Data.Series.Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() });
+                context.SaveChanges();
             }
+            this.Close();
         }
         private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
