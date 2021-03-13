@@ -7,6 +7,6 @@ using Athena.Data.Books;
 namespace Athena.Data {
     public class Category {
         public CategoryName Name { get; set; }
-        public ICollection<Book> Books { get; set; } 
+        public ICollection<Book> Books { get; set; }
     }
 }

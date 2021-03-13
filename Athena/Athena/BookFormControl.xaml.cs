@@ -7,6 +7,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using Athena.Data;
 using Athena.Data.Books;
+using Athena.Resources;
 using Athena.Windows;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,9 +22,9 @@ namespace Athena {
         public ObservableCollection<Author> Authors { get; set; }
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
         public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
+        public ObservableCollection<Category> Categories { get; set; }
 
-        public BookFormControl(string title, string buttonContent, Book book)
-        {
+        public BookFormControl(string title, string buttonContent, Book book) {
             InitializeComponent();
             Title = title;
             ButtonContent = buttonContent;
@@ -40,6 +41,8 @@ namespace Athena {
             StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
             ApplicationDbContext.PublishingHouses.Load();
             PublishingHouses = ApplicationDbContext.PublishingHouses.Local.ToObservableCollection();
+            ApplicationDbContext.Categories.Load();
+            Categories = ApplicationDbContext.Categories.Local.ToObservableCollection();
             if (BookView.Authors.Count > 0) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
                 if (BookView.Authors.Count > 1) {
@@ -50,10 +53,15 @@ namespace Athena {
                         combobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[i]);
                     }
                 }
-                
             }
-            // w tym ifie powinien być for który idzie przez resztę autorów i dodaje za każdego autora AddingAuthorUserCOntrol do StackPanelu
-            // i ustawia selectedIndex
+
+            if (BookView.Categories.Count > 0) {
+                CategoriesCombobox.SelectedItem = BookView.Categories.ToList()[0].Name;
+            }
+
+            if (BookView.StoragePlace != null) {
+                StoragePlaceCombobox.SelectedIndex = StoragePlaces.IndexOf(BookView.StoragePlace);
+            }
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
@@ -65,12 +73,11 @@ namespace Athena {
             new AddSeriesWindow().Show();
         }
 
-        private void AddPublisher_Click(object sender, RoutedEventArgs e)
-        {
+        private void AddPublisher_Click(object sender, RoutedEventArgs e) {
             new AddPublisherWindow().Show();
         }
-        private void AddStoragePlace_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void AddStoragePlace_Click(object sender, RoutedEventArgs e) {
             new AddStoragePlaceWindow().Show();
         }
 
