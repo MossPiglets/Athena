@@ -58,10 +58,6 @@ namespace Athena {
             if (BookView.Categories.Count > 0) {
                 CategoriesCombobox.SelectedItem = BookView.Categories.ToList()[0].Name;
             }
-
-            if (BookView.StoragePlace != null) {
-                StoragePlaceCombobox.SelectedIndex = StoragePlaces.IndexOf(BookView.StoragePlace);
-            }
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {

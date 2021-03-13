@@ -167,7 +167,7 @@
 
                 <TextBlock Text="Miejsce składowania:" Grid.Row="0" Grid.Column="0"/>
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <ComboBox Name="StoragePlaceCombobox" ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}" 
+                <ComboBox Text="{Binding Path=BookView.StoragePlace.StoragePlaceName}" ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}" 
                           IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0" />
                 <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="2" 
                         Margin="0 0 19 0" Width="22" Height="22" Click="AddStoragePlace_Click" />
