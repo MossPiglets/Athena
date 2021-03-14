@@ -47,8 +47,10 @@ namespace Athena
 
         private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            AddBookWindow addBook = new AddBookWindow();
-            addBook.Show();
+            //AddBookWindow addBook = new AddBookWindow();
+            //addBook.Show();
+            BorrowedBooksListWindow window = new BorrowedBooksListWindow();
+            window.Show();
         }
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
