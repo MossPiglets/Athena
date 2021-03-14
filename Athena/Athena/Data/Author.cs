@@ -15,7 +15,7 @@ namespace Athena.Data {
             if (string.IsNullOrWhiteSpace(FirstName))
                 return LastName;
             else
-                return $"{FirstName} {LastName}";
+                return $"{LastName}, {FirstName}";
         }
 
         public override bool Equals(object? obj) {
