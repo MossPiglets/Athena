@@ -5,12 +5,17 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:local="clr-namespace:Athena.Windows"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       xmlns:StoragePlaces="clr-namespace:Athena.Data.StoragePlaces"
                        mc:Ignorable="d"
                        Title="Dodaj miejsce przechowywania" SizeToContent="WidthAndHeight" MaxWidth="300">
-
+    <Window.Resources>
+        <StoragePlaces:StoragePlaceView x:Key="StoragePlaceInstance" />
+    </Window.Resources>
+    
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Miejsce przechowywania" HorizontalAlignment="Center"/>
+            
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"/>
@@ -21,12 +26,27 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwa:" VerticalAlignment="Center"/>
-                <TextBox Grid.Column="1" Grid.Row="1" Margin="10 0 0 0" MinWidth="150"/>
+                <TextBox x:Name ="StoragePlaceTextBox" Grid.Column="1" Grid.Row="1" Margin="10 0 0 0" MinWidth="150">
+                    <TextBox.Text>
+                        <Binding  Path="StoragePlaceName" Source="{StaticResource StoragePlaceInstance}"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </Grid>
             <TextBlock Margin="0 10 0 0" Text="Komentarz:" HorizontalAlignment="Center"/>
             <TextBox Margin="0 5 0 0" MinWidth="250" MinHeight="50" TextWrapping="Wrap"/>
 
-            <Button Margin="50 10" Content="Dodaj"/>
+            <Button Margin="50 10" Content="Dodaj" IsEnabled="{Binding ElementName=StoragePlaceTextBox, Path=Text.Length, Mode=OneWay}">
+                <Button.CommandBindings>
+                    <CommandBinding Command="Save" 
+                                    Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                </Button.CommandBindings>
+            </Button>
         </StackPanel>
     </Border>
 
