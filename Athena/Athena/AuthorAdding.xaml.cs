@@ -34,7 +34,7 @@ namespace Athena
         }
 
 
-        private void Delate_Button_Click(object sender, RoutedEventArgs e)
+        private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
             (this.Parent as StackPanel).Children.Remove(this);
         }

@@ -29,6 +29,7 @@ namespace Athena
                 .Include(b => b.PublishingHouse)
                 .Include(b => b.StoragePlace)
                 .Include(b => b.Authors)
+                .Include(b => b.Categories)
                 .Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
             
