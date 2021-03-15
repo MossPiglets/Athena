@@ -14,9 +14,11 @@ namespace Athena.Windows
             ApplicationDbContext = new ApplicationDbContext();
             ApplicationDbContext.Borrowings
                 .Include(a => a.Book)
-                .Include(a => a.Book.StoragePlace)
-                .Include(a => a.Book.PublishingHouse)
-                .Include(a => a.Book.Authors)
+                .ThenInclude(a => a.StoragePlace)
+                .Include(a => a.Book)
+                .ThenInclude(a => a.PublishingHouse)
+                .Include(a => a.Book)
+                .ThenInclude(a => a.Authors)
                 .Load();
             Borrowings = ApplicationDbContext.Borrowings.Local.ToObservableCollection();
             BorrowedBookList.ItemsSource = Borrowings;
