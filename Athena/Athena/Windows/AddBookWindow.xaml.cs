@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Athena.Data;
 using Athena.Data.Books;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Windows {
     /// <summary>
@@ -28,7 +29,7 @@ namespace Athena.Windows {
             using var context = new ApplicationDbContext();
             Book bookModel = Mapper.Instance.Map<Book>(book);
             bookModel.Id = Guid.NewGuid();
-            context.Books.Add(bookModel);
+            context.Entry(bookModel).State = EntityState.Added;
             context.SaveChanges();
         }
 
