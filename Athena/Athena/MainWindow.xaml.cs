@@ -9,7 +9,9 @@ using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using Athena.Data.Books;
-
+using System.Linq;
+using Athena.Data.Series;
+using System;
 
 namespace Athena {
     /// <summary>
@@ -94,6 +96,23 @@ namespace Athena {
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
+        }
+
+        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+            var text = SearchTextBox.Text;
+            if (text.Length == 0)
+                BookList.ItemsSource = Books;
+            if (text.Length < 3)
+                return;
+            var fillteredBooks = Books.Where(b => b.Title.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
+                                            (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
+                                            (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
+                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            );
+                                            
+            BookList.ItemsSource = fillteredBooks;
         }
     }
 }

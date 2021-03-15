@@ -72,7 +72,6 @@ namespace Athena.Data.Books {
                 return null;
             }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
