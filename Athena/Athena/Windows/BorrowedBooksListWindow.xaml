@@ -26,6 +26,7 @@
             <ListView Grid.Row="1" Margin="10" x:Name="BorrowedBookList" Grid.Column="0" HorizontalAlignment="Stretch"
                       Width="Auto">
                 <ListView.View>
+
                     <GridView>
                         <GridViewColumn Header="Tytuł" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.Title}" />
@@ -65,6 +66,7 @@
                         </GridViewColumn>
                         <GridViewColumn Header="Data wypożyczenia" Width="Auto"
                                         DisplayMemberBinding="{Binding BorrowDate, StringFormat=dd-MM-yyyy}" />
+
                         <GridViewColumn Header="" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
