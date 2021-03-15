@@ -26,7 +26,7 @@ namespace Athena.Windows
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
             using var context = new ApplicationDbContext();
-            if (!context.Series.Any(s => s.SeriesName == SeriesNameTextBox.Text))
+            if (!context.Series.Any(s => s.SeriesName.ToLower() == SeriesNameTextBox.Text.ToLower()))
             {
                 context.Series.Add(new Data.Series.Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() });
                 context.SaveChanges();
