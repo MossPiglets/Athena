@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Athena.Data.Books;
 
 namespace Athena.Data.Borrowings {
@@ -12,5 +11,13 @@ namespace Athena.Data.Borrowings {
         public DateTime ReturnDate { get; set; }
         public Book Book { get; set; }
 
+        public override string ToString() {
+            if (string.IsNullOrEmpty(LastName)) {
+                return FirstName;
+            }
+            else {
+                return$"{FirstName} {LastName}";
+            }
+        }
     }
 }

@@ -4,6 +4,7 @@ using System.Windows.Input;
 using AdonisUI.Controls;
 using Athena.Data;
 using Athena.Data.Books;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Windows {
     public partial class EditBookWindow {
@@ -24,7 +25,7 @@ namespace Athena.Windows {
 
         public void Execute(object book) {
             using var context = new ApplicationDbContext();
-            context.Books.Update(Mapper.Instance.Map<Book>(book));
+            context.Entry(Mapper.Instance.Map<Book>(book)).State = EntityState.Modified;
             context.SaveChanges();
         }
 

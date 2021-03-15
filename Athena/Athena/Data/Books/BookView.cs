@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Athena.Annotations;
 using Athena.Data.Borrowings;
 
@@ -73,7 +72,6 @@ namespace Athena.Data.Books {
                 return null;
             }
         }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
