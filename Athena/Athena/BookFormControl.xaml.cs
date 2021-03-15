@@ -95,5 +95,9 @@ namespace Athena {
             }
         }
 
+        private void AddingCategoryCombobox_Click(object sender, RoutedEventArgs e) {
+            var categoryAddingUserControl = new CategoryAdding();
+            CategoriesStackPanel.Children.Add(categoryAddingUserControl);
+        }
     }
 }
