@@ -64,7 +64,7 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn Header="Data wypożyczenia" Width="Auto"
-                                        DisplayMemberBinding="{Binding BorrowDate}" />
+                                        DisplayMemberBinding="{Binding BorrowDate, StringFormat=dd-MM-yyyy}" />
                         <GridViewColumn Header="" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

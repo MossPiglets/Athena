@@ -11,16 +11,15 @@ using System.Collections.ObjectModel;
 using Athena.Data.Books;
 
 
-namespace Athena
-{
+namespace Athena {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Book> Books { get; set; }
-        public MainWindow() {
 
+        public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
             ApplicationDbContext = new ApplicationDbContext();
@@ -31,12 +30,12 @@ namespace Athena
                 .Include(b => b.Authors)
                 .Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
-            
+
             if (!Books.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Collapsed;
             }
 
-            this.Closed += (sender, args) =>  Application.Current.Shutdown();
+            this.Closed += (sender, args) => Application.Current.Shutdown();
         }
 
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
@@ -45,12 +44,9 @@ namespace Athena
             borrowForm.Show();
         }
 
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            //AddBookWindow addBook = new AddBookWindow();
-            //addBook.Show();
-            BorrowedBooksListWindow window = new BorrowedBooksListWindow();
-            window.Show();
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
+            AddBookWindow addBook = new AddBookWindow();
+            addBook.Show();
         }
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -97,6 +93,5 @@ namespace Athena
             var dataImporter = new DatabaseImporter();
             dataImporter.ImportFromSpreadsheet(fileName);
         }
-
     }
 }
