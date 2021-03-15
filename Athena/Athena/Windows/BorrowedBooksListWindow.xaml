@@ -30,7 +30,7 @@
                         <GridViewColumn Header="Autor" Width="Auto" />
                         <GridViewColumn Header="Wydawca" Width="Auto" />
                         <GridViewColumn Header="Rok wydania" Width="Auto" />
-                        <GridViewColumn Header="Miejce Składowania" Width="Auto" />
+                        <GridViewColumn Header="Miejce przechowywania" Width="Auto" />
                         <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" />
                         <GridViewColumn Header="Data wypożyczenia" Width="Auto" />
                         <GridViewColumn Header="" Width="Auto">
