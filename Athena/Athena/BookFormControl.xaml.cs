@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Athena.Data;
 using Athena.Data.Books;
 using Athena.Windows;
+using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -40,7 +41,7 @@ namespace Athena {
             PublishingHouses = ApplicationDbContext.PublishingHouses.Local.ToObservableCollection();
             ApplicationDbContext.Categories.Load();
             Categories = ApplicationDbContext.Categories.Local.ToObservableCollection();
-            if (BookView.Authors.Count > 0) {
+            if (!BookView.Authors.IsNullOrEmpty()) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
                 if (BookView.Authors.Count > 1) {
                     for (int i = 1; i < BookView.Authors.Count; i++) {
@@ -52,7 +53,7 @@ namespace Athena {
                 }
             }
 
-            if (BookView.Categories.Count > 0) {
+            if (!BookView.Categories.IsNullOrEmpty()) {
                 CategoriesCombobox.SelectedItem = BookView.Categories.ToList()[0].Name;
             }
         }
