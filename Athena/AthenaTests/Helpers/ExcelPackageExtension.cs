@@ -15,7 +15,7 @@ namespace AthenaTests.Helpers {
             worksheetCatalog.Cells[1, 6].Value = "Miejscowość";
             worksheetCatalog.Cells[1, 7].Value = "ISBN";
             worksheetCatalog.Cells[1, 8].Value = "Język";
-            worksheetCatalog.Cells[1, 9].Value = "Miejsce składowania";
+            worksheetCatalog.Cells[1, 9].Value = "Miejsce przechowywania";
             worksheetCatalog.Cells[1, 10].Value = "Uwagi";
 
             for (int i = 0; i < data.CatalogTestsDataList.Count; i++) {
