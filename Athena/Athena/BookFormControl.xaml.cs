@@ -54,7 +54,13 @@ namespace Athena {
             }
 
             if (!BookView.Categories.IsNullOrEmpty()) {
-                CategoriesCombobox.SelectedItem = BookView.Categories.ToList()[0].Name;
+                CategoriesCombobox.SelectedItem = BookView.Categories.First().Name;
+                for (int i = 1; i < BookView.Categories.Count; i++) {
+                    AddingCategoryCombobox_Click(this, new RoutedEventArgs());
+                    var categoryAdding = (CategoryAdding) CategoriesStackPanel.Children[i - 1];
+                    var combobox = categoryAdding.CategoryComboBox;
+                    combobox.SelectedItem = BookView.Categories.ToList()[i].Name;
+                }
             }
         }
 
