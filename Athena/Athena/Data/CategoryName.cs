@@ -98,6 +98,9 @@ namespace Athena.Data {
         Tourism,
 
         [LocalizedDescription("Relationship", typeof(Categories))]
-        Relationship
+        Relationship,
+
+        [LocalizedDescription("CrimeStory", typeof(Categories))]
+        CrimeStory
     }
 }

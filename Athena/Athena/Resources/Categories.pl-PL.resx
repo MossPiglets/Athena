@@ -141,6 +141,9 @@
   <data name="Comic" xml:space="preserve">
     <value>Komiks</value>
   </data>
+  <data name="CrimeStory" xml:space="preserve">
+    <value>Kryminał</value>
+  </data>
   <data name="Culinary" xml:space="preserve">
     <value>Kulinarma</value>
   </data>
