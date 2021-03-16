@@ -68,10 +68,11 @@ namespace Athena.Data.Books {
                 if (firstOrDefault != null) {
                     return _bookViewValidator != null ? firstOrDefault.ErrorMessage : null;
                 }
-
+                
                 return null;
             }
         }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
