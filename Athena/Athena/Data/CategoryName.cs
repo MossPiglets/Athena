@@ -100,7 +100,7 @@ namespace Athena.Data {
         [LocalizedDescription("Relationship", typeof(Categories))]
         Relationship,
 
-        [LocalizedDescription("CrimeStory", typeof(Categories))]
-        CrimeStory
+        [LocalizedDescription("CrimeNovel", typeof(Categories))]
+        CrimeNovel
     }
 }
