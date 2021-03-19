@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Athena.EnumLocalizations;
 using Athena.Resources;
 
 namespace Athena.Data {

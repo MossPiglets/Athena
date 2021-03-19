@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,6 +8,7 @@ using System.Windows.Input;
 using Athena.Data;
 using Athena.Data.Books;
 using Athena.Data.Series;
+using Athena.EnumLocalizations;
 using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
@@ -76,6 +78,9 @@ namespace Athena {
                     combobox.SelectedItem = BookView.Categories.ToList()[i].Name;
                 }
             }
+
+            CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
+            LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {

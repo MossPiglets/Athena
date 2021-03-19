@@ -86,7 +86,6 @@
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0"
                         Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
                 <ComboBox x:Name="CategoriesCombobox"
-                          ItemsSource="{Binding Source={local:EnumBindingSource {x:Type Data:CategoryName}}, UpdateSourceTrigger=PropertyChanged}"
                           Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 52 0 " Height="22" />
                 <StackPanel x:Name="CategoriesStackPanel" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" />
                 <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 7 18 0"
@@ -166,10 +165,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBox Text="{Binding BookView.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox Text="{Binding BookView.Language}"
-                          ItemsSource="{Binding 
-                    Source={StaticResource EnumLanguage}}"
-                          IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
+                <ComboBox Name="LanguageComboBox" IsEditable="True" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
