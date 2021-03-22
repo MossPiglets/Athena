@@ -6,6 +6,7 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
                        mc:Ignorable="d"
                        Title="Athena" Height="580" SizeToContent="Width">
 
@@ -13,11 +14,9 @@
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
 	</Window.Style>
     
-    <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="36" GlassFrameThickness="0 0 0 1" ResizeBorderThickness="5" />
-    </WindowChrome.WindowChrome>
     
     <Grid>
+        
         <Grid.RowDefinitions>
                 <RowDefinition Height = "auto"/>
                 <RowDefinition Height="auto" />
@@ -27,19 +26,24 @@
 			<Grid.ColumnDefinitions>
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
+			</Grid.ColumnDefinitions>
 
-        <ToolBarTray Grid.Row="0">
-            <ToolBar Band="1" BandIndex="1">
-                <Border Padding="10"/>
-                <Button Margin="20 0 10 0" Content="Dodaj nową książkę" Grid.Row="0" Grid.Column="0" Click="AddBook_Click"/>
-                <Button Margin="10 0 10 0" Content="Wyświetl listę wypożyczonych książek" Grid.Row="0" Grid.Column="1" />
-            </ToolBar>
-        </ToolBarTray>
-            
-        <TextBox Grid.Row="1" Grid.Column="0" x:Name="FindTextBox" Margin="20 10 20 5" Grid.ColumnSpan="3"/>
-
-        <ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_File">
+                    <MenuItem Header="_New" />
+                    <MenuItem Header="_Open" />
+                    <MenuItem Header="_Save" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
+            </Menu>
+            <TextBox AcceptsReturn="True" />
+        </DockPanel>
+        
+        <TextBox Grid.Row="0" Grid.Column="0" x:Name="SearchTextBox" adonisExtensions:WatermarkExtension.Watermark="Wyszukaj..." TextChanged="SearchTextBox_TextChanged" />
+			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" Click="AddBook_Click"/>
+			<ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
                         <MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>
@@ -68,7 +72,7 @@
 						<GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
 						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
 						<GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}" />
-						<GridViewColumn Header="Miejce Składowania" Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" />
+                        <GridViewColumn Header="Miejce przechowywania" Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" />
                         <GridViewColumn Header="Wypożyczone" Width="Auto"  >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

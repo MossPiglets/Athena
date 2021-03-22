@@ -8,9 +8,6 @@
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600" >
     
-
-
-
     <UserControl.Resources>
         
         <ObjectDataProvider
@@ -80,11 +77,14 @@
                 </Grid.RowDefinitions>
 
                 <ComboBox x:Name="AuthorCombobox" ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}" 
-                          IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 52 0 " Height="22"/>
+                          IsEditable="True"  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"  Margin="0 0 52 0 " Height="22"/>
                 <StackPanel x:Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"/>
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
-                <ComboBox x:Name="Categories" Text="{Binding BookView.Categories}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type Data:CategoryName}}, UpdateSourceTrigger=PropertyChanged}" 
-                          IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 10 0" Height="22"/>
+                <ComboBox x:Name="CategoriesCombobox" Text="{Binding BookView.Categories}" ItemsSource="{Binding Source={local:EnumBindingSource {x:Type Data:CategoryName}}, UpdateSourceTrigger=PropertyChanged}" 
+                          IsEditable="True" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 52 0 " Height="22"/>
+                <StackPanel x:Name="CategoriesStackPanel" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2"/>
+                <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 7 18 0" Content="Dodaj kolejną kategorię" Click="AddingCategoryCombobox_Click" />
+
             </Grid>
 
             <Grid Margin="5 10 10 0">
@@ -108,7 +108,7 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Nazwa:" />
                 <TextBlock Text="Nr tomu:" Grid.Column="2" />
-                <TextBox Text="{Binding BookView.Series.VolumeNumber}" PreviewTextInput="AllowOnlyNumbers" DataObject.Pasting="AllowPastOnlyNumbers" HorizontalAlignment="Left" Width="40" Grid.Column="3" />
+                <TextBox Text="{Binding BookView.VolumeNumber}" PreviewTextInput="AllowOnlyNumbers" DataObject.Pasting="AllowPastOnlyNumbers" HorizontalAlignment="Left" Width="40" Grid.Column="3" />
                 <ComboBox Text="{Binding BookView.Series.SeriesName}" IsEditable="True" Grid.Column="1" Margin="0 0 19 0"/>
             </Grid>
 
@@ -168,11 +168,12 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Miejsce składowania:" Grid.Row="0" Grid.Column="0"/>
+                <TextBlock Text="Miejsce przechowywania:" Grid.Row="0" Grid.Column="0"/>
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
-                <ComboBox ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}" IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0" />
-                <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="2" Margin="0 0 19 0" Width="22"
-                        Height="22" Click="AddStoragePlace_Click" />
+                <ComboBox Text="{Binding Path=BookView.StoragePlace.StoragePlaceName}" ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}" 
+                          IsEditable="True" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0" />
+                <Button Content="➕" Padding ="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="2" 
+                        Margin="0 0 19 0" Width="22" Height="22" Click="AddStoragePlace_Click" />
                 <TextBox Text="{Binding BookView.Comment}" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Grid.Column="1" Height="66" Margin="0 7 19 0"/>
             </Grid>
 
