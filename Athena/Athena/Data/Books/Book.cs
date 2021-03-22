@@ -18,6 +18,6 @@ namespace Athena.Data.Books {
         public PublishingHouse PublishingHouse { get; set; }
         public ICollection<Category> Categories { get; set; }
         public StoragePlace StoragePlace { get; set; }
-        public ICollection<Borrowing> Borrowing { get; set; }
+        public IList<Borrowing> Borrowing { get; set; }
     }
 }
