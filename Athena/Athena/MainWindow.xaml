@@ -57,20 +57,7 @@
 						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
 						<GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}" />
                         <GridViewColumn Header="Miejce przechowywania" Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" />
-                        <GridViewColumn Header="Wypożyczone" Width="Auto"  >
-                            <GridViewColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Borrowing[0].FirstName" />
-                                                <Binding Path="Borrowing[0].LastName" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
+                        <GridViewColumn Header="Wypożyczone" Width="Auto" DisplayMemberBinding="{Binding LastBorrowName}"/>
                     </GridView>
 
 				</ListView.View>

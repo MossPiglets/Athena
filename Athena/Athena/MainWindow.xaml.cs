@@ -19,7 +19,7 @@ namespace Athena {
     /// </summary>
     public partial class MainWindow {
         private ApplicationDbContext ApplicationDbContext { get; set; }
-        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<BookInListView> Books { get; set; }
 
         public MainWindow() {
             InitializeComponent();
@@ -33,7 +33,8 @@ namespace Athena {
                 .Include(b => b.Categories)
                 .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
                 .Load();
-            Books = ApplicationDbContext.Books.Local.ToObservableCollection();
+            //Books = ApplicationDbContext.Books.Local.ToObservableCollection();
+            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Books.Local.ToObservableCollection());
 
             if (!Books.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Collapsed;
