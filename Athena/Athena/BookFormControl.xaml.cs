@@ -56,7 +56,7 @@ namespace Athena {
             SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Series.Local
                 .ToList()
                 .OrderBy(a => a.SeriesName));
-            
+
             if (!BookView.Authors.IsNullOrEmpty()) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
                 if (BookView.Authors.Count > 1) {
@@ -81,6 +81,13 @@ namespace Athena {
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
+            SeriesComboBox.ItemsSource = SeriesList.Select(a => a.SeriesName).ToList();
+
+            if (BookView.Series != null) {
+                SeriesComboBox.SelectedItem = BookView.Series.SeriesName;
+            }
+
+            LanguageComboBox.SelectedItem = BookView.Language;
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
