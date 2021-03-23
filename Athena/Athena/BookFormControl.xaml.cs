@@ -125,5 +125,9 @@ namespace Athena {
             var categoryAddingUserControl = new CategoryAdding();
             CategoriesStackPanel.Children.Add(categoryAddingUserControl);
         }
+
+        private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
+            Window.GetWindow(this)?.Close();
+        }
     }
 }
