@@ -81,7 +81,7 @@ namespace Athena {
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-            SeriesComboBox.ItemsSource = SeriesList.Select(a => a.SeriesName).ToList();
+            SeriesComboBox.ItemsSource = SeriesList.Select(a => a).ToList();
 
             if (BookView.Series != null) {
                 SeriesComboBox.SelectedItem = BookView.Series.SeriesName;
