@@ -1,11 +1,16 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
 using Athena.Data.Books;
+using Athena.Data.Series;
+using Athena.EnumLocalizations;
 using Athena.Windows;
+using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -19,7 +24,7 @@ namespace Athena {
         public ObservableCollection<Author> Authors { get; set; }
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
         public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
-        public ObservableCollection<Category> Categories { get; set; }
+        public ObservableCollection<Series> SeriesList { get; set; }
 
         public BookFormControl(string title, string buttonContent, Book book) {
             InitializeComponent();
@@ -33,14 +38,26 @@ namespace Athena {
         private void OnLoaded(object sender, RoutedEventArgs e) {
             ApplicationDbContext = new ApplicationDbContext();
             ApplicationDbContext.Authors.Load();
-            Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
+            Authors = new ObservableCollection<Author>(ApplicationDbContext.Authors.Local
+                .ToList()
+                .OrderBy(a => a.LastName));
+            
             ApplicationDbContext.StoragePlaces.Load();
-            StoragePlaces = ApplicationDbContext.StoragePlaces.Local.ToObservableCollection();
+            StoragePlaces = new ObservableCollection<StoragePlace>(ApplicationDbContext.StoragePlaces.Local
+                .ToList()
+                .OrderBy(a => a.StoragePlaceName));
+           
             ApplicationDbContext.PublishingHouses.Load();
-            PublishingHouses = ApplicationDbContext.PublishingHouses.Local.ToObservableCollection();
-            ApplicationDbContext.Categories.Load();
-            Categories = ApplicationDbContext.Categories.Local.ToObservableCollection();
-            if (BookView.Authors.Count > 0) {
+            PublishingHouses = new ObservableCollection<PublishingHouse>(ApplicationDbContext.PublishingHouses.Local
+                .ToList()
+                .OrderBy(a => a.PublisherName));
+
+            ApplicationDbContext.Series.Load();
+            SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Series.Local
+                .ToList()
+                .OrderBy(a => a.SeriesName));
+            
+            if (!BookView.Authors.IsNullOrEmpty()) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
                 if (BookView.Authors.Count > 1) {
                     for (int i = 1; i < BookView.Authors.Count; i++) {
@@ -52,9 +69,18 @@ namespace Athena {
                 }
             }
 
-            if (BookView.Categories.Count > 0) {
-                CategoriesCombobox.SelectedItem = BookView.Categories.ToList()[0].Name;
+            if (!BookView.Categories.IsNullOrEmpty()) {
+                CategoriesCombobox.SelectedItem = BookView.Categories.First().Name;
+                for (int i = 1; i < BookView.Categories.Count; i++) {
+                    AddingCategoryCombobox_Click(this, new RoutedEventArgs());
+                    var categoryAdding = (CategoryAdding) CategoriesStackPanel.Children[i - 1];
+                    var combobox = categoryAdding.CategoryComboBox;
+                    combobox.SelectedItem = BookView.Categories.ToList()[i].Name;
+                }
             }
+
+            CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
+            LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {

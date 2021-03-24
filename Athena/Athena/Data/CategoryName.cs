@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Athena.EnumLocalizations;
 using Athena.Resources;
 
 namespace Athena.Data {
@@ -98,6 +99,9 @@ namespace Athena.Data {
         Tourism,
 
         [LocalizedDescription("Relationship", typeof(Categories))]
-        Relationship
+        Relationship,
+
+        [LocalizedDescription("CrimeNovel", typeof(Categories))]
+        CrimeNovel
     }
 }
