@@ -135,5 +135,13 @@ namespace Athena {
             
             BookView.Authors.Add((Author) e.AddedItems[0]);
         }
+
+        private void CategoriesCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.RemovedItems.Count > 0) {
+                BookView.Categories.Remove((Category) e.RemovedItems[0]);
+            }
+
+            BookView.Categories.Add((Category) e.AddedItems[0]);
+        }
     }
 }
