@@ -7,7 +7,7 @@ namespace Athena.Data.Books
     {
         public BookViewValidator() {
             RuleFor(book => book.Title)
-                .NotEmpty();
+                .NotEqual("");
             RuleFor(book => book.PublishmentYear)
                 .LessThanOrEqualTo(DateTime.Today.Year)
                 .WithMessage($"Musi być mniejszy bądź równy {DateTime.Today.Year}");
