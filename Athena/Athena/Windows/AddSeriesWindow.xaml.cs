@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Athena.Data;
 using System.Linq;
 using Athena.Data.Series;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Windows
 {
@@ -26,10 +27,14 @@ namespace Athena.Windows
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
             using var context = new ApplicationDbContext();
             if (!context.Series.Any(s => s.SeriesName.ToLower() == SeriesNameTextBox.Text.ToLower())) {
-                context.Series.Add(new Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() });
+                context.Entry(new Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
                 context.SaveChanges();
+                this.Close();
             }
-            this.Close();
+            else {
+                SeriesExistsTextBlock.Visibility = Visibility.Visible;
+            }
+            
         }
         private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = !Validation.GetHasError(SeriesNameTextBox);
