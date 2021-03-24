@@ -127,17 +127,13 @@ namespace Athena {
             CategoriesStackPanel.Children.Add(categoryAddingUserControl);
         }
 
-        private Author author;
 
         private void AuthorCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (author != null) {
-                BookView.Authors.Remove(author);
+            if (e.RemovedItems.Count > 0) {
+                BookView.Authors.Remove((Author) e.RemovedItems[0]);
             }
-            else {
-                BookView.Authors = new List<Author>();
-            }
-            author = (Author) AuthorCombobox.SelectedItem;
-            BookView.Authors.Add(author);
+            
+            BookView.Authors.Add((Author) e.AddedItems[0]);
         }
     }
 }

@@ -29,6 +29,7 @@ namespace Athena.Windows {
             using var context = new ApplicationDbContext();
             Book bookModel = Mapper.Instance.Map<Book>(book);
             bookModel.Id = Guid.NewGuid();
+            context.AttachRange(bookModel.Authors);
             context.Entry(bookModel).State = EntityState.Added;
             context.SaveChanges();
         }
