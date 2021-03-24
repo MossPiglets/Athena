@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Athena {
+namespace Athena.EnumLocalizations {
     public class EnumDescriptionTypeConverter : EnumConverter {
         public EnumDescriptionTypeConverter(Type type)
             : base(type) { }

@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Markup;
 
-namespace Athena {
+namespace Athena.EnumLocalizations {
     public class EnumBindingSourceExtension : MarkupExtension {
         private Type _enumType;
 

@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Resources;
 
-namespace Athena.Resources {
+namespace Athena.EnumLocalizations {
     public class LocalizedDescriptionAttribute : DescriptionAttribute {
         ResourceManager _resourceManager;
         string _resourceKey;

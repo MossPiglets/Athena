@@ -133,6 +133,15 @@ namespace Athena.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CrimeStory.
+        /// </summary>
+        internal static string CrimeNovel {
+            get {
+                return ResourceManager.GetString("CrimeNovel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Culinary.
         /// </summary>
         internal static string Culinary {

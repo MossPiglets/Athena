@@ -10,6 +10,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Athena.Data;
+using Athena.EnumLocalizations;
 
 namespace Athena
 {
@@ -21,6 +23,7 @@ namespace Athena
         public CategoryAdding()
         {
             InitializeComponent();
+            CategoryComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
