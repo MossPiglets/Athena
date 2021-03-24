@@ -24,7 +24,8 @@ namespace Athena
                 .WithMany(a => a.Books);
             entity
                 .HasMany(a => a.Borrowing)
-                .WithOne(a => a.Book);
+                .WithOne(a => a.Book)
+                .IsRequired();
             entity
                 .HasMany(a => a.Categories)
                 .WithMany(a => a.Books)

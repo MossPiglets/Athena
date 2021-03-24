@@ -9,18 +9,19 @@ using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using Athena.Data.Books;
+using System.Linq;
+using Athena.Data.Series;
+using System;
 
-
-namespace Athena
-{
+namespace Athena {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Book> Books { get; set; }
-        public MainWindow() {
 
+        public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
             ApplicationDbContext = new ApplicationDbContext();
@@ -29,14 +30,16 @@ namespace Athena
                 .Include(b => b.PublishingHouse)
                 .Include(b => b.StoragePlace)
                 .Include(b => b.Authors)
+                .Include(b => b.Categories)
+                .Include(b => b.Borrowing)
                 .Load();
             Books = ApplicationDbContext.Books.Local.ToObservableCollection();
-            
+
             if (!Books.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Collapsed;
             }
 
-            this.Closed += (sender, args) =>  Application.Current.Shutdown();
+            this.Closed += (sender, args) => Application.Current.Shutdown();
         }
 
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
@@ -90,10 +93,27 @@ namespace Athena
             dataImporter.ImportFromSpreadsheet(fileName);
         }
 
+        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+            var text = SearchTextBox.Text;
+            if (text.Length == 0)
+                BookList.ItemsSource = Books;
+            if (text.Length < 3)
+                return;
+            var fillteredBooks = Books.Where(b => b.Title.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
+                                            (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
+                                            (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
+                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            );
+                                            
+            BookList.ItemsSource = fillteredBooks;
+        }
+
         private void OpenBorrowedBooksListWindowButton_Click(object sender, RoutedEventArgs e)
         {
-            BorrowedBooksListWindow borrowBook = new BorrowedBooksListWindow();
-            borrowBook.Show();
+            BorrowedBooksListWindow borrowedBook = new BorrowedBooksListWindow();
+            borrowedBook.Show();
         }
     }
 }

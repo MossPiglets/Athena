@@ -6,7 +6,7 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:borrowings="clr-namespace:Athena.Data.Borrowings"
                        mc:Ignorable="d"
-                       Title="Wypożycz" Width="330" SizeToContent="Height">
+                       Title="Wypożycz" SizeToContent="WidthAndHeight" >
 
     <Window.Resources>
         <borrowings:BorrowingView x:Key="BorrowingInstance" />
@@ -18,37 +18,51 @@
 
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-
-            <TextBlock Text="Wybrana książka" FontWeight="Bold" FontSize="15" />
-            <TextBlock Name="Title" FontWeight="Bold" FontStyle="Italic" Margin="0 5 0 0" TextWrapping="Wrap" />
-            <TextBlock Name="Author" Margin="0 5 0 5" TextWrapping="Wrap" />
-            <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Osoba wypożyczająca książkę" />
-            <Grid>
+            <TextBlock Text="Wybrana książka" FontSize="13" HorizontalAlignment="Center" Margin="5 5"/>
+            <Rectangle HorizontalAlignment="Stretch" Fill="GhostWhite" Height="1" Width="Auto" Margin="5 5"/>
+            <TextBlock Name="Title" FontWeight="Bold" Margin="0 0 0 0" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="15" />
+            <TextBlock Name="Author" Margin="0 0 0 0" FontStyle="Italic" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="14" />
+            <Rectangle HorizontalAlignment="Stretch" Fill="GhostWhite" Height="1" Width="Auto" Margin="5 5"/>
+            <Grid Margin="10">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Column="0" Grid.Row="0" Text="Imię:" />
-                <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwisko:" />
-                <TextBox Name="FirstName" Grid.Column="1" Grid.Row="0" Margin="15 0 5 5">
-                    <TextBox.Text>
-                        <Binding Path="BorrowingView.FirstName"
-                                 ValidatesOnDataErrors="True"
-                                 UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <ExceptionValidationRule />
-                            </Binding.ValidationRules>
-                        </Binding>
-                    </TextBox.Text>
-                </TextBox>
-                <TextBox Text="{Binding Path=BorrowingView.LastName}" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" />
-            </Grid>
-            <TextBlock Margin="0 15 0 5" Text="Data wypożyczenia" FontWeight="Bold" />
-            <Calendar Name="Calendar" >
+                <Grid Grid.Column="0" Grid.RowSpan="2" Margin="0 0 10 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10 0 0 0" Text="Osoba wypożyczająca książkę" Grid.Row="0" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Column="0" Grid.Row="1" FontWeight="Bold"  Text="Imię:" HorizontalAlignment="Left"  Margin="10 20 10 5"/>
+                    <TextBlock Grid.Column="0" Grid.Row="3" FontWeight="Bold" Text="Nazwisko:" HorizontalAlignment="Left" Margin="10 20 10 5"/>
+                    <TextBox Name="FirstName" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="2" Margin="5 0 5 0" MinWidth="175">
+                        <TextBox.Text>
+                            <Binding Path="BorrowingView.FirstName"
+                                     ValidatesOnDataErrors="True"
+                                     UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBox Text="{Binding Path=BorrowingView.LastName}" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="5" Margin="5 0 5 0" />
+                </Grid>
+                <TextBlock Margin="0 0 0 0" Text="Data wypożyczenia"  Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center"/>
+                <Calendar Name="Calendar" Margin="10 5" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" >
                 <Calendar.CalendarDayButtonStyle>
                     <Style TargetType="CalendarDayButton" BasedOn="{StaticResource {x:Type CalendarDayButton}}">
                         <Style.Triggers>
@@ -59,7 +73,8 @@
                     </Style>
                 </Calendar.CalendarDayButtonStyle>
             </Calendar>
-            <Button Margin="10" Content="Wypożycz" Click="Borrow_OnClick" Command="Save">
+            </Grid>
+            <Button Margin="10" Content="Wypożycz" Click="Borrow_OnClick" Command="Save" IsEnabled="{Binding ElementName=FirstName, Path=Text.Length, Mode=OneWay}" >
                 <Button.CommandBindings>
                     <CommandBinding Command="Save"
                                     Executed="Save_Executed" CanExecute="Save_CanExecute" />

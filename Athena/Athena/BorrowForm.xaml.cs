@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
 using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
     /// <summary>
@@ -53,7 +54,7 @@ namespace Athena {
             BorrowingView.Id = Guid.NewGuid();
             BorrowingView.BorrowDate = Calendar.SelectedDate.Value;
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
-            context.Borrowings.Add(borrowing);
+            context.Entry(borrowing).State = EntityState.Added;
             context.SaveChanges();
             this.Close();
         }
