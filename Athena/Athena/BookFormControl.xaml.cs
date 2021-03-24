@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -124,6 +125,19 @@ namespace Athena {
         private void AddingCategoryCombobox_Click(object sender, RoutedEventArgs e) {
             var categoryAddingUserControl = new CategoryAdding();
             CategoriesStackPanel.Children.Add(categoryAddingUserControl);
+        }
+
+        private Author author;
+
+        private void AuthorCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (author != null) {
+                BookView.Authors.Remove(author);
+            }
+            else {
+                BookView.Authors = new List<Author>();
+            }
+            author = (Author) AuthorCombobox.SelectedItem;
+            BookView.Authors.Add(author);
         }
     }
 }

@@ -80,9 +80,8 @@
 
                 <ComboBox x:Name="AuthorCombobox"
                           ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}"
-                          SelectedItem="{Binding BookView.Authors}"
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 52 0 "
-                          Height="22" />
+                          Height="22" SelectionChanged="AuthorCombobox_OnSelectionChanged" />
                 <StackPanel x:Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 18 0"
                         Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
