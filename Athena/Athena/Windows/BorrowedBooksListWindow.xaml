@@ -25,6 +25,17 @@
 
             <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Stretch" 
                       Width="Auto">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource Self}}" 
+                         Value="True">
+                                <Setter Property="IsSelected" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                
                 <ListView.View>
                     <GridView>
                         <GridViewColumn Header="Tytuł" Width="Auto"
@@ -71,7 +82,7 @@
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Button x:Name="ReturnBookButton" Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center" Click="OpenReturnBookWindow_Click"/>
+                                        <Button x:Name="OpenReturnBookFormButton" Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center" Click="OpenReturnWindow_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

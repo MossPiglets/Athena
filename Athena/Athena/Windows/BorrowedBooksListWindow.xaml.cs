@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using Athena.Data.Borrowings;
 using Microsoft.EntityFrameworkCore;
-
 using Athena.Data.Books;
+using System.Windows.Controls;
+using System.Windows;
+using System;
 
 namespace Athena.Windows
 {
@@ -24,20 +26,15 @@ namespace Athena.Windows
                 .Load();
             Borrowings = ApplicationDbContext.Borrowings.Local.ToObservableCollection();
             BorrowedBookList.ItemsSource = Borrowings;
-            
-            returnWindow = new ReturnWindow();
-            returnWindow.ButtonWasClicked += new ReturnWindow.ClickButton(returnWindow_ButtonWasClicked);
         }
 
-        void returnWindow_ButtonWasClicked()
+        private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ReturnBookButton.Visibility = Visibility.Collapsed;
-        }
-        private void OpenReturnBookWindow_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Borrowing borrowedBook = (Borrowing)BorrowedBookList.SelectedItem;
+            Button button = (Button)sender;
+            Borrowing borrowedBook = (Borrowing)button.DataContext;
             Book book = borrowedBook.Book;
             ReturnWindow returnWindow = new ReturnWindow(book);
+            returnWindow.BookWasReturned += (sender, args) => button.Visibility = Visibility.Collapsed;
             returnWindow.Show();
         }
     }

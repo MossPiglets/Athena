@@ -13,8 +13,7 @@ namespace Athena.Windows
     public partial class ReturnWindow
     {
         public Borrowing Borrowing{ get; set; }
-        public delegate void ClickButton();
-        public event ClickButton ButtonWasClicked;
+        public event EventHandler BookWasReturned;
         public ReturnWindow(Book book)
         {
             InitializeComponent();
@@ -32,6 +31,7 @@ namespace Athena.Windows
             Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(1), DateTime.Today.AddDays(1).AddYears(1000)));
             Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(-1).AddYears(-1000), (book.Borrowing[book.Borrowing.Count() - 1].BorrowDate).AddDays(-1)));
         }
+
 
         public string ToAuthorsNames(Book book)
         {
@@ -55,15 +55,11 @@ namespace Athena.Windows
 
         private void ReturnBorrowedBook_Click(object sender, RoutedEventArgs e)
         {
-            //ma setować return date z kalendarza//
             using var context = new ApplicationDbContext();
             Borrowing.ReturnDate = Calendar.SelectedDate.Value;
             context.Entry(Borrowing).State = EntityState.Modified;
             context.SaveChanges();
-
-
-            //wyłączyć przycisk zwróc z BorrowedBookListVindow dla tej książki//
-            ButtonWasClicked();
+            BookWasReturned?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
     }
