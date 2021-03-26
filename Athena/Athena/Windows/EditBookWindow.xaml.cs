@@ -25,8 +25,11 @@ namespace Athena.Windows {
 
         public void Execute(object book) {
             using var context = new ApplicationDbContext();
-            context.Entry(Mapper.Instance.Map<Book>(book)).State = EntityState.Modified;
+            Book bookModel = Mapper.Instance.Map<Book>(book);
+            ContextTracker.AttackBookRelatedEntries(bookModel, context);
+            context.Entry(bookModel).State = EntityState.Modified;
             context.SaveChanges();
+            context.Entry(bookModel).State = EntityState.Detached;
         }
 
         public event EventHandler CanExecuteChanged {
