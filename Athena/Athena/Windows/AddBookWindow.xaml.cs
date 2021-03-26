@@ -31,6 +31,20 @@ namespace Athena.Windows {
             bookModel.Id = Guid.NewGuid();
             context.AttachRange(bookModel.Authors);
             context.AttachRange(bookModel.Categories);
+            if (bookModel.PublishingHouse != null) {
+                context.Attach(bookModel.PublishingHouse);
+            }
+
+            if (bookModel.StoragePlace != null) {
+                context.Attach(bookModel.StoragePlace);
+            }
+
+            if (bookModel.Series != null) {
+                context.Attach(bookModel.Series);
+            }
+
+            
+            
             context.Entry(bookModel).State = EntityState.Added;
             context.SaveChanges();
         }

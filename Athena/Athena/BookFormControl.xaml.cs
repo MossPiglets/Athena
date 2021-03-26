@@ -26,6 +26,7 @@ namespace Athena {
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
         public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
         public ObservableCollection<Series> SeriesList { get; set; }
+        public ObservableCollection<Category> Categories { get; set; }
 
         public BookFormControl(string title, string buttonContent, Book book) {
             InitializeComponent();
@@ -57,7 +58,10 @@ namespace Athena {
             SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Series.Local
                 .ToList()
                 .OrderBy(a => a.SeriesName));
-            
+
+            ApplicationDbContext.Categories.Load();
+            Categories = new ObservableCollection<Category>(ApplicationDbContext.Categories.Local);
+
             if (!BookView.Authors.IsNullOrEmpty()) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
                 if (BookView.Authors.Count > 1) {
@@ -82,6 +86,7 @@ namespace Athena {
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
+            LanguageComboBox.SelectedItem = BookView.Language;
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
@@ -138,10 +143,26 @@ namespace Athena {
 
         private void CategoriesCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (e.RemovedItems.Count > 0) {
-                BookView.Categories.Remove((CategoryName) e.RemovedItems[0]);
+                BookView.Categories.Remove(Categories.First(a => a.Name == (CategoryName) e.RemovedItems[0]));
             }
 
-            BookView.Categories.Add();
+            BookView.Categories.Add(Categories.First(a => a.Name == (CategoryName) e.AddedItems[0]));
+        }
+
+        private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+        }
+
+        private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+        }
+
+        private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.Series = (Series) e.AddedItems[0];
+        }
+
+        private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.Language = (Language) e.AddedItems[0];
         }
     }
 }
