@@ -48,11 +48,6 @@ namespace Athena {
             borrowForm.Show();
         }
 
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
-            AddBookWindow addBook = new AddBookWindow();
-            addBook.Show();
-        }
-
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = (Book) BookList.SelectedItem;
             EditBookWindow editBook = new EditBookWindow(book);
@@ -66,6 +61,26 @@ namespace Athena {
             context.SaveChanges();
         }
 
+        private void WindowRefresh_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OpenBorrowedBookList_Click(object sender, RoutedEventArgs e)
+        {
+            BorrowedBooksListWindow borrowedBooks = new BorrowedBooksListWindow();
+            borrowedBooks.Show();
+        }
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            AddBookWindow addBook = new AddBookWindow();
+            addBook.Show();
+        }
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
@@ -114,5 +129,20 @@ namespace Athena {
                                             
             BookList.ItemsSource = fillteredBooks;
         }
+        private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnMaximizeRestoreButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

@@ -8,39 +8,110 @@
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Athena" Height="580" SizeToContent="Width">
+                       Title="Athena" Height="580" SizeToContent="Width" WindowStyle="None">
 
     <Window.Style>
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
-	</Window.Style>
-    
-    
+    </Window.Style>
+
+    <!--<WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome> -->
+
     <Grid>
         <Grid.RowDefinitions>
-                <RowDefinition Height = "auto"/>
-                <RowDefinition Height="auto" />
-                <RowDefinition Height="*" />
-				<RowDefinition Height = "*"/>
-            </Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="auto" />
-			</Grid.ColumnDefinitions>
+            <RowDefinition Height = "auto"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+			<RowDefinition Height = "*"/>
+        </Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="auto" />
+		</Grid.ColumnDefinitions>
 
-        <DockPanel Grid.Row="0">
-            <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_File">
-                    <MenuItem Header="_New" />
-                    <MenuItem Header="_Open" />
-                    <MenuItem Header="_Save" />
-                    <Separator />
-                    <MenuItem Header="_Exit" />
-                </MenuItem>
-            </Menu>
-        </DockPanel>
-
-        <TextBox Grid.Row="1" Grid.Column="0" x:Name="SearchTextBox" adonisExtensions:WatermarkExtension.Watermark="Wyszukaj..." TextChanged="SearchTextBox_TextChanged" />
-		<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="1" Grid.Column="1" Click="AddBook_Click"/>
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            
+            <Image Grid.Column="0" Width="22" Height="22" Margin="4" Source="/Assets/Athena_icon.ico" />
+            <TextBlock Grid.Column="1" Margin="5 0 " VerticalAlignment="Center" FontSize="14" Text="Athena">
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource AncestorType=Window}}" Value="False">
+                                <Setter Property="Foreground" Value="{DynamicResource WindowTitleBarInactiveText}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            
+            <DockPanel Grid.Column="2" Margin="0 0 0 0" ContextMenuService.Placement="MousePoint">
+                <Menu DockPanel.Dock="Left" VerticalAlignment="Bottom">
+                    <MenuItem Header="Opcje">
+                        <MenuItem Header="Odśwież listę książek" Click="WindowRefresh_Click"/>
+                        <MenuItem Header="Dodaj nową książkę" Click="AddBook_Click" />
+                        <MenuItem Header="Lista wypożyczonych książek" Click="OpenBorrowedBookList_Click"/>
+                        <Separator />
+                        <MenuItem Header="Zamknij" Click="MenuItem_Click"/>
+                    </MenuItem>
+                </Menu>
+            </DockPanel>
+            <Button Grid.Column="4" Click="OnMinimizeButtonClick" RenderOptions.EdgeMode="Aliased">
+                <Style="{StaticResource TitleBarButtonStyle}">
+            <!--<Path
+			Width="46"
+			Height="32"
+			Data="M 18,15 H 28"
+			Stroke="{Binding Path=Foreground,
+							 RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+			StrokeThickness="1" />-->
+            </Button>
+            <Button
+		Name="maximizeButton" Grid.Column="5" Click="OnMaximizeRestoreButtonClick">
+                <!--<Style="{StaticResource TitleBarButtonStyle}">
+                <Path
+			Width="46"
+			Height="32"
+			Data="M 18.5,10.5 H 27.5 V 19.5 H 18.5 Z"
+			Stroke="{Binding Path=Foreground,
+							 RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+			StrokeThickness="1" />-->
+            </Button>
+            <Button Name="restoreButton" Grid.Column="5" Click="OnMaximizeRestoreButtonClick">
+                <!--<Style="{StaticResource TitleBarButtonStyle}">
+                <Path
+			Width="46"
+			Height="32"
+			Data="M 18.5,12.5 H 25.5 V 19.5 H 18.5 Z M 20.5,12.5 V 10.5 H 27.5 V 17.5 H 25.5"
+			Stroke="{Binding Path=Foreground,
+							 RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+			StrokeThickness="1" />-->
+            </Button> 
+            <Button
+		Grid.Column="6"
+		Click="OnCloseButtonClick">
+                <!--<Style="{StaticResource TitleBarCloseButtonStyle}">
+                <Path
+			Width="46"
+			Height="32"
+			Data="M 18,11 27,20 M 18,20 27,11"
+			Stroke="{Binding Path=Foreground,
+							 RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+			StrokeThickness="1" /> -->
+            </Button>
+        </Grid>
+        
+        <TextBox Grid.Row="1" Grid.Column="0" x:Name="SearchTextBox" Margin="10 10 10 10" adonisExtensions:WatermarkExtension.Watermark="Wyszukaj..." TextChanged="SearchTextBox_TextChanged" />
+		<!--<Button Margin="10 10 10 0" Content="Dodaj książkę" Grid.Row="1" Grid.Column="1" Click="AddBook_Click"/>-->
         
 			<ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
