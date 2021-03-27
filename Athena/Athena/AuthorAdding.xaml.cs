@@ -13,8 +13,6 @@ namespace Athena {
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
 
-        public Action Delete;
-
         public AuthorAdding() {
             InitializeComponent();
             ApplicationDbContext = new ApplicationDbContext();

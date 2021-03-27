@@ -138,12 +138,10 @@ namespace Athena {
             var categoryAddingUserControl = new CategoryAdding();
             CategoriesStackPanel.Children.Add(categoryAddingUserControl);
             categoryAddingUserControl.CategoryComboBox.SelectionChanged += CategoriesCombobox_OnSelectionChanged;
-            categoryAddingUserControl.DeleteButton.Click += CategoryComboBoxDeleteButton_OnClick;
-        }
-
-        private void CategoryComboBoxDeleteButton_OnClick(object sender, RoutedEventArgs e) {
-            var button = (Button) sender;
-            BookView.Categories.Remove((Category) button.DataContext);
+            categoryAddingUserControl.DeleteButton.Click += (o, args) => {
+                BookView.Categories.Remove(BookView.Categories.First(a
+                    => a.Name == (CategoryName) categoryAddingUserControl.CategoryComboBox.SelectedItem));
+            };
         }
 
         private void AuthorCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
@@ -160,7 +158,7 @@ namespace Athena {
 
         private void CategoriesCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (e.RemovedItems.Count > 0) {
-                BookView.Categories.Remove(Categories.First(a => a.Name == (CategoryName) e.RemovedItems[0]));
+                BookView.Categories.Remove(BookView.Categories.First(a => a.Name == (CategoryName) e.RemovedItems[0]));
             }
 
             if (e.AddedItems.Count > 0) {

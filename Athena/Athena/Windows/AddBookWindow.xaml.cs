@@ -32,7 +32,7 @@ namespace Athena.Windows {
             ContextTracker.AttackBookRelatedEntries(bookModel, context);
             context.Entry(bookModel).State = EntityState.Added;
             context.SaveChanges();
-            context.Entry(bookModel).State = EntityState.Detached;
+            context.ChangeTracker.Clear();
         }
 
         public event EventHandler CanExecuteChanged {
