@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Athena {
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
         public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
         public ObservableCollection<Series> SeriesList { get; set; }
+        public ObservableCollection<Category> Categories { get; set; }
 
         public BookFormControl(string title, string buttonContent, Book book) {
             InitializeComponent();
@@ -41,12 +43,12 @@ namespace Athena {
             Authors = new ObservableCollection<Author>(ApplicationDbContext.Authors.Local
                 .ToList()
                 .OrderBy(a => a.LastName));
-            
+
             ApplicationDbContext.StoragePlaces.Load();
             StoragePlaces = new ObservableCollection<StoragePlace>(ApplicationDbContext.StoragePlaces.Local
                 .ToList()
                 .OrderBy(a => a.StoragePlaceName));
-           
+
             ApplicationDbContext.PublishingHouses.Load();
             PublishingHouses = new ObservableCollection<PublishingHouse>(ApplicationDbContext.PublishingHouses.Local
                 .ToList()
@@ -56,7 +58,10 @@ namespace Athena {
             SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Series.Local
                 .ToList()
                 .OrderBy(a => a.SeriesName));
-            
+
+            ApplicationDbContext.Categories.Load();
+            Categories = new ObservableCollection<Category>(ApplicationDbContext.Categories.Local);
+
             if (!BookView.Authors.IsNullOrEmpty()) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
                 if (BookView.Authors.Count > 1) {
@@ -81,11 +86,19 @@ namespace Athena {
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
+            LanguageComboBox.SelectedItem = BookView.Language;
         }
 
         private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
             var authorAddingUserControl = new AuthorAdding();
             AuthorsStackPanel.Children.Add(authorAddingUserControl);
+            authorAddingUserControl.AuthorComboBox.SelectionChanged += AuthorCombobox_OnSelectionChanged;
+            authorAddingUserControl.DeleteButton.Click += AuthorComboBoxDeleteButton_OnClick;
+        }
+
+        private void AuthorComboBoxDeleteButton_OnClick(object sender, RoutedEventArgs e) {
+            var button = (Button) sender;
+            BookView.Authors.Remove((Author) button.DataContext);
         }
 
         private void AddSeries_Click(object sender, RoutedEventArgs e) {
@@ -124,6 +137,51 @@ namespace Athena {
         private void AddingCategoryCombobox_Click(object sender, RoutedEventArgs e) {
             var categoryAddingUserControl = new CategoryAdding();
             CategoriesStackPanel.Children.Add(categoryAddingUserControl);
+            categoryAddingUserControl.CategoryComboBox.SelectionChanged += CategoriesCombobox_OnSelectionChanged;
+            categoryAddingUserControl.DeleteButton.Click += (o, args) => {
+                BookView.Categories.Remove(BookView.Categories.First(a
+                    => a.Name == (CategoryName) categoryAddingUserControl.CategoryComboBox.SelectedItem));
+            };
+        }
+
+        private void AuthorCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.RemovedItems.Count > 0) {
+                BookView.Authors.Remove((Author) e.RemovedItems[0]);
+            }
+
+            if (e.AddedItems.Count > 0) {
+                if (!BookView.Authors.Any(a => Equals(a, e.AddedItems[0]))) {
+                    BookView.Authors.Add((Author) e.AddedItems[0]);
+                }
+            }
+        }
+
+        private void CategoriesCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.RemovedItems.Count > 0) {
+                BookView.Categories.Remove(BookView.Categories.First(a => a.Name == (CategoryName) e.RemovedItems[0]));
+            }
+
+            if (e.AddedItems.Count > 0) {
+                if (!BookView.Categories.Any(a => a.Name == (CategoryName) e.AddedItems[0])) {
+                    BookView.Categories.Add(Categories.First(a => a.Name == (CategoryName) e.AddedItems[0]));
+                }
+            }
+        }
+
+        private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+        }
+
+        private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+        }
+
+        private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.Series = (Series) e.AddedItems[0];
+        }
+
+        private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            BookView.Language = (Language) e.AddedItems[0];
         }
     }
 }

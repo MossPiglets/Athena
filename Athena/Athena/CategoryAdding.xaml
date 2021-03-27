@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     
     <DockPanel x:Name="CategoriesDockPanel" ClipToBounds="False" >
-        <Button Margin="0,7,17,0"  Height="20" Width="20" DockPanel.Dock="Right" Click="Button_Click" Content="➖" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="8" Padding = "0 0"/>
+        <Button Name="DeleteButton" Margin="0,7,17,0"  Height="20" Width="20" DockPanel.Dock="Right" Click="Button_Click" Content="➖" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="8" Padding = "0 0"/>
         <ComboBox Name="CategoryComboBox" Margin="0, 7, 15, 0" Height="22" />
     </DockPanel>
 </UserControl>
