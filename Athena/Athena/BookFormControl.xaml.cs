@@ -110,6 +110,10 @@ namespace Athena {
         private void AddSeries_Click(object sender, RoutedEventArgs e) {
             new AddSeriesWindow().Show();
         }
+        private void AddAuthor_Click(object sender, RoutedEventArgs e)
+        {
+            new AddAuthorWindow().Show();
+        }
 
         private void AddPublisher_Click(object sender, RoutedEventArgs e) {
             new AddPublisherWindow().Show();
