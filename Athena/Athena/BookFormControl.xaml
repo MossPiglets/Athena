@@ -91,6 +91,7 @@
                 <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 7 18 0"
                         Content="Dodaj kolejną kategorię" Click="AddingCategoryCombobox_Click" />
 
+
             </Grid>
 
             <Grid Margin="5 10 10 0">

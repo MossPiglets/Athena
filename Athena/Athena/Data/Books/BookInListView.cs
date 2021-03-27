@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using Athena.Data.Borrowings;
 
-
-namespace Athena.Data.Books {
-    public class Book {
+namespace Athena.Data.Books
+{
+    public class BookInListView
+    {
         public Guid Id { get; set; }
         public string Title { get; set; }
         public int? PublishmentYear { get; set; }
@@ -19,5 +21,6 @@ namespace Athena.Data.Books {
         public ICollection<Category> Categories { get; set; }
         public StoragePlace StoragePlace { get; set; }
         public IList<Borrowing> Borrowing { get; set; }
+        public string LastBorrowName => this.Borrowing.Count < 1 ? string.Empty : this.Borrowing[0].ReturnDate == null ? string.Empty : $"{this.Borrowing[0].FirstName} {this.Borrowing[0].LastName}";
     }
 }
