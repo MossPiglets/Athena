@@ -40,8 +40,8 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            
-            <Image Grid.Column="0" Width="22" Height="22" Margin="4" Source="/Assets/Athena_icon.ico" />
+
+            <Image Grid.Column="0" Width="22" Height="22" Margin="4"  Source="/Assets/Atena_logo.png" HorizontalAlignment="Center" VerticalAlignment="Center" />
             <TextBlock Grid.Column="1" Margin="5 0 " VerticalAlignment="Center" FontSize="14" Text="Athena">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
@@ -54,7 +54,7 @@
                 </TextBlock.Style>
             </TextBlock>
             
-            <DockPanel Grid.Column="2" Margin="0 0 0 0" ContextMenuService.Placement="MousePoint">
+            <DockPanel Grid.Column="2" Margin="0 0 0 0" ContextMenuService.Placement="MousePoint" >
                 <Menu DockPanel.Dock="Left" VerticalAlignment="Bottom">
                     <MenuItem Header="Opcje">
                         <MenuItem Header="Odśwież listę książek" Click="WindowRefresh_Click"/>
@@ -66,8 +66,8 @@
                 </Menu>
             </DockPanel>
             <Button Grid.Column="4" Click="OnMinimizeButtonClick" RenderOptions.EdgeMode="Aliased">
-                <Style="{StaticResource TitleBarButtonStyle}">
-            <!--<Path
+                <!--<Style="{StaticResource TitleBarButtonStyle}">
+            <Path
 			Width="46"
 			Height="32"
 			Data="M 18,15 H 28"
