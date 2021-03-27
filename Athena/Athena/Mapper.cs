@@ -9,7 +9,6 @@ namespace Athena {
         }
         private static IMapper CreateMapper() {
             var config = new MapperConfiguration(cfg => {
-                cfg.AllowNullCollections = true;
                 cfg.AddMaps(Assembly.GetExecutingAssembly());
             });
             return config.CreateMapper();

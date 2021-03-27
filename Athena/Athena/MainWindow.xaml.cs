@@ -19,7 +19,7 @@ namespace Athena {
     /// </summary>
     public partial class MainWindow {
         private ApplicationDbContext ApplicationDbContext { get; set; }
-        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<BookInListView> Books { get; set; }
 
         public MainWindow() {
             InitializeComponent();
@@ -31,9 +31,9 @@ namespace Athena {
                 .Include(b => b.StoragePlace)
                 .Include(b => b.Authors)
                 .Include(b => b.Categories)
-                .Include(b => b.Borrowing)
+                .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
                 .Load();
-            Books = ApplicationDbContext.Books.Local.ToObservableCollection();
+            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Books.Local.ToObservableCollection());
 
             if (!Books.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Collapsed;
@@ -43,7 +43,7 @@ namespace Athena {
         }
 
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
-            Book book = (Book) BookList.SelectedItem;
+            Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
         }
@@ -54,13 +54,13 @@ namespace Athena {
         }
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
-            Book book = (Book) BookList.SelectedItem;
+            Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            Book book = (Book) BookList.SelectedItem;
+            Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             ApplicationDbContext context = new ApplicationDbContext();
             context.Books.Remove(book);
             context.SaveChanges();
