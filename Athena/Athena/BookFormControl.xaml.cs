@@ -189,5 +189,9 @@ namespace Athena {
         private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             BookView.Language = (Language) e.AddedItems[0];
         }
+
+        private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
+            Window.GetWindow(this)?.Close();
+        }
     }
 }
