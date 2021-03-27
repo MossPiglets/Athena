@@ -41,10 +41,10 @@ namespace Athena.Data.Books {
         private BookViewValidator _bookViewValidator;
         private string _title;
         private int? _year;
-
         public BookView() {
             _bookViewValidator = new BookViewValidator();
         }
+
 
         public string Error {
             get {

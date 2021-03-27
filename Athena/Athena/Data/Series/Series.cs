@@ -9,5 +9,9 @@ namespace Athena.Data.Series {
         public string SeriesName { get; set; }
 
         public virtual ICollection<Book> Books { get; set; }
+
+        public override string ToString() {
+            return SeriesName;
+        } 
     }
 }

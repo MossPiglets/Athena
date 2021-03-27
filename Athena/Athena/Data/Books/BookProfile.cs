@@ -5,6 +5,7 @@ namespace Athena.Data.Books {
         public BookProfile() {
             CreateMap<Book, BookView>().ReverseMap();
             CreateMap<Book, BookInListView>().ReverseMap();
+            CreateMap<Book, Book>();
         }
     }
 }
