@@ -61,11 +61,6 @@ namespace Athena {
             context.SaveChanges();
         }
 
-        private void WindowRefresh_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
