@@ -170,7 +170,7 @@
 
             <Grid Margin="33 7 0 0 ">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="9*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
@@ -179,7 +179,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <TextBlock Text="Miejsce przechowywania:" Grid.Row="0" Grid.Column="0" />
+                <TextBlock Text="Miejsce przechowywania:" Grid.Row="0" Grid.Column="0" Margin="0 0 5 0"/>
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
                 <ComboBox Text="{Binding Path=BookView.StoragePlace.StoragePlaceName}"
                           ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}"
