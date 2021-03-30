@@ -79,7 +79,13 @@
                 <ComboBox x:Name="AuthorCombobox"
                           ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 52 0 "
-                          Height="22" SelectionChanged="AuthorCombobox_OnSelectionChanged" />
+                          Height="22" SelectionChanged="AuthorCombobox_OnSelectionChanged">
+                    <ComboBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Usuń" Click="MenuItemDeleteAuthor_OnClick" CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                        </ContextMenu>
+                    </ComboBox.ContextMenu>
+                </ComboBox>
                 <StackPanel x:Name="AuthorsStackPanel" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" />
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 52 0"
                         Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />

@@ -197,5 +197,14 @@ namespace Athena {
         private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
             Window.GetWindow(this)?.Close();
         }
+
+        private void MenuItemDeleteAuthor_OnClick(object sender, RoutedEventArgs e) {
+            var menu = (MenuItem) e.Source;
+            var context = (ContextMenu) menu.Parent;
+            var comboBox = (ComboBox) context.PlacementTarget;
+            Author author = (Author) comboBox.DataContext;
+            ApplicationDbContext.Authors.Remove(author);
+            ApplicationDbContext.SaveChanges();
+        }
     }
 }
