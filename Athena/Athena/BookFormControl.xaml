@@ -79,10 +79,10 @@
                 <ComboBox x:Name="AuthorCombobox"
                           ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 52 0 "
-                          Height="22" SelectionChanged="AuthorCombobox_OnSelectionChanged">
+                          Height="22" SelectionChanged="AuthorCombobox_OnSelectionChanged" >
                     <ComboBox.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Usuń" Click="MenuItemDeleteAuthor_OnClick" CommandParameter="{Binding PlacementTarget.SelectedItem, RelativeSource={RelativeSource AncestorType=ContextMenu}}"/>
+                            <MenuItem x:Name="MenuItem"  Header="Usuń" Click="MenuItemDeleteAuthor_OnClick"/>
                         </ContextMenu>
                     </ComboBox.ContextMenu>
                 </ComboBox>
