@@ -13,7 +13,8 @@ namespace Athena.Windows
     public partial class ReturnWindow
     {
         public Borrowing Borrowing{ get; set; }
-        public event EventHandler BookWasReturned;
+
+      
         public ReturnWindow(Book book)
         {
             InitializeComponent();
@@ -59,7 +60,6 @@ namespace Athena.Windows
             Borrowing.ReturnDate = Calendar.SelectedDate.Value;
             context.Entry(Borrowing).State = EntityState.Modified;
             context.SaveChanges();
-            BookWasReturned?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
     }
