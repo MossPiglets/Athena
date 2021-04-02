@@ -146,6 +146,7 @@ namespace Athena.Import {
                     Categories = bookCategories,
                     VolumeNumber = bookSeriesInfo?.VolumeNumber
                 };
+                
                 ImportBookValidator.CheckAuthors(authors, book.Authors);
                 ImportBookValidator.CheckSeries(seriesList, book.Series);
                 ImportBookValidator.CheckPublishingHouse(publishingHouses, book.PublishingHouse);
@@ -208,14 +209,16 @@ namespace Athena.Import {
             List<PublishingHouse> publishingHousesList = new List<PublishingHouse>();
             foreach (var spreadsheetData in CatalogData) {
                 var publishingHouse = PublishingHouseExtractor.Extract(spreadsheetData.PublishingHouse);
-                publishingHousesList.Add(publishingHouse);
+                if (publishingHouse != null) {
+                    publishingHousesList.Add(publishingHouse);
+                }
             }
 
-            var seriesWithoutDoubles = publishingHousesList
+            var publisherWithoutDoubles = publishingHousesList
                 .GroupBy(a => a.PublisherName)
                 .Select(a => a.First())
                 .ToList();
-            return seriesWithoutDoubles;
+            return publisherWithoutDoubles;
         }
 
         public List<StoragePlace> ImportStoragePlacesList() {

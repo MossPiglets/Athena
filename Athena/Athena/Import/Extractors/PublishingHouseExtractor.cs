@@ -5,9 +5,7 @@ namespace Athena.Import.Extractors {
     public class PublishingHouseExtractor {
         public static PublishingHouse Extract(string text) {
             if (text == "'-" || text == "-" || string.IsNullOrEmpty(text)) {
-                return new PublishingHouse {
-                    PublisherName = null
-                };
+                return null;
             }
 
             return new PublishingHouse {
