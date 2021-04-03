@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media;
 using Athena.Data;
 using Athena.Data.Books;
 using Athena.Data.Series;
@@ -35,6 +36,7 @@ namespace Athena {
             this.DataContext = this;
             BookView = Mapper.Instance.Map<BookView>(book);
             this.Loaded += OnLoaded;
+            AuthorCombobox.PreviewMouseRightButtonDown += AuthorComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -110,8 +112,8 @@ namespace Athena {
         private void AddSeries_Click(object sender, RoutedEventArgs e) {
             new AddSeriesWindow().Show();
         }
-        private void AddAuthor_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void AddAuthor_Click(object sender, RoutedEventArgs e) {
             new AddAuthorWindow().Show();
         }
 
@@ -196,6 +198,28 @@ namespace Athena {
 
         private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
             Window.GetWindow(this)?.Close();
+        }
+        
+        private void AuthorComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
+            var comboBoxItem = (ComboBoxItem) VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+            if (comboBoxItem == null) return;
+            comboBoxItem.IsSelected = true;
+            e.Handled = true;
+        }
+
+        private object VisualUpwardSearch(DependencyObject source) {
+            while (source != null && !(source is ComboBoxItem))
+                source = VisualTreeHelper.GetParent(source);
+
+            return source as ComboBoxItem;
+        }
+
+        private void MenuItemDeleteAuthor_OnClick(object sender, RoutedEventArgs e) {
+            var author = (Author) AuthorCombobox.SelectedItem;
+            ApplicationDbContext.Authors.Remove(author);
+            ApplicationDbContext.SaveChanges();
+            Authors.Remove(author);
         }
     }
 }
