@@ -95,6 +95,24 @@ namespace Athena.Import.Extractors
                 case "0099CC":
                     categoryName = CategoryName.Tourism;
                     break;
+                case "FFDDBB":
+                    categoryName = CategoryName.Audiobook;
+                    break;
+                case "92446D":
+                    categoryName = CategoryName.Economy;
+                    break;
+                case "666633":
+                    categoryName = CategoryName.Philosophy;
+                    break;
+                case "9933FF":
+                    categoryName = CategoryName.PersonalDevelopment;
+                    break;
+                case "3333FF":
+                    categoryName = CategoryName.Relationship;
+                    break;
+                case "FF6600":
+                    categoryName = CategoryName.CrimeNovel;
+                    break;
                 default:
                     throw new ExtractorException("Cannot extract color from text", color);
             }
