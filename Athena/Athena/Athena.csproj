@@ -47,9 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Atena_logo.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="assets\catalog.xlsx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

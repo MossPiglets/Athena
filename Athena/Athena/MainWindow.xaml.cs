@@ -124,20 +124,5 @@ namespace Athena {
                                             
             BookList.ItemsSource = fillteredBooks;
         }
-        private void OnMinimizeButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnMaximizeRestoreButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void OnCloseButtonClick(object sender, RoutedEventArgs e)
-        {
-
-        }
-
     }
 }
