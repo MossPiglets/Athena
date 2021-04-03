@@ -12,15 +12,6 @@ namespace Athena.Windows
     {
         private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Borrowing> Borrowings { get; set; }
-
-        public Visibility ReturnBookButtonVisibility
-        {
-            get
-            {
-                return Visibility.Visible;
-            }
-        }
-        
             public BorrowedBooksListWindow() {
             InitializeComponent();
             this.DataContext = this;
