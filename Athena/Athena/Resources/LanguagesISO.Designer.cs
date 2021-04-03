@@ -430,11 +430,11 @@ namespace Athena.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SH-YU.
+        ///   Looks up a localized string similar to SH.
         /// </summary>
-        internal static string SH_YU {
+        internal static string SH {
             get {
-                return ResourceManager.GetString("SH-YU", resourceCulture);
+                return ResourceManager.GetString("SH", resourceCulture);
             }
         }
         
@@ -466,11 +466,11 @@ namespace Athena.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SR-CS.
+        ///   Looks up a localized string similar to SR.
         /// </summary>
-        internal static string SR_CS {
+        internal static string SR {
             get {
-                return ResourceManager.GetString("SR-CS", resourceCulture);
+                return ResourceManager.GetString("SR", resourceCulture);
             }
         }
         
