@@ -124,5 +124,11 @@ namespace Athena {
                                             
             BookList.ItemsSource = fillteredBooks;
         }
+
+        private void OpenBorrowedBooksListWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            BorrowedBooksListWindow borrowedBook = new BorrowedBooksListWindow();
+            borrowedBook.Show();
+        }
     }
 }

@@ -11,6 +11,7 @@
     <Window.Resources>
         <borrowings:BorrowingView x:Key="BorrowingInstance" />
     </Window.Resources>
+    
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>

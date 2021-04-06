@@ -123,7 +123,6 @@ namespace Athena.Import {
                 .Select(a => a.ToSeries())
                 .ToList();
             List<Book> books = new List<Book>();
-            foreach (var spreadsheetData in CatalogData) { }
 
             foreach (var spreadsheetCatalogData in CatalogData) {
                 var bookCategories = new List<Category>() {

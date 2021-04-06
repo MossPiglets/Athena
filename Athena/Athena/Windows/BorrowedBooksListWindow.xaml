@@ -7,12 +7,19 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight">
+                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight"
+                       xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" 
+                       xmlns:converters="clr-namespace:Athena.Converters">
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
 
+    <Window.Resources>
+        <converters:NullVisibilityConverter x:Key="NullToVis" />
+    </Window.Resources>
+
     <Border Padding="10">
+        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -23,14 +30,24 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView Grid.Row="1" Margin="10" x:Name="BorrowedBookList" Grid.Column="0" HorizontalAlignment="Stretch"
+            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Stretch" 
                       Width="Auto">
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource Self}}" 
+                         Value="True">
+                                <Setter Property="IsSelected" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                
                 <ListView.View>
-
                     <GridView>
                         <GridViewColumn Header="Tytuł" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.Title}" />
-                        <GridViewColumn Header="Autor" Width="Auto">
+                        <GridViewColumn Header="Autor" Width="Auto" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -66,12 +83,13 @@
                         </GridViewColumn>
                         <GridViewColumn Header="Data wypożyczenia" Width="Auto"
                                         DisplayMemberBinding="{Binding BorrowDate, StringFormat=dd-MM-yyyy}" />
-
+                        <GridViewColumn Header="Data zwrotu" Width="Auto"
+                                        DisplayMemberBinding="{Binding ReturnDate, StringFormat=dd-MM-yyyy}" />
                         <GridViewColumn Header="" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel>
-                                        <Button Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center" />
+                                        <Button x:Name="OpenReturnBookFormButton" Visibility="{Binding ReturnDate, Converter={StaticResource NullToVis}}" Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center" Click="OpenReturnWindow_Click"/>
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
