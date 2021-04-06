@@ -277,7 +277,7 @@ namespace Athena.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Inne.
         /// </summary>
         internal static string Inne {
             get {
@@ -430,7 +430,7 @@ namespace Athena.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SR-CS.
+        ///   Looks up a localized string similar to SR.
         /// </summary>
         internal static string Serbski {
             get {
@@ -439,7 +439,7 @@ namespace Athena.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SH-YU.
+        ///   Looks up a localized string similar to SH.
         /// </summary>
         internal static string Serbsko_Chorwacki {
             get {
