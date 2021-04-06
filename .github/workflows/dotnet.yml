@@ -6,11 +6,15 @@ on:
   pull_request:
     branches: [ develop ]
 
+defaults:
+      run:
+        shell: bash
+        working-directory: scripts
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./Athena
+
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET
