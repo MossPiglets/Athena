@@ -36,11 +36,13 @@ jobs:
     - name: Restore the application
       run: dotnet restore
 
+    # Build
+    - name: Build
+      run: dotnet build
+
     # Execute all unit tests in the solution
     - name: Execute unit tests
       run: dotnet test
 
-    # Build
-    - name: Build
-      run: dotnet build
+
 
