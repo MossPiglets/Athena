@@ -26,7 +26,7 @@
 				<ColumnDefinition Width="auto" />
 			</Grid.ColumnDefinitions>
             <TextBox Grid.Row="0" Grid.Column="0" x:Name="SearchTextBox" adonisExtensions:WatermarkExtension.Watermark="Wyszukaj..." TextChanged="SearchTextBox_TextChanged" />
-			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" Click="AddBook_Click"/>
+			<Button Grid.Row="0" Grid.Column="1" x:Name="OpenBorrowedBooksListWindowButton" Click="OpenBorrowedBooksListWindowButton_Click" Content="Lista wypożyczonych książek"/>
 			<ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="1" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
