@@ -8,9 +8,7 @@
                        xmlns:publishingHouses="clr-namespace:Athena.Data.PublishingHouses"
                        mc:Ignorable="d"
                        Title="Dodaj wydawnictwo" Height="200" Width="300">
-    <Window.Resources>
-        <publishingHouses:PublishingHouseView x:Key="PublisherInstance" />
-    </Window.Resources>
+
 
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -27,7 +25,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwa:" />
                 <TextBox Name="PublisherNameTextBox" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="150">
                     <TextBox.Text>
-                        <Binding Path="PublishingHouseView.PublisherName" Source="{StaticResource PublisherInstance}"
+                        <Binding Path="PublishingHouseView.PublisherName" 
                             ValidatesOnDataErrors="True"
                             UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

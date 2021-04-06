@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using Athena.Data;
 using Athena.Data.Books;
+using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
 using Athena.EnumLocalizations;
 using Athena.Windows;

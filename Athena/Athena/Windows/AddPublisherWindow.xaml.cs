@@ -13,13 +13,13 @@ namespace Athena.Windows {
 
         public AddPublisherWindow() {
             InitializeComponent();
+            this.DataContext = this;
             PublishingHouseView = new PublishingHouseView();
             Context = new ApplicationDbContext();
         }
 
         private void AddPublisherToDataBase_OnClick(object sender, RoutedEventArgs e) {
             PublishingHouseView.Id = Guid.NewGuid();
-            PublishingHouseView.PublisherName = PublisherNameTextBox.Text;
             Context.Entry(Mapper.Instance.Map<PublishingHouse>(PublishingHouseView)).State = EntityState.Added;
             Context.SaveChanges();
             this.Close();

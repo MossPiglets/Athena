@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Athena.Annotations;
 using Athena.Data.Borrowings;
+using Athena.Data.PublishingHouses;
 
 namespace Athena.Data.Books {
     public class BookView : IDataErrorInfo, INotifyPropertyChanged {
