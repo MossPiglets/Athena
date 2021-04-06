@@ -61,6 +61,21 @@ namespace Athena {
             context.SaveChanges();
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OpenBorrowedBookList_Click(object sender, RoutedEventArgs e)
+        {
+            BorrowedBooksListWindow borrowedBooks = new BorrowedBooksListWindow();
+            borrowedBooks.Show();
+        }
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            AddBookWindow addBook = new AddBookWindow();
+            addBook.Show();
+        }
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
