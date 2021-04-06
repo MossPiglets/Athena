@@ -295,6 +295,15 @@ namespace Athena.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inne.
+        /// </summary>
+        internal static string Inne {
+            get {
+                return ResourceManager.GetString("Inne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IT.
         /// </summary>
         internal static string IT {

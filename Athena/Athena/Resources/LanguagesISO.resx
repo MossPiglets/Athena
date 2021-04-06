@@ -195,6 +195,9 @@
   <data name="HU" xml:space="preserve">
     <value>HU</value>
   </data>
+  <data name="Inne" xml:space="preserve">
+    <value>Inne</value>
+  </data>
   <data name="IT" xml:space="preserve">
     <value>IT</value>
   </data>
