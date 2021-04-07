@@ -181,19 +181,27 @@ namespace Athena {
         }
 
         private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+            }
         }
 
         private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+            }
         }
 
         private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.Series = (Series) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+               BookView.Series = (Series) e.AddedItems[0]; 
+            }
         }
 
         private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.Language = (Language) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.Language = (Language) e.AddedItems[0];
+            }
         }
 
         private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
