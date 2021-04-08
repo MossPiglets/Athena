@@ -224,9 +224,14 @@ namespace Athena {
         }
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
             var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
-            ApplicationDbContext.PublishingHouses.Remove(publisher);
-            ApplicationDbContext.SaveChanges();
-            PublishingHouses.Remove(publisher);
+            if (publisher.Books != null) { 
+                ApplicationDbContext.PublishingHouses.Remove(publisher);
+                ApplicationDbContext.SaveChanges();
+                PublishingHouses.Remove(publisher); 
+            }
+            else {
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            }
         }
     }
 }
