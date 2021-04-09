@@ -36,7 +36,8 @@ namespace Athena {
             this.DataContext = this;
             BookView = Mapper.Instance.Map<BookView>(book);
             this.Loaded += OnLoaded;
-            AuthorCombobox.PreviewMouseRightButtonDown += AuthorComboboxOnPreviewMouseRightButtonDown;
+            AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            SeriesCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -88,10 +89,10 @@ namespace Athena {
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-            SeriesComboBox.ItemsSource = SeriesList.Select(a => a).ToList();
+            SeriesCombobox.ItemsSource = SeriesList.Select(a => a).ToList();
 
             if (BookView.Series != null) {
-                SeriesComboBox.SelectedItem = BookView.Series.SeriesName;
+                SeriesCombobox.SelectedItem = BookView.Series.SeriesName;
             }
 
             LanguageComboBox.SelectedItem = BookView.Language;
@@ -188,7 +189,7 @@ namespace Athena {
             BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
         }
 
-        private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+        private void SeriesComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             BookView.Series = (Series) e.AddedItems[0];
         }
 
@@ -200,7 +201,7 @@ namespace Athena {
             Window.GetWindow(this)?.Close();
         }
         
-        private void AuthorComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
+        private void ComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
             var comboBoxItem = (ComboBoxItem) VisualUpwardSearch(e.OriginalSource as DependencyObject);
 
             if (comboBoxItem == null) return;
@@ -220,6 +221,22 @@ namespace Athena {
             ApplicationDbContext.Authors.Remove(author);
             ApplicationDbContext.SaveChanges();
             Authors.Remove(author);
+        }
+
+        private void ComboBoxDeleteSeries_Click(object sender, RoutedEventArgs e)
+        {
+            var series = (Series) SeriesCombobox.SelectedItem;
+            if (series.Books != null)
+            {
+                ApplicationDbContext.Series.Remove(series);
+                ApplicationDbContext.SaveChanges();
+                SeriesList.Remove(series);
+            }
+            else
+            {
+                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
+            }
+            
         }
     }
 }
