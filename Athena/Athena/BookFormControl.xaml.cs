@@ -36,8 +36,8 @@ namespace Athena {
             this.DataContext = this;
             BookView = Mapper.Instance.Map<BookView>(book);
             this.Loaded += OnLoaded;
-            AuthorCombobox.PreviewMouseRightButtonDown += AuthorOrPublisherComboboxOnPreviewMouseRightButtonDown;
-            PublisherComboBox.PreviewMouseRightButtonDown += AuthorOrPublisherComboboxOnPreviewMouseRightButtonDown;
+            AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -201,7 +201,7 @@ namespace Athena {
             Window.GetWindow(this)?.Close();
         }
         
-        private void AuthorOrPublisherComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
+        private void ComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
             var comboBoxItem = (ComboBoxItem) VisualUpwardSearch(e.OriginalSource as DependencyObject);
 
             if (comboBoxItem == null) return;
