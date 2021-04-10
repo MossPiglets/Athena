@@ -56,21 +56,21 @@ namespace AthenaTests
         [Test]
         public void Extract_Ua_ShouldReturnEnum() {
             // Arrange
-            var text = "UA";
+            var text = "UK";
             // Act
             var language = LanguageExtractor.Extract(text);
             // Assert
-            language.Should().Be(Language.UA);
+            language.Should().Be(Language.UK);
         }
 
         [Test]
         public void Extract_TextWithSpaces_ShouldReturnEnum() {
             // Arrange
-            var text = " UA ";
+            var text = " UK ";
             // Act
             var language = LanguageExtractor.Extract(text);
             // Assert
-            language.Should().Be(Language.UA);
+            language.Should().Be(Language.UK);
         }
         [Test]
         public void Extract_Kr_ShouldReturnExtractException() {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Athena.Data;
+using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
 using Athena.Import;
 using Athena.Import.Extractors;

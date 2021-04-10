@@ -38,6 +38,7 @@ namespace Athena {
             BookView = Mapper.Instance.Map<BookView>(book);
             this.Loaded += OnLoaded;
             AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            SeriesCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
@@ -90,10 +91,10 @@ namespace Athena {
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-            SeriesComboBox.ItemsSource = SeriesList.Select(a => a).ToList();
+            SeriesCombobox.ItemsSource = SeriesList.Select(a => a).ToList();
 
             if (BookView.Series != null) {
-                SeriesComboBox.SelectedItem = BookView.Series.SeriesName;
+                SeriesCombobox.SelectedItem = BookView.Series.SeriesName;
             }
 
             LanguageComboBox.SelectedItem = BookView.Language;
@@ -194,6 +195,7 @@ namespace Athena {
             }
         }
 
+
         private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (e.AddedItems.Count != 0) {
                BookView.Series = (Series) e.AddedItems[0]; 
@@ -231,6 +233,22 @@ namespace Athena {
             ApplicationDbContext.SaveChanges();
             Authors.Remove(author);
         }
+
+        private void ComboBoxDeleteSeries_Click(object sender, RoutedEventArgs e)
+        {
+            var series = (Series) SeriesCombobox.SelectedItem;
+            if (series.Books != null)
+            {
+                ApplicationDbContext.Series.Remove(series);
+                ApplicationDbContext.SaveChanges();
+                SeriesList.Remove(series);
+            }
+            else
+            {
+                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
+            }
+        }
+        
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
             var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
             if (publisher.Books != null) { 
