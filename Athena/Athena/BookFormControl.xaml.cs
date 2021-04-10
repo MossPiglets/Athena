@@ -246,7 +246,8 @@ namespace Athena {
             {
                 MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
             }
-            
+        }
+        
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
             var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
             if (publisher.Books != null) { 
