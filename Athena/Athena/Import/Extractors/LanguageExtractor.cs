@@ -27,7 +27,7 @@ namespace Athena.Import.Extractors
                 case "DE":
                     language = Language.DE;
                     break;
-                case "UA":
+                case "UK":
                     language = Language.UK;
                     break;
                 default:
