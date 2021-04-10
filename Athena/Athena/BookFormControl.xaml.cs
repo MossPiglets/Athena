@@ -37,7 +37,8 @@ namespace Athena {
             this.DataContext = this;
             BookView = Mapper.Instance.Map<BookView>(book);
             this.Loaded += OnLoaded;
-            AuthorCombobox.PreviewMouseRightButtonDown += AuthorComboboxOnPreviewMouseRightButtonDown;
+            AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -182,26 +183,34 @@ namespace Athena {
         }
 
         private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+            }
         }
 
         private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+            }
         }
 
         private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.Series = (Series) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+               BookView.Series = (Series) e.AddedItems[0]; 
+            }
         }
 
         private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.Language = (Language) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.Language = (Language) e.AddedItems[0];
+            }
         }
 
         private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
             Window.GetWindow(this)?.Close();
         }
         
-        private void AuthorComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
+        private void ComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
             var comboBoxItem = (ComboBoxItem) VisualUpwardSearch(e.OriginalSource as DependencyObject);
 
             if (comboBoxItem == null) return;
@@ -221,6 +230,17 @@ namespace Athena {
             ApplicationDbContext.Authors.Remove(author);
             ApplicationDbContext.SaveChanges();
             Authors.Remove(author);
+        }
+        private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
+            var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
+            if (publisher.Books != null) { 
+                ApplicationDbContext.PublishingHouses.Remove(publisher);
+                ApplicationDbContext.SaveChanges();
+                PublishingHouses.Remove(publisher); 
+            }
+            else {
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            }
         }
     }
 }

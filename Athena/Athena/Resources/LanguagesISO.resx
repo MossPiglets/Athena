@@ -195,6 +195,9 @@
   <data name="HU" xml:space="preserve">
     <value>HU</value>
   </data>
+  <data name="Inne" xml:space="preserve">
+    <value>Inne</value>
+  </data>
   <data name="IT" xml:space="preserve">
     <value>IT</value>
   </data>
@@ -240,8 +243,8 @@
   <data name="RU" xml:space="preserve">
     <value>RU</value>
   </data>
-  <data name="SH-YU" xml:space="preserve">
-    <value>SH-YU</value>
+  <data name="SH" xml:space="preserve">
+    <value>SH</value>
   </data>
   <data name="SK" xml:space="preserve">
     <value>SK</value>
@@ -252,8 +255,8 @@
   <data name="SQ" xml:space="preserve">
     <value>SQ</value>
   </data>
-  <data name="SR-CS" xml:space="preserve">
-    <value>SR-CS</value>
+  <data name="SR" xml:space="preserve">
+    <value>SR</value>
   </data>
   <data name="SV" xml:space="preserve">
     <value>SV</value>

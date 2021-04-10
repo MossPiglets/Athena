@@ -190,7 +190,7 @@
     <value>NL</value>
   </data>
   <data name="Inne" xml:space="preserve">
-    <value />
+    <value>Inne</value>
   </data>
   <data name="Irlandzki" xml:space="preserve">
     <value>GA</value>
@@ -238,10 +238,10 @@
     <value>RO</value>
   </data>
   <data name="Serbski" xml:space="preserve">
-    <value>SR-CS</value>
+    <value>SR</value>
   </data>
   <data name="Serbsko-Chorwacki" xml:space="preserve">
-    <value>SH-YU</value>
+    <value>SH</value>
   </data>
   <data name="Suahili" xml:space="preserve">
     <value>SW</value>
