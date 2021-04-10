@@ -38,6 +38,7 @@ namespace Athena {
             this.Loaded += OnLoaded;
             AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             SeriesCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -182,19 +183,28 @@ namespace Athena {
         }
 
         private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
+            }
         }
 
         private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
+            }
         }
 
-        private void SeriesComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.Series = (Series) e.AddedItems[0];
+
+        private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
+            if (e.AddedItems.Count != 0) {
+               BookView.Series = (Series) e.AddedItems[0]; 
+            }
         }
 
         private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            BookView.Language = (Language) e.AddedItems[0];
+            if (e.AddedItems.Count != 0) {
+                BookView.Language = (Language) e.AddedItems[0];
+            }
         }
 
         private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
@@ -237,6 +247,16 @@ namespace Athena {
                 MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
             }
             
+        private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
+            var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
+            if (publisher.Books != null) { 
+                ApplicationDbContext.PublishingHouses.Remove(publisher);
+                ApplicationDbContext.SaveChanges();
+                PublishingHouses.Remove(publisher); 
+            }
+            else {
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            }
         }
     }
 }
