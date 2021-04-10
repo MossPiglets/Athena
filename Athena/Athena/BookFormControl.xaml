@@ -120,7 +120,7 @@
                 <TextBox Text="{Binding BookView.VolumeNumber}" PreviewTextInput="AllowOnlyNumbers"
                          DataObject.Pasting="AllowPastOnlyNumbers" HorizontalAlignment="Left" Width="40"
                          Grid.Column="3" />
-                <ComboBox Name="SeriesCombobox" Text="{Binding BookView.Series.SeriesName}" IsEditable="True" SelectionChanged="SeriesComboBox_OnSelectionChanged" Grid.Column="1"
+                <ComboBox Name="SeriesCombobox" Text="{Binding BookView.Series.SeriesName}" IsEditable="True" SelectionChanged="Series_OnSelectionChanged" Grid.Column="1"
                           Margin="0 0 19 0">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
