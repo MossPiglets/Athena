@@ -27,8 +27,8 @@ namespace Athena.Import.Extractors
                 case "DE":
                     language = Language.DE;
                     break;
-                case "UA":
-                    language = Language.UA;
+                case "UK":
+                    language = Language.UK;
                     break;
                 default:
                     throw new ExtractorException("Cannot extract language from text", text);

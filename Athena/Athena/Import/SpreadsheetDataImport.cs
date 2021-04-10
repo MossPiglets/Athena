@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Athena.Data;
 using Athena.Data.Books;
+using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
 using Athena.Data.SpreadsheetData;
 using Athena.Import.Extractors;

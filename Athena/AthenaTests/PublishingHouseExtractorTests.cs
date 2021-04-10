@@ -34,8 +34,7 @@ namespace AthenaTests
             // Act
             var publishingHouse = PublishingHouseExtractor.Extract(text);
             // Assert
-            publishingHouse.Id.Should().BeEmpty();
-            publishingHouse.PublisherName.Should().BeNull();
+            publishingHouse.Should().BeNull();
         }
         [Test]
         public void Extractor_Pause_ShouldReturnEmptyPublishingHouse() {
@@ -44,8 +43,7 @@ namespace AthenaTests
             // Act
             var publishingHouse = PublishingHouseExtractor.Extract(text);
             // Assert
-            publishingHouse.Id.Should().BeEmpty();
-            publishingHouse.PublisherName.Should().BeNull();
+            publishingHouse.Should().BeNull();
         }
         [Test]
         public void Extractor_EmptyName_ShouldReturnEmptyPublishingHouse() {
@@ -54,8 +52,7 @@ namespace AthenaTests
             // Act
             var publishingHouse = PublishingHouseExtractor.Extract(text);
             // Assert
-            publishingHouse.Id.Should().BeEmpty();
-            publishingHouse.PublisherName.Should().BeNull();
+            publishingHouse.Should().BeNull();
         }
         [Test]
         public void Extractor_Null_ShouldReturnEmptyPublishingHouse() {
@@ -64,8 +61,7 @@ namespace AthenaTests
             // Act
             var publishingHouse = PublishingHouseExtractor.Extract(text);
             // Assert
-            publishingHouse.Id.Should().BeEmpty();
-            publishingHouse.PublisherName.Should().BeNull();
+            publishingHouse.Should().BeNull();
         }
     }
 }
