@@ -36,7 +36,8 @@ namespace Athena {
             this.DataContext = this;
             BookView = Mapper.Instance.Map<BookView>(book);
             this.Loaded += OnLoaded;
-            AuthorCombobox.PreviewMouseRightButtonDown += AuthorComboboxOnPreviewMouseRightButtonDown;
+            AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -208,7 +209,7 @@ namespace Athena {
             Window.GetWindow(this)?.Close();
         }
         
-        private void AuthorComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
+        private void ComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
             var comboBoxItem = (ComboBoxItem) VisualUpwardSearch(e.OriginalSource as DependencyObject);
 
             if (comboBoxItem == null) return;
@@ -228,6 +229,17 @@ namespace Athena {
             ApplicationDbContext.Authors.Remove(author);
             ApplicationDbContext.SaveChanges();
             Authors.Remove(author);
+        }
+        private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
+            var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
+            if (publisher.Books != null) { 
+                ApplicationDbContext.PublishingHouses.Remove(publisher);
+                ApplicationDbContext.SaveChanges();
+                PublishingHouses.Remove(publisher); 
+            }
+            else {
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            }
         }
     }
 }
