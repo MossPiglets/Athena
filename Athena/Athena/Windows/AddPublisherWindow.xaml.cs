@@ -1,25 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Athena.Data.PublishingHouses;
+using Microsoft.EntityFrameworkCore;
 
-namespace Athena.Windows
-{
+namespace Athena.Windows {
     /// <summary>
     /// Logika interakcji dla klasy AddPublisherWindow.xaml
     /// </summary>
-    public partial class AddPublisherWindow
-    {
-        public AddPublisherWindow()
-        {
+    public partial class AddPublisherWindow {
+        public PublishingHouseView PublishingHouseView { get; set; }
+        private ApplicationDbContext Context { get; set; }
+
+        public AddPublisherWindow() {
             InitializeComponent();
+            this.DataContext = this;
+            PublishingHouseView = new PublishingHouseView();
+            Context = new ApplicationDbContext();
+        }
+
+        private void AddPublisherToDataBase_OnClick(object sender, RoutedEventArgs e) {
+            PublishingHouseView.Id = Guid.NewGuid();
+            Context.Entry(Mapper.Instance.Map<PublishingHouse>(PublishingHouseView)).State = EntityState.Added;
+            Context.SaveChanges();
+            this.Close();
         }
     }
 }
