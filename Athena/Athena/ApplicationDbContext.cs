@@ -4,6 +4,9 @@ using Athena.Data.Borrowings;
 using Athena.Data.Series;
 using Athena.Data.PublishingHouses;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Athena.EventManagers;
 
 namespace Athena {
     public class ApplicationDbContext : DbContext {
@@ -45,5 +48,12 @@ namespace Athena {
             builder.Entity<Category>()
                 .HasKey(a => a.Name);
         }
+        public bool WasModified()
+        {
+            return this.ChangeTracker.Entries().Any(e => e.State == EntityState.Added
+                                              || e.State == EntityState.Modified
+                                              || e.State == EntityState.Deleted);
+        }
     }
+
 }

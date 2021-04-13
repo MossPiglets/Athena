@@ -93,6 +93,7 @@ namespace Athena {
             worker.RunWorkerCompleted += (o, args) => {
                 ImportText.Visibility = Visibility.Hidden;
                 ProgressBarStatus.Visibility = Visibility.Hidden;
+                BookList.Items.Refresh();
             };
             worker.RunWorkerAsync(argument: fileName);
         }
