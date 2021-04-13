@@ -2,6 +2,7 @@
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
 using Athena.Data.Series;
+using Athena.Data.PublishingHouses;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
