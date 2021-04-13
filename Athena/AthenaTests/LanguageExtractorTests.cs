@@ -18,7 +18,7 @@ namespace AthenaTests
             language.Should().Be(Language.PL);
         }
         [Test]
-        public void Extract_Eng_ShouldReturnEnum() {
+        public void Extract_En_ShouldReturnEnum() {
             // Arrange
             var text = "EN";
             // Act
@@ -54,7 +54,7 @@ namespace AthenaTests
             language.Should().Be(Language.DE);
         }
         [Test]
-        public void Extract_Ua_ShouldReturnEnum() {
+        public void Extract_Uk_ShouldReturnEnum() {
             // Arrange
             var text = "UK";
             // Act
