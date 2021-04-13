@@ -27,6 +27,4 @@ namespace Athena.Data {
             return this.Id.Equals(author.Id);
         }
     }
-
-    
 }
