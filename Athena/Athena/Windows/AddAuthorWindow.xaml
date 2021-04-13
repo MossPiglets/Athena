@@ -5,9 +5,13 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:local="clr-namespace:Athena.Windows"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       xmlns:Authors="clr-namespace:Athena.Data.Authors"
                        mc:Ignorable="d"
                        Title="Dodaj autora" Height="200" Width="300">
-    
+    <Window.Resources>
+        <Authors:AuthorView x:Key="AuthorsInstance" />
+    </Window.Resources>
+
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Autor" HorizontalAlignment="Center"/>
@@ -23,10 +27,25 @@
                 <TextBlock Grid.Column="0" Grid.Row="0" Text="Imię/imiona:"/>
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwisko:"/>
                 <TextBox x:Name="AuthorFirstNameTextBox" Grid.Column="1" Grid.Row="0" Margin="15 0 5 5" MinWidth="100"/>
-                <TextBox x:Name="AuthorLastNameTextBox" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="100"/>
+                <TextBox x:Name="AuthorLastNameTextBox" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="100">
+                    <TextBox.Text>
+                        <Binding Path="LastName" Source="{StaticResource AuthorsInstance}"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <ExceptionValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
             </Grid>
             <TextBlock x:Name="AuthorExistsTextBlock" Visibility="Collapsed" Text="Taki autor już istnieje." Margin=" 0 10 0 0" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
-            <Button Margin="10" Content="Dodaj" Click="AddAuthorButton_Click"/>
+            <Button Margin="10" Content="Dodaj" Click="AddAuthorButton_Click" IsEnabled="{Binding ElementName=AuthorLastNameTextBox, Path=Text.Length, Mode=OneWay}">
+                <Button.CommandBindings>
+                    <CommandBinding Command="Save" 
+                                    Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                </Button.CommandBindings>
+            </Button>
         </StackPanel>
     </Border>
     

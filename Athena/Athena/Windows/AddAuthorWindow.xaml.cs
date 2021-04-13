@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
 using Athena.Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +25,13 @@ namespace Athena.Windows
             else {
                 AuthorExistsTextBlock.Visibility = Visibility.Visible;
             }
+        }
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+        }
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = !Validation.GetHasError(AuthorLastNameTextBox);
         }
     }
 }
