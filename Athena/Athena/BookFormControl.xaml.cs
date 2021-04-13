@@ -41,11 +41,11 @@ namespace Athena {
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
             ApplicationDbContext = new ApplicationDbContext();
-            Authors = ApplicationDbContext.Authors.LoadAuthorsAsObservableCollection();
-            StoragePlaces = ApplicationDbContext.StoragePlaces.LoadStoragePlacesAsObservableCollection();
-            PublishingHouses = ApplicationDbContext.PublishingHouses.LoadPublishingHousesAsObservableCollection();
-            SeriesList = ApplicationDbContext.Series.LoadSeriesAsObservableCollection();
-            Categories = ApplicationDbContext.Categories.LoadCategoriesAsObservableCollection();
+            Authors = ApplicationDbContext.Authors.LoadAsObservableCollection();
+            StoragePlaces = ApplicationDbContext.StoragePlaces.LoadAsObservableCollection();
+            PublishingHouses = ApplicationDbContext.PublishingHouses.LoadAsObservableCollection();
+            SeriesList = ApplicationDbContext.Series.LoadAsObservableCollection();
+            Categories = ApplicationDbContext.Categories.LoadAsObservableCollection();
 
             if (!BookView.Authors.IsNullOrEmpty()) {
                 ConfigureAuthorsComboBoxes();
@@ -125,15 +125,15 @@ namespace Athena {
         }
 
         private void AllowPastOnlyNumbers(object sender, DataObjectPastingEventArgs e) {
-            PastTextValidator.AllowPastOnlyNumbers(e);
+            PastedTextValidator.AllowPastOnlyNumbers(e);
         }
 
-        private T GetSelectedItem<T>(IList list) where T : class {
+        private T GetSelectedItem<T>(IList list) {
             if (list.Count != 0) {
                 return(T) list[0];
             }
 
-            return null;
+            return default(T);
         }
 
         private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -145,11 +145,8 @@ namespace Athena {
         private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
             => BookView.Series = GetSelectedItem<Series>(e.AddedItems);
 
-        private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count != 0) {
-                BookView.Language = (Language) e.AddedItems[0];
-            }
-        }
+        private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+            => BookView.Language = GetSelectedItem<Language>(e.AddedItems);
 
         private void AuthorCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (e.RemovedItems.Count > 0) {

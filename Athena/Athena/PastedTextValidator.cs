@@ -2,7 +2,7 @@
 using System.Windows;
 
 namespace Athena {
-    public class PastTextValidator {
+    public class PastedTextValidator {
         public static void AllowPastOnlyNumbers(DataObjectPastingEventArgs e) {
             if (e.DataObject.GetDataPresent(typeof(string))) {
                 string text = (string) e.DataObject.GetData(typeof(string));
