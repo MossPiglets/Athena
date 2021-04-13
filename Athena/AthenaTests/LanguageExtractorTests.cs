@@ -20,11 +20,11 @@ namespace AthenaTests
         [Test]
         public void Extract_Eng_ShouldReturnEnum() {
             // Arrange
-            var text = "ENG";
+            var text = "EN";
             // Act
             var language = LanguageExtractor.Extract(text);
             // Assert
-            language.Should().Be(Language.ENG);
+            language.Should().Be(Language.EN);
         }
         [Test]
         public void Extract_Ru_ShouldReturnEnum() {
