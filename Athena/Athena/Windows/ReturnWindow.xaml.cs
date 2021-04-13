@@ -56,10 +56,9 @@ namespace Athena.Windows
 
         private void ReturnBorrowedBook_Click(object sender, RoutedEventArgs e)
         {
-            using var context = new ApplicationDbContext();
             Borrowing.ReturnDate = Calendar.SelectedDate.Value;
-            context.Entry(Borrowing).State = EntityState.Modified;
-            context.SaveChanges();
+            ApplicationDbContext.Instance.Entry(Borrowing).State = EntityState.Modified;
+            ApplicationDbContext.Instance.SaveChanges();
             this.Close();
         }
     }

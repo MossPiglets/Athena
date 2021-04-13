@@ -9,7 +9,6 @@ using Castle.Core.Internal;
 
 namespace Athena.Import {
     public class DatabaseImporter : IDisposable {
-        ApplicationDbContext _context = new ApplicationDbContext();
 
         public void ImportFromSpreadsheet(string fileName) {
             if (IfDatabaseIsNotEmpty()) {
@@ -20,7 +19,7 @@ namespace Athena.Import {
 
             var importData = new SpreadsheetDataImport(fileName);
             var authors = importData.ImportAuthorsList();
-            _context.Authors.AddRange(authors);
+            ApplicationDbContext.Instance.Authors.AddRange(authors);
             var seriesInfoList = importData.ImportSeriesListInfo();
             var seriesList = seriesInfoList
                 .GroupBy(a => a.SeriesName)
@@ -28,18 +27,18 @@ namespace Athena.Import {
                 .Where(a => !string.IsNullOrEmpty(a.SeriesName))
                 .Select(a => a.ToSeries())
                 .ToList();
-            _context.Series.AddRange(seriesList);
+            ApplicationDbContext.Instance.Series.AddRange(seriesList);
             var publishingHouses = importData.ImportPublishingHousesList();
-            _context.PublishingHouses.AddRange(publishingHouses);
+            ApplicationDbContext.Instance.PublishingHouses.AddRange(publishingHouses);
             var categories = importData.ImportCategoriesList();
-            _context.Categories.AddRange(categories);
+            ApplicationDbContext.Instance.Categories.AddRange(categories);
             var storagePlaces = importData.ImportStoragePlacesList();
-            _context.StoragePlaces.AddRange(storagePlaces);
-            _context.SaveChanges();
+            ApplicationDbContext.Instance.StoragePlaces.AddRange(storagePlaces);
+            ApplicationDbContext.Instance.SaveChanges();
             var books = ImportBooksFromSpreadsheet(importData, authors, seriesList, publishingHouses, categories,
                 storagePlaces);
-            _context.Books.AddRange(books);
-            _context.SaveChanges();
+            ApplicationDbContext.Instance.Books.AddRange(books);
+            ApplicationDbContext.Instance.SaveChanges();
         }
 
         private List<Book> ImportBooksFromSpreadsheet(SpreadsheetDataImport importData, List<Author> authors,
@@ -84,12 +83,12 @@ namespace Athena.Import {
         }
 
         private bool IfDatabaseIsNotEmpty() {
-            if (_context.Books.Any() ||
-                _context.Authors.Any() ||
-                _context.Series.Any() ||
-                _context.Categories.Any() ||
-                _context.PublishingHouses.Any() ||
-                _context.StoragePlaces.Any()) {
+            if (ApplicationDbContext.Instance.Books.Any() ||
+                ApplicationDbContext.Instance.Authors.Any() ||
+                ApplicationDbContext.Instance.Series.Any() ||
+                ApplicationDbContext.Instance.Categories.Any() ||
+                ApplicationDbContext.Instance.PublishingHouses.Any() ||
+                ApplicationDbContext.Instance.StoragePlaces.Any()) {
                 return true;
             }
 
@@ -97,7 +96,7 @@ namespace Athena.Import {
         }
 
         public void Dispose() {
-            _context.Dispose();
+            ApplicationDbContext.Instance.Dispose();
         }
     }
 }

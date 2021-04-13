@@ -24,10 +24,7 @@ namespace Athena.EventManagers
         }
         private void Update()
         {
-            if (ApplicationDbContext.WasModified() == true)
-            {
-                OnDataBaseModified?.Invoke(this, EventArgs.Empty);
-            }
+            
         }
 
     }

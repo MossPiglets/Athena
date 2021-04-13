@@ -18,14 +18,12 @@ namespace Athena {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow {
-        private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<BookInListView> Books { get; set; }
 
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
-            ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Books
+            ApplicationDbContext.Instance.Books
                 .Include(b => b.Series)
                 .Include(b => b.PublishingHouse)
                 .Include(b => b.StoragePlace)
@@ -33,12 +31,13 @@ namespace Athena {
                 .Include(b => b.Categories)
                 .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
                 .Load();
-            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Books.Local.ToObservableCollection());
+            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local.ToObservableCollection());
 
             if (!Books.IsNullOrEmpty()) {
                 ImportButton.Visibility = Visibility.Collapsed;
             }
 
+            ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {foreach (var item in e?.NewItems) { Books.Add(Mapper.Instance.Map<BookInListView>(item)); } if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove) { Books.RemoveAt(e.OldStartingIndex); } };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
 
@@ -56,9 +55,9 @@ namespace Athena {
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
-            ApplicationDbContext context = new ApplicationDbContext();
-            context.Books.Remove(book);
-            context.SaveChanges();
+            //ApplicationDbContext.Instance.Remove(book);
+            ApplicationDbContext.Instance.Entry(book).State = EntityState.Deleted;
+            ApplicationDbContext.Instance.SaveChanges();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)

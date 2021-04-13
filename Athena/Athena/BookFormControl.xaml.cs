@@ -23,7 +23,6 @@ namespace Athena {
         public string Title { get; set; }
         public string ButtonContent { get; set; }
         public ICommand ButtonCommand { get; set; }
-        private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
         public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
@@ -43,29 +42,28 @@ namespace Athena {
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
-            ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Authors.Load();
-            Authors = new ObservableCollection<Author>(ApplicationDbContext.Authors.Local
+            ApplicationDbContext.Instance.Authors.Load();
+            Authors = new ObservableCollection<Author>(ApplicationDbContext.Instance.Authors.Local
                 .ToList()
                 .OrderBy(a => a.LastName));
 
-            ApplicationDbContext.StoragePlaces.Load();
-            StoragePlaces = new ObservableCollection<StoragePlace>(ApplicationDbContext.StoragePlaces.Local
+            ApplicationDbContext.Instance.StoragePlaces.Load();
+            StoragePlaces = new ObservableCollection<StoragePlace>(ApplicationDbContext.Instance.StoragePlaces.Local
                 .ToList()
                 .OrderBy(a => a.StoragePlaceName));
 
-            ApplicationDbContext.PublishingHouses.Load();
-            PublishingHouses = new ObservableCollection<PublishingHouse>(ApplicationDbContext.PublishingHouses.Local
+            ApplicationDbContext.Instance.PublishingHouses.Load();
+            PublishingHouses = new ObservableCollection<PublishingHouse>(ApplicationDbContext.Instance.PublishingHouses.Local
                 .ToList()
                 .OrderBy(a => a.PublisherName));
 
-            ApplicationDbContext.Series.Load();
-            SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Series.Local
+            ApplicationDbContext.Instance.Series.Load();
+            SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Instance.Series.Local
                 .ToList()
                 .OrderBy(a => a.SeriesName));
 
-            ApplicationDbContext.Categories.Load();
-            Categories = new ObservableCollection<Category>(ApplicationDbContext.Categories.Local);
+            ApplicationDbContext.Instance.Categories.Load();
+            Categories = new ObservableCollection<Category>(ApplicationDbContext.Instance.Categories.Local);
 
             if (!BookView.Authors.IsNullOrEmpty()) {
                 AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
@@ -229,8 +227,8 @@ namespace Athena {
 
         private void MenuItemDeleteAuthor_OnClick(object sender, RoutedEventArgs e) {
             var author = (Author) AuthorCombobox.SelectedItem;
-            ApplicationDbContext.Authors.Remove(author);
-            ApplicationDbContext.SaveChanges();
+            ApplicationDbContext.Instance.Authors.Remove(author);
+            ApplicationDbContext.Instance.SaveChanges();
             Authors.Remove(author);
         }
 
@@ -239,8 +237,8 @@ namespace Athena {
             var series = (Series) SeriesCombobox.SelectedItem;
             if (series.Books != null)
             {
-                ApplicationDbContext.Series.Remove(series);
-                ApplicationDbContext.SaveChanges();
+                ApplicationDbContext.Instance.Series.Remove(series);
+                ApplicationDbContext.Instance.SaveChanges();
                 SeriesList.Remove(series);
             }
             else
@@ -252,8 +250,8 @@ namespace Athena {
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
             var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
             if (publisher.Books != null) { 
-                ApplicationDbContext.PublishingHouses.Remove(publisher);
-                ApplicationDbContext.SaveChanges();
+                ApplicationDbContext.Instance.PublishingHouses.Remove(publisher);
+                ApplicationDbContext.Instance.SaveChanges();
                 PublishingHouses.Remove(publisher); 
             }
             else {

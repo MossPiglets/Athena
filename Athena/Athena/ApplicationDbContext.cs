@@ -10,6 +10,18 @@ using Athena.EventManagers;
 
 namespace Athena {
     public class ApplicationDbContext : DbContext {
+        static ApplicationDbContext instance;
+        private ApplicationDbContext() { }
+        public static ApplicationDbContext Instance
+        {
+            get {
+                if (instance == null)
+                    {
+                    instance = new ApplicationDbContext();
+                    }
+                return instance;
+                }
+        }
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Series> Series { get; set; }
@@ -48,12 +60,5 @@ namespace Athena {
             builder.Entity<Category>()
                 .HasKey(a => a.Name);
         }
-        public bool WasModified()
-        {
-            return this.ChangeTracker.Entries().Any(e => e.State == EntityState.Added
-                                              || e.State == EntityState.Modified
-                                              || e.State == EntityState.Deleted);
-        }
     }
-
 }

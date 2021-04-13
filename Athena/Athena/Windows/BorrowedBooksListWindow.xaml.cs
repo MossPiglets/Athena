@@ -10,13 +10,11 @@ namespace Athena.Windows
 {
     public partial class BorrowedBooksListWindow
     {
-        private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Borrowing> Borrowings { get; set; }
             public BorrowedBooksListWindow() {
             InitializeComponent();
             this.DataContext = this;
-            ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Borrowings
+            ApplicationDbContext.Instance.Borrowings
                 .Include(a => a.Book)
                 .ThenInclude(a => a.StoragePlace)
                 .Include(a => a.Book)
@@ -24,7 +22,7 @@ namespace Athena.Windows
                 .Include(a => a.Book)
                 .ThenInclude(a => a.Authors)
                 .Load();
-            Borrowings = ApplicationDbContext.Borrowings.Local.ToObservableCollection();
+            Borrowings = ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection();
             BorrowedBookList.ItemsSource = Borrowings;
         }
 

@@ -9,19 +9,17 @@ namespace Athena.Windows {
     /// </summary>
     public partial class AddPublisherWindow {
         public PublishingHouseView PublishingHouseView { get; set; }
-        private ApplicationDbContext Context { get; set; }
 
         public AddPublisherWindow() {
             InitializeComponent();
             this.DataContext = this;
             PublishingHouseView = new PublishingHouseView();
-            Context = new ApplicationDbContext();
         }
 
         private void AddPublisherToDataBase_OnClick(object sender, RoutedEventArgs e) {
             PublishingHouseView.Id = Guid.NewGuid();
-            Context.Entry(Mapper.Instance.Map<PublishingHouse>(PublishingHouseView)).State = EntityState.Added;
-            Context.SaveChanges();
+            ApplicationDbContext.Instance.Entry(Mapper.Instance.Map<PublishingHouse>(PublishingHouseView)).State = EntityState.Added;
+            ApplicationDbContext.Instance.SaveChanges();
             this.Close();
         }
     }
