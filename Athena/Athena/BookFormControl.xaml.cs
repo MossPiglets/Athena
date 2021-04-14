@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
@@ -206,36 +207,36 @@ namespace Athena {
 
         private void MenuItemDeleteSeries_Click(object sender, RoutedEventArgs e) {
             var series = (Series) SeriesCombobox.SelectedItem;
-            if (series.Books != null) {
+            try {
                 ApplicationDbContext.Series.Remove(series);
                 ApplicationDbContext.SaveChanges();
                 SeriesList.Remove(series);
             }
-            else {
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
                 MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
             }
         }
 
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
             var publisher = (PublishingHouse) PublisherComboBox.SelectedItem;
-            if (publisher.Books != null) {
+            try {
                 ApplicationDbContext.PublishingHouses.Remove(publisher);
                 ApplicationDbContext.SaveChanges();
                 PublishingHouses.Remove(publisher);
             }
-            else {
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
                 MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
             }
         }
 
         private void MenuItemDeleteStoragePlace_OnClick(object sender, RoutedEventArgs e) {
             var storagePlace = (StoragePlace) StoragePlaceComboBox.SelectedItem;
-            if (storagePlace.Books == null) {
+            try {
                 ApplicationDbContext.StoragePlaces.Remove(storagePlace);
                 ApplicationDbContext.SaveChanges();
                 StoragePlaces.Remove(storagePlace);
             }
-            else {
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
                 MessageBox.Show("To miejsce składowania jest przypisane do jakiejś książki, nie można go usunąć.");
             }
         }
