@@ -37,6 +37,7 @@ namespace Athena {
             AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             SeriesCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            StoragePlaceComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -224,6 +225,18 @@ namespace Athena {
             }
             else {
                 MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            }
+        }
+
+        private void MenuItemDeleteStoragePlace_OnClick(object sender, RoutedEventArgs e) {
+            var storagePlace = (StoragePlace) StoragePlaceComboBox.SelectedItem;
+            if (storagePlace.Books == null) {
+                ApplicationDbContext.StoragePlaces.Remove(storagePlace);
+                ApplicationDbContext.SaveChanges();
+                StoragePlaces.Remove(storagePlace);
+            }
+            else {
+                MessageBox.Show("To miejsce składowania jest przypisane do jakiejś książki, nie można go usunąć.");
             }
         }
     }
