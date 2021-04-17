@@ -12,6 +12,10 @@ using Athena.Data.Series;
 using Athena.EnumLocalizations;
 using Athena.Windows;
 using Castle.Core.Internal;
+using AdonisUI.Controls;
+using MessageBox = AdonisUI.Controls.MessageBox;
+using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
+using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
 
 
 namespace Athena {
@@ -37,6 +41,7 @@ namespace Athena {
             AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             SeriesCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            StoragePlaceComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
@@ -205,25 +210,37 @@ namespace Athena {
 
         private void MenuItemDeleteSeries_Click(object sender, RoutedEventArgs e) {
             var series = (Series) SeriesCombobox.SelectedItem;
-            if (series.Books != null) {
+            try {
                 ApplicationDbContext.Series.Remove(series);
                 ApplicationDbContext.SaveChanges();
                 SeriesList.Remove(series);
             }
-            else {
-                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
+                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
             }
         }
 
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
             var publisher = (PublishingHouse) PublisherComboBox.SelectedItem;
-            if (publisher.Books != null) {
+            try {
                 ApplicationDbContext.PublishingHouses.Remove(publisher);
                 ApplicationDbContext.SaveChanges();
                 PublishingHouses.Remove(publisher);
             }
-            else {
-                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
+
+        private void MenuItemDeleteStoragePlace_OnClick(object sender, RoutedEventArgs e) {
+            var storagePlace = (StoragePlace) StoragePlaceComboBox.SelectedItem;
+            try {
+                ApplicationDbContext.StoragePlaces.Remove(storagePlace);
+                ApplicationDbContext.SaveChanges();
+                StoragePlaces.Remove(storagePlace);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
+                MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
             }
         }
     }
