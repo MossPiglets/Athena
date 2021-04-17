@@ -35,7 +35,7 @@
                            Grid.ColumnSpan="2" Padding="10" />
                 <TextBlock Text="Tytuł:" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="1" Grid.Column="0"
                            Margin="0 10 0 0" />
-                <TextBox Name="BookTitle" Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="22">
+                <TextBox Name="BookTitle" Grid.Row="1" Grid.Column="1" Margin="5 10 10 0" Height="25">
                     <TextBox.Text>
                         <Binding Path="BookView.Title"
                                  ValidatesOnDataErrors="True"
@@ -58,8 +58,8 @@
                 <TextBlock Text="Autor" FontWeight="Bold" HorizontalAlignment="Left" Grid.Column="0" Margin="0 10" />
                 <TextBlock Text="Kategoria" FontWeight="Bold" HorizontalAlignment="Left" Grid.Column="2" Margin="20 10" />
                 <Button Content="➕" Padding="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="1"
-                        Margin="0 10" Width="20"
-                        Height="20" Click="AddAuthor_Click"/>
+                        Margin="0 10" Width="23"
+                        Height="23" Click="AddAuthor_Click"/>
                 
             </Grid>
 
@@ -78,7 +78,7 @@
                 <ComboBox x:Name="AuthorCombobox"
                           ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 52 0 "
-                          Height="22" SelectionChanged="AuthorCombobox_OnSelectionChanged" >
+                          Height="25" SelectionChanged="AuthorCombobox_OnSelectionChanged" >
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Usuń" Click="MenuItemDeleteAuthor_OnClick"/>
@@ -89,7 +89,7 @@
                 <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 7 52 0"
                         Content="Dodaj kolejnego autora" Click="AddingAuthorCombobox" />
                 <ComboBox x:Name="CategoriesCombobox" SelectionChanged="CategoriesCombobox_OnSelectionChanged"
-                          Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 52 0 " Height="22" />
+                          Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 0 52 0 " Height="25" />
                 <StackPanel x:Name="CategoriesStackPanel" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" />
                 <Button Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="0 7 52 0"
                         Content="Dodaj kolejną kategorię" Click="AddingCategoryCombobox_Click" />
@@ -104,8 +104,8 @@
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Seria" FontWeight="Bold" Margin="0 10" />
                 <Button Content="➕" Padding="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="1"
-                        Margin="0 10" Width="20"
-                        Height="20" Click="AddSeries_Click" />
+                        Margin="0 10" Width="23"
+                        Height="23" Click="AddSeries_Click" />
             </Grid>
 
             <Grid Margin="33 7 0 0">
@@ -118,11 +118,11 @@
                 <TextBlock Text="Nazwa:" />
                 <TextBlock Text="Nr tomu:" Grid.Column="2" />
                 <TextBox Text="{Binding BookView.VolumeNumber}" PreviewTextInput="AllowOnlyNumbers"
-                         DataObject.Pasting="AllowPastOnlyNumbers" HorizontalAlignment="Left" Width="40"
+                         DataObject.Pasting="AllowPastOnlyNumbers" HorizontalAlignment="Left" Height="25" Width="40"
                          Grid.Column="3" />
                 <ComboBox Name="SeriesCombobox" ItemsSource="{Binding SeriesList}" Text="{Binding BookView.Series.SeriesName}" 
                           SelectedItem="{Binding Path=BookView.Series}" IsEditable="True" SelectionChanged="Series_OnSelectionChanged" Grid.Column="1"
-                          Margin="0 0 19 0">
+                          Height="25" Margin="0 0 19 0">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem x:Name="ComboBoxDeleteSeries"  Header="Usuń" Click="MenuItemDeleteSeries_Click"/>
@@ -155,7 +155,7 @@
                           Text="{Binding BookView.PublishingHouse.PublisherName}"
                           ItemsSource="{Binding Path=PublishingHouses,  UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" SelectionChanged="PublishingHouseCombobox_OnSelectionChanged"
-                          Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 48 0">
+                          Grid.Row="0" Grid.Column="1" Height="25" Margin="0 0 48 0">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Usuń" Click="MenuItemDeletePublisher_OnClick"/>
@@ -163,10 +163,10 @@
                     </ComboBox.ContextMenu>
                 </ComboBox>
                 <Button Content="➕" Padding="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="1"
-                        Margin="0 0 18 0" Width="20"
-                        Height="20" Click="AddPublisher_Click" />
+                        Margin="0 0 18 0" Width="25"
+                        Height="25" Click="AddPublisher_Click" />
                 <TextBox PreviewTextInput="AllowOnlyNumbers" DataObject.Pasting="AllowPastOnlyNumbers" Grid.Row="1"
-                         Grid.Column="3" Height="22"
+                         Grid.Column="3" Height="25"
                          Margin="0 7 18 0" HorizontalAlignment="Left" Width="60">
                     <TextBox.Text>
                         <Binding Path="BookView.PublishmentYear"
@@ -179,8 +179,8 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox Text="{Binding BookView.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="22" />
-                <ComboBox Name="LanguageComboBox" IsEditable="True" SelectedItem="{Binding Path=BookView.Language}" SelectionChanged="LanguageComboBox_OnSelectionChanged" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
+                <TextBox Text="{Binding BookView.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="25" />
+                <ComboBox Name="LanguageComboBox" IsEditable="True" SelectedItem="{Binding Path=BookView.Language}" SelectionChanged="LanguageComboBox_OnSelectionChanged" Height="25" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
@@ -202,18 +202,19 @@
                 <TextBlock Text="Uwagi:" Grid.Row="1" Grid.Column="0" Margin="0 7 0 0" />
                 <ComboBox Name="StoragePlaceComboBox" Text="{Binding Path=BookView.StoragePlace.StoragePlaceName}"
                           ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}"
-                          IsEditable="True" SelectionChanged="StoragePlace_OnSelectionChanged" Grid.Row="0" Grid.Column="1" Height="22" Margin="0 0 19 0" >
+                          IsEditable="True" SelectionChanged="StoragePlace_OnSelectionChanged" Grid.Row="0" Grid.Column="1" 
+                           Height="25" Margin="0 0 0 0" >
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Usuń" Click="MenuItemDeleteStoragePlace_OnClick"/>
                         </ContextMenu>
                     </ComboBox.ContextMenu>
                 </ComboBox>
-                <Button Content="➕" Padding="0 0" HorizontalAlignment="Right" FontSize="8" Grid.Column="2"
-                        Margin="0 0 19 0" Width="22" Height="22" Click="AddStoragePlace_Click" />
+                <Button Content="➕"  Padding="0 0" HorizontalAlignment="Left" FontSize="8" Grid.Column="2"
+                        Margin="5 0 10 0" Width="25" Height="25" Click="AddStoragePlace_Click" />
                 <TextBox Text="{Binding BookView.Comment}" Grid.Row="1" TextWrapping="Wrap"
                          VerticalScrollBarVisibility="Visible"
-                         Grid.Column="1" Height="66" Margin="0 7 19 0" />
+                         Grid.Column="1" Height="66" Margin="0 7 0 0" />
             </Grid>
 
             <Grid Margin="5 40 0 0">
