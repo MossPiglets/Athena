@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,7 +12,10 @@ using Athena.Data.Series;
 using Athena.EnumLocalizations;
 using Athena.Windows;
 using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore;
+using AdonisUI.Controls;
+using MessageBox = AdonisUI.Controls.MessageBox;
+using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
+using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
 
 
 namespace Athena {
@@ -40,77 +41,51 @@ namespace Athena {
             AuthorCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             SeriesCombobox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
             PublisherComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
+            StoragePlaceComboBox.PreviewMouseRightButtonDown += ComboboxOnPreviewMouseRightButtonDown;
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
             ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Authors.Load();
-            Authors = new ObservableCollection<Author>(ApplicationDbContext.Authors.Local
-                .ToList()
-                .OrderBy(a => a.LastName));
-
-            ApplicationDbContext.StoragePlaces.Load();
-            StoragePlaces = new ObservableCollection<StoragePlace>(ApplicationDbContext.StoragePlaces.Local
-                .ToList()
-                .OrderBy(a => a.StoragePlaceName));
-
-            ApplicationDbContext.PublishingHouses.Load();
-            PublishingHouses = new ObservableCollection<PublishingHouse>(ApplicationDbContext.PublishingHouses.Local
-                .ToList()
-                .OrderBy(a => a.PublisherName));
-
-            ApplicationDbContext.Series.Load();
-            SeriesList = new ObservableCollection<Series>(ApplicationDbContext.Series.Local
-                .ToList()
-                .OrderBy(a => a.SeriesName));
-
-            ApplicationDbContext.Categories.Load();
-            Categories = new ObservableCollection<Category>(ApplicationDbContext.Categories.Local);
+            Authors = ApplicationDbContext.Authors.LoadAsObservableCollection();
+            StoragePlaces = ApplicationDbContext.StoragePlaces.LoadAsObservableCollection();
+            PublishingHouses = ApplicationDbContext.PublishingHouses.LoadAsObservableCollection();
+            SeriesList = ApplicationDbContext.Series.LoadAsObservableCollection();
+            Categories = ApplicationDbContext.Categories.LoadAsObservableCollection();
 
             if (!BookView.Authors.IsNullOrEmpty()) {
-                AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
-                if (BookView.Authors.Count > 1) {
-                    for (int i = 1; i < BookView.Authors.Count; i++) {
-                        AddingAuthorCombobox(this, new RoutedEventArgs());
-                        var authorAdding = (AuthorAdding) AuthorsStackPanel.Children[i - 1];
-                        var combobox = authorAdding.AuthorComboBox;
-                        combobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[i]);
-                    }
-                }
+                ConfigureAuthorsComboBoxes();
             }
 
             if (!BookView.Categories.IsNullOrEmpty()) {
-                CategoriesCombobox.SelectedItem = BookView.Categories.First().Name;
-                for (int i = 1; i < BookView.Categories.Count; i++) {
-                    AddingCategoryCombobox_Click(this, new RoutedEventArgs());
-                    var categoryAdding = (CategoryAdding) CategoriesStackPanel.Children[i - 1];
-                    var combobox = categoryAdding.CategoryComboBox;
-                    combobox.SelectedItem = BookView.Categories.ToList()[i].Name;
-                }
+                ConfigureCategoriesComboBox();
             }
 
             CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
             LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-            SeriesCombobox.ItemsSource = SeriesList.Select(a => a).ToList();
+        }
 
-            if (BookView.Series != null) {
-                SeriesCombobox.SelectedItem = BookView.Series.SeriesName;
+        private void ConfigureAuthorsComboBoxes() {
+            AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
+            if (BookView.Authors.Count > 1) {
+                for (int i = 1; i < BookView.Authors.Count; i++) {
+                    AddingAuthorCombobox(this, new RoutedEventArgs());
+                    var authorAdding = (AuthorAdding) AuthorsStackPanel.Children[i - 1];
+                    var combobox = authorAdding.AuthorComboBox;
+                    combobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[i]);
+                }
             }
-
-            LanguageComboBox.SelectedItem = BookView.Language;
         }
 
-        private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
-            var authorAddingUserControl = new AuthorAdding();
-            AuthorsStackPanel.Children.Add(authorAddingUserControl);
-            authorAddingUserControl.AuthorComboBox.SelectionChanged += AuthorCombobox_OnSelectionChanged;
-            authorAddingUserControl.DeleteButton.Click += AuthorComboBoxDeleteButton_OnClick;
+        private void ConfigureCategoriesComboBox() {
+            CategoriesCombobox.SelectedItem = BookView.Categories.First().Name;
+            for (int i = 1; i < BookView.Categories.Count; i++) {
+                AddingCategoryCombobox_Click(this, new RoutedEventArgs());
+                var categoryAdding = (CategoryAdding) CategoriesStackPanel.Children[i - 1];
+                var combobox = categoryAdding.CategoryComboBox;
+                combobox.SelectedItem = BookView.Categories.ToList()[i].Name;
+            }
         }
 
-        private void AuthorComboBoxDeleteButton_OnClick(object sender, RoutedEventArgs e) {
-            var button = (Button) sender;
-            BookView.Authors.Remove((Author) button.DataContext);
-        }
 
         private void AddSeries_Click(object sender, RoutedEventArgs e) {
             new AddSeriesWindow().Show();
@@ -128,9 +103,27 @@ namespace Athena {
             new AddStoragePlaceWindow().Show();
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e) {
-            var myWindow = Window.GetWindow(this);
-            myWindow.Close();
+        private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
+            var authorAddingUserControl = new AuthorAdding();
+            AuthorsStackPanel.Children.Add(authorAddingUserControl);
+            authorAddingUserControl.AuthorComboBox.SelectionChanged += AuthorCombobox_OnSelectionChanged;
+            authorAddingUserControl.DeleteButton.Click += AuthorComboBoxDeleteButton_OnClick;
+        }
+
+        private void AddingCategoryCombobox_Click(object sender, RoutedEventArgs e) {
+            var categoryAddingUserControl = new CategoryAdding();
+            CategoriesStackPanel.Children.Add(categoryAddingUserControl);
+            categoryAddingUserControl.CategoryComboBox.SelectionChanged += CategoriesCombobox_OnSelectionChanged;
+            categoryAddingUserControl.CategoryComboBox.SelectedIndex = 0;
+            categoryAddingUserControl.DeleteButton.Click += (o, args) => {
+                BookView.Categories.Remove(BookView.Categories.First(a
+                    => a.Name == (CategoryName) categoryAddingUserControl.CategoryComboBox.SelectedItem));
+            };
+        }
+
+        private void AuthorComboBoxDeleteButton_OnClick(object sender, RoutedEventArgs e) {
+            var button = (Button) sender;
+            BookView.Authors.Remove((Author) button.DataContext);
         }
 
         private void AllowOnlyNumbers(object sender, TextCompositionEventArgs e) {
@@ -138,26 +131,28 @@ namespace Athena {
         }
 
         private void AllowPastOnlyNumbers(object sender, DataObjectPastingEventArgs e) {
-            if (e.DataObject.GetDataPresent(typeof(string))) {
-                string text = (string) e.DataObject.GetData(typeof(string));
-                if (text.Any(a => !char.IsDigit(a))) {
-                    e.CancelCommand();
-                }
-            }
-            else {
-                e.CancelCommand();
-            }
+            PastedTextValidator.AllowPastOnlyNumbers(e);
         }
 
-        private void AddingCategoryCombobox_Click(object sender, RoutedEventArgs e) {
-            var categoryAddingUserControl = new CategoryAdding();
-            CategoriesStackPanel.Children.Add(categoryAddingUserControl);
-            categoryAddingUserControl.CategoryComboBox.SelectionChanged += CategoriesCombobox_OnSelectionChanged;
-            categoryAddingUserControl.DeleteButton.Click += (o, args) => {
-                BookView.Categories.Remove(BookView.Categories.First(a
-                    => a.Name == (CategoryName) categoryAddingUserControl.CategoryComboBox.SelectedItem));
-            };
+        private T GetSelectedItem<T>(IList list) {
+            if (list.Count != 0) {
+                return(T) list[0];
+            }
+
+            return default(T);
         }
+
+        private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+            => BookView.PublishingHouse = GetSelectedItem<PublishingHouse>(e.AddedItems);
+
+        private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+            => BookView.StoragePlace = GetSelectedItem<StoragePlace>(e.AddedItems);
+
+        private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+            => BookView.Series = GetSelectedItem<Series>(e.AddedItems);
+
+        private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+            => BookView.Language = GetSelectedItem<Language>(e.AddedItems);
 
         private void AuthorCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
             if (e.RemovedItems.Count > 0) {
@@ -183,35 +178,15 @@ namespace Athena {
             }
         }
 
-        private void PublishingHouseCombobox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count != 0) {
-                BookView.PublishingHouse = (PublishingHouse) e.AddedItems[0];
-            }
-        }
-
-        private void StoragePlace_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count != 0) {
-                BookView.StoragePlace = (StoragePlace) e.AddedItems[0];
-            }
-        }
-
-
-        private void Series_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count != 0) {
-               BookView.Series = (Series) e.AddedItems[0]; 
-            }
-        }
-
-        private void LanguageComboBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e) {
-            if (e.AddedItems.Count != 0) {
-                BookView.Language = (Language) e.AddedItems[0];
-            }
-        }
-
         private void ButtonReturn_OnClick(object sender, RoutedEventArgs e) {
             Window.GetWindow(this)?.Close();
         }
-        
+
+        private void ConfirmButton_Click(object sender, RoutedEventArgs e) {
+            var myWindow = Window.GetWindow(this);
+            myWindow.Close();
+        }
+
         private void ComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
             var comboBoxItem = (ComboBoxItem) VisualUpwardSearch(e.OriginalSource as DependencyObject);
 
@@ -234,30 +209,39 @@ namespace Athena {
             Authors.Remove(author);
         }
 
-        private void ComboBoxDeleteSeries_Click(object sender, RoutedEventArgs e)
-        {
+        private void MenuItemDeleteSeries_Click(object sender, RoutedEventArgs e) {
             var series = (Series) SeriesCombobox.SelectedItem;
-            if (series.Books != null)
-            {
+            try {
                 ApplicationDbContext.Series.Remove(series);
                 ApplicationDbContext.SaveChanges();
                 SeriesList.Remove(series);
             }
-            else
-            {
-                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.");
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
+                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
             }
         }
-        
+
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
-            var publisher = (PublishingHouse)PublisherComboBox.SelectedItem;
-            if (publisher.Books != null) { 
+            var publisher = (PublishingHouse) PublisherComboBox.SelectedItem;
+            try {
                 ApplicationDbContext.PublishingHouses.Remove(publisher);
                 ApplicationDbContext.SaveChanges();
-                PublishingHouses.Remove(publisher); 
+                PublishingHouses.Remove(publisher);
             }
-            else {
-                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.");
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
+
+        private void MenuItemDeleteStoragePlace_OnClick(object sender, RoutedEventArgs e) {
+            var storagePlace = (StoragePlace) StoragePlaceComboBox.SelectedItem;
+            try {
+                ApplicationDbContext.StoragePlaces.Remove(storagePlace);
+                ApplicationDbContext.SaveChanges();
+                StoragePlaces.Remove(storagePlace);
+            }
+            catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
+                MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
             }
         }
     }
