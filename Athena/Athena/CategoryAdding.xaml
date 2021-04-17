@@ -10,6 +10,6 @@
     
     <DockPanel x:Name="CategoriesDockPanel" ClipToBounds="False" >
         <Button Name="DeleteButton" Margin="0,7,17,0"  Height="25" Width="25" DockPanel.Dock="Right" Click="Button_Click" Content="➖" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="8" Padding = "0 0"/>
-        <ComboBox Name="CategoryComboBox" SelectedIndex="0" Margin="0, 7, 10, 0" Height="25" />
+        <ComboBox Name="CategoryComboBox" Margin="0, 7, 10, 0" Height="25" />
     </DockPanel>
 </UserControl>
