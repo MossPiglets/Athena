@@ -7,7 +7,7 @@
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        xmlns:StoragePlaces="clr-namespace:Athena.Data.StoragePlaces"
                        mc:Ignorable="d"
-                       Title="Dodaj miejsce przechowywania" SizeToContent="WidthAndHeight" MaxWidth="300">
+                       Title="Dodaj miejsce przechowywania" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <StoragePlaces:StoragePlaceView x:Key="StoragePlaceInstance" />
     </Window.Resources>
