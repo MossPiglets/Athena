@@ -16,7 +16,7 @@ namespace Athena.Data.PublishingHouses {
             get
             {
                 string result = string.Empty;
-                if (columnName == "PublisherName")
+                if (columnName == nameof(PublisherName)) 
                 {
                     if (this.PublisherName == "")
                         result = "Nazwa wydawcy nie może być pusta.";
