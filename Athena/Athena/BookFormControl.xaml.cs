@@ -114,6 +114,7 @@ namespace Athena {
             var categoryAddingUserControl = new CategoryAdding();
             CategoriesStackPanel.Children.Add(categoryAddingUserControl);
             categoryAddingUserControl.CategoryComboBox.SelectionChanged += CategoriesCombobox_OnSelectionChanged;
+            categoryAddingUserControl.CategoryComboBox.SelectedIndex = 0;
             categoryAddingUserControl.DeleteButton.Click += (o, args) => {
                 BookView.Categories.Remove(BookView.Categories.First(a
                     => a.Name == (CategoryName) categoryAddingUserControl.CategoryComboBox.SelectedItem));
