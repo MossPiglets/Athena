@@ -16,7 +16,7 @@ namespace Athena.Data.Borrowings {
 
         public string this[string columnName] {
             get {
-                if (columnName == "FirstName") {
+                if (columnName == nameof(FirstName)) {
                     if (this.FirstName == "") { 
                         return "Imię nie może być puste";
                     }

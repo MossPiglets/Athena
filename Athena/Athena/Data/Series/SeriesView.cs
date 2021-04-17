@@ -11,7 +11,7 @@ namespace Athena.Data.Series {
         public string this[string columnName] {
             get {
                 string result = string.Empty;
-                if (columnName == "SeriesName") {
+                if (columnName == nameof(SeriesName)) {
                     if (this.SeriesName == "")
                         result = "Nazwa serii nie może być pusta.";
                 }
