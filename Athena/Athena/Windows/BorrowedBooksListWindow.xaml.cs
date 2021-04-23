@@ -4,14 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
-using System;
 
-namespace Athena.Windows
-{
-    public partial class BorrowedBooksListWindow
-    {
+
+namespace Athena.Windows {
+    public partial class BorrowedBooksListWindow {
         public ObservableCollection<Borrowing> Borrowings { get; set; }
-            public BorrowedBooksListWindow() {
+
+        public BorrowedBooksListWindow() {
             InitializeComponent();
             this.DataContext = this;
             ApplicationDbContext.Instance.Borrowings
@@ -24,12 +23,14 @@ namespace Athena.Windows
                 .Load();
             Borrowings = ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection();
             BorrowedBookList.ItemsSource = Borrowings;
+            if (Borrowings.Count == 0) {
+                TextBlock.Visibility = Visibility.Visible;
+            }
         }
 
-        private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            Borrowing borrowedBook = (Borrowing)button.DataContext;
+        private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
+            Button button = (Button) sender;
+            Borrowing borrowedBook = (Borrowing) button.DataContext;
             Book book = borrowedBook.Book;
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.Show();

@@ -9,7 +9,10 @@
                        mc:Ignorable="d"
                        Title="Dodaj wydawnictwo" Height="200" Width="300">
 
-
+    <Window.Resources>
+        <publishingHouses:PublishingHouseView x:Key="PublishingHouseInstance" />
+    </Window.Resources> 
+    
     <Border Padding="10">
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Wydawnictwo" HorizontalAlignment="Center" />
@@ -25,7 +28,7 @@
                 <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwa:" />
                 <TextBox Name="PublisherNameTextBox" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="150">
                     <TextBox.Text>
-                        <Binding Path="PublishingHouseView.PublisherName" 
+                        <Binding Path="PublisherName" Source="{StaticResource PublishingHouseInstance}" 
                             ValidatesOnDataErrors="True"
                             UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -35,7 +38,12 @@
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <Button Click="AddPublisherToDataBase_OnClick" Margin="10" Content="Dodaj" />
+            <Button Click="AddPublisherToDataBase_OnClick" Margin="10" Content="Dodaj" IsEnabled="{Binding ElementName=PublisherNameTextBox, Path=Text.Length, Mode=OneWay}">
+                <Button.CommandBindings>
+                    <CommandBinding Command="Save" 
+                                    Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                </Button.CommandBindings>
+            </Button>
         </StackPanel>
     </Border>
 

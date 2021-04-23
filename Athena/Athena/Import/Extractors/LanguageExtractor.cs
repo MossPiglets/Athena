@@ -15,8 +15,8 @@ namespace Athena.Import.Extractors
                 case "PL":
                     language = Language.PL;
                     break;
-                case "ENG":
-                    language = Language.ENG;
+                case "EN":
+                    language = Language.EN;
                     break;
                 case "RU":
                     language = Language.RU;

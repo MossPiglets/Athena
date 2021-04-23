@@ -15,7 +15,7 @@ namespace Athena.Data.StoragePlaces
             get
             {
                 string result = string.Empty;
-                if (columnName == "StoragePlaceName")
+                if (columnName == nameof(StoragePlaceName))
                 {
                     if (this.StoragePlaceName == "")
                         result = "Nazwa nie może być pusta.";
