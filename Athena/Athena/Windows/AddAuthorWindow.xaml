@@ -26,7 +26,7 @@
                 <TextBox x:Name="AuthorLastNameTextBox" Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="100"/>
             </Grid>
             <TextBlock x:Name="AuthorExistsTextBlock" Visibility="Collapsed" Text="Taki autor już istnieje." Margin=" 0 10 0 0" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
-            <Button Margin="10" Content="Dodaj" Click="AddAuthorButton_Click"/>
+            <Button Margin="10" Content="Dodaj" Click="AddAuthorButton_Click" IsDefault="True"/>
         </StackPanel>
     </Border>
     

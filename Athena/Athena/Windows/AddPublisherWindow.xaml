@@ -38,7 +38,7 @@
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <Button Click="AddPublisherToDataBase_OnClick" Margin="10" Content="Dodaj" IsEnabled="{Binding ElementName=PublisherNameTextBox, Path=Text.Length, Mode=OneWay}">
+            <Button Click="AddPublisherToDataBase_OnClick" IsDefault="True" Margin="10" Content="Dodaj" IsEnabled="{Binding ElementName=PublisherNameTextBox, Path=Text.Length, Mode=OneWay}">
                 <Button.CommandBindings>
                     <CommandBinding Command="Save" 
                                     Executed="Save_Executed" CanExecute="Save_CanExecute"/>
