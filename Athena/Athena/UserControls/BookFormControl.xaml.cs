@@ -244,5 +244,95 @@ namespace Athena {
                 MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
             }
         }
+
+        private void AuthorCombobox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool allowed = false;
+            foreach (Author it in AuthorCombobox.Items)
+            {
+                if (it.ToString() == AuthorCombobox.Text || it.ToString().IsNullOrEmpty())
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed)
+            {
+                MessageBox.Show("Wprowadzony autor nie istnieje. Użyj opcji dodaj autora.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
+
+        private void PublisherComboBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool allowed = false;
+            foreach (PublishingHouse it in PublisherComboBox.Items)
+            {
+                if (it.ToString() == PublisherComboBox.Text || it.ToString().IsNullOrEmpty())
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed)
+            {
+                MessageBox.Show("Wprowadzone wydawnictwo nie istnieje. Użyj opcji dodaj wydawnictwo.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
+
+        private void LanguageComboBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool allowed = false;
+            foreach (Language it in LanguageComboBox.Items)
+            {
+                if (it.ToString() == LanguageComboBox.Text)
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed)
+            {
+                MessageBox.Show("Wprowadzony język nie istnieje. Popraw nazwę lub wybierz opcje 'Inne'.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
+
+        private void SeriesCombobox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool allowed = false;
+            foreach (Series it in SeriesCombobox.Items)
+            {
+                if (it.ToString() == SeriesCombobox.Text || it.ToString().IsNullOrEmpty())
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed)
+            {
+                MessageBox.Show("Wprowadzona seria nie istnieje. Użyj opcji dodaj serię.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
+
+        private void StoragePlaceComboBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            bool allowed = false;
+            foreach (StoragePlace it in StoragePlaceComboBox.Items)
+            {
+                if (it.ToString() == StoragePlaceComboBox.Text || it.ToString().IsNullOrEmpty())
+                {
+                    allowed = true;
+                    break;
+                }
+            }
+
+            if (!allowed)
+            {
+                MessageBox.Show("Wprowadzone miejsce przechowywania nie istnieje. Użyj opcji dodaj miejsce przechowywania.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+            }
+        }
     }
 }

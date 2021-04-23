@@ -28,7 +28,7 @@
                     <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwa:"/>
                 <TextBox Name="SeriesNameTextBox"  Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="150">
                     <TextBox.Text>
-                            <Binding  Path="SeriesName" Source="{StaticResource SeriesInstance}"
+                            <Binding Path="SeriesName" Source="{StaticResource SeriesInstance}"
                                  ValidatesOnDataErrors="True"
                                  UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
