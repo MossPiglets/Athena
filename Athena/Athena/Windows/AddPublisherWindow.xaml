@@ -38,7 +38,8 @@
                     </TextBox.Text>
                 </TextBox>
             </Grid>
-            <Button Click="AddPublisherToDataBase_OnClick" IsDefault="True" Margin="10" Content="Dodaj" IsEnabled="{Binding ElementName=PublisherNameTextBox, Path=Text.Length, Mode=OneWay}">
+            <TextBlock x:Name="PublisherExistsTextBlock" Margin=" 0 10 0 0" Visibility="Collapsed" Text="Taki wydawca już istnieje." FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
+            <Button Margin="10" Content="Dodaj" Command="Save" IsEnabled="{Binding ElementName=PublisherNameTextBox, Path=Text.Length, Mode=OneWay}" IsDefault="True">
                 <Button.CommandBindings>
                     <CommandBinding Command="Save" 
                                     Executed="Save_Executed" CanExecute="Save_CanExecute"/>

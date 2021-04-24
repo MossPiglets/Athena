@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,27 +11,24 @@ namespace Athena.Windows {
     /// Logika interakcji dla klasy AddPublisherWindow.xaml
     /// </summary>
     public partial class AddPublisherWindow {
-        public PublishingHouseView PublishingHouseView { get; set; }
-        private ApplicationDbContext Context { get; set; }
-
         public AddPublisherWindow() {
             InitializeComponent();
-            this.DataContext = this;
-            PublishingHouseView = new PublishingHouseView();
-            Context = new ApplicationDbContext();
         }
 
-        private void AddPublisherToDataBase_OnClick(object sender, RoutedEventArgs e) {
-            PublishingHouseView.Id = Guid.NewGuid();
-            Context.Entry(Mapper.Instance.Map<PublishingHouse>(PublishingHouseView)).State = EntityState.Added;
-            Context.SaveChanges();
-            this.Close();
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
+            using var context = new ApplicationDbContext();
+            if (!context.PublishingHouses.Any(s => s.PublisherName.ToLower() == PublisherNameTextBox.Text.ToLower())) {
+                context.Entry(new PublishingHouse() {PublisherName = PublisherNameTextBox.Text, Id = Guid.NewGuid()})
+                    .State = EntityState.Added;
+                context.SaveChanges();
+                this.Close();
+            }
+            else {
+                PublisherExistsTextBlock.Visibility = Visibility.Visible;
+            }
         }
-        private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
-        {
-        }
-        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
+
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = !Validation.GetHasError(PublisherNameTextBox);
         }
     }
