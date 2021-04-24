@@ -11,16 +11,25 @@ namespace Athena.Windows {
     /// Logika interakcji dla klasy AddPublisherWindow.xaml
     /// </summary>
     public partial class AddPublisherWindow {
+        public PublishingHouseView PublishingHouseView { get; set; }
+
         public AddPublisherWindow() {
             InitializeComponent();
+            this.DataContext = this;
+            PublishingHouseView = new PublishingHouseView();
         }
 
+        private void AddPublisherToDataBase_OnClick(object sender, RoutedEventArgs e) {
+            PublishingHouseView.Id = Guid.NewGuid();
+            ApplicationDbContext.Instance.Entry(Mapper.Instance.Map<PublishingHouse>(PublishingHouseView)).State = EntityState.Added;
+            ApplicationDbContext.Instance.SaveChanges();
+            this.Close();
+        }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
-            using var context = new ApplicationDbContext();
-            if (!context.PublishingHouses.Any(s => s.PublisherName.ToLower() == PublisherNameTextBox.Text.ToLower())) {
-                context.Entry(new PublishingHouse() {PublisherName = PublisherNameTextBox.Text, Id = Guid.NewGuid()})
+            if (!ApplicationDbContext.Instance.PublishingHouses.Any(s => s.PublisherName.ToLower() == PublisherNameTextBox.Text.ToLower())) {
+                ApplicationDbContext.Instance.Entry(new PublishingHouse() {PublisherName = PublisherNameTextBox.Text, Id = Guid.NewGuid()})
                     .State = EntityState.Added;
-                context.SaveChanges();
+                ApplicationDbContext.Instance.SaveChanges();
                 this.Close();
             }
             else {

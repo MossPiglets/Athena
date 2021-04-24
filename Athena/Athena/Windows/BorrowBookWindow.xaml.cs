@@ -50,12 +50,11 @@ namespace Athena {
         }
 
         private void Borrow_OnClick(object sender, RoutedEventArgs e) {
-            using var context = new ApplicationDbContext();
             BorrowingView.Id = Guid.NewGuid();
             BorrowingView.BorrowDate = Calendar.SelectedDate.Value;
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
-            context.Entry(borrowing).State = EntityState.Added;
-            context.SaveChanges();
+            ApplicationDbContext.Instance.Entry(borrowing).State = EntityState.Added;
+            ApplicationDbContext.Instance.SaveChanges();
             this.Close();
         }
 

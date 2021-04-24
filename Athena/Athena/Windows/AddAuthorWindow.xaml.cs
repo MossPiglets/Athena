@@ -17,13 +17,10 @@ namespace Athena.Windows
         {
             InitializeComponent();
         }
-        private void AddAuthorButton_Click(object sender, RoutedEventArgs e)
-        {
-            using var context = new ApplicationDbContext();
-            if (!context.Authors.Any(a => a.FirstName.ToLower() == AuthorFirstNameTextBox.Text.ToLower() && a.LastName.ToLower() == AuthorLastNameTextBox.Text.ToLower()))
-            {
-                context.Entry(new Author { FirstName = AuthorFirstNameTextBox.Text, LastName = AuthorLastNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
-                context.SaveChanges();
+        private void AddAuthorButton_Click(object sender, RoutedEventArgs e) {
+            if (!ApplicationDbContext.Instance.Authors.Any(a => a.FirstName.ToLower() == AuthorFirstNameTextBox.Text.ToLower() && a.LastName.ToLower() == AuthorLastNameTextBox.Text.ToLower())) {
+                ApplicationDbContext.Instance.Entry(new Author { FirstName = AuthorFirstNameTextBox.Text, LastName = AuthorLastNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
+                ApplicationDbContext.Instance.SaveChanges();
                 this.Close();
             }
             else

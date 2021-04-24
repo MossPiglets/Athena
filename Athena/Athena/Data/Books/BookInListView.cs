@@ -1,27 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Text;
+using Athena.Annotations;
 using Athena.Data.Borrowings;
 using Athena.Data.PublishingHouses;
 
 namespace Athena.Data.Books
 {
-    public class BookInListView
+    public class BookInListView : INotifyPropertyChanged
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public int? PublishmentYear { get; set; }
-        public Language Language { get; set; }
-        public string ISBN { get; set; }
-        public string Comment { get; set; }
-        public int? VolumeNumber { get; set; }
+        private Guid id;
+        private string title;
+        private Series.Series series;
+        private PublishingHouse publishingHouse;
+        private int? publishmentYear;
+        private Language language;
+        private StoragePlace storagePlace;
 
+        public Guid Id
+        {
+            get => id; set
+            {
+                id = value;
+                OnPropertyChanged(nameof(Id));
+            }
+        }
+        public string Title
+        {
+            get => title; set
+            {
+                title = value;
+                OnPropertyChanged(nameof(Title));
+            }
+        }
         public IList<Author> Authors { get; set; }
-        public Series.Series Series { get; set; }
-        public PublishingHouse PublishingHouse { get; set; }
-        public ICollection<Category> Categories { get; set; }
-        public StoragePlace StoragePlace { get; set; }
+        public Series.Series Series
+        {
+            get => series; set
+            {
+                series = value;
+                OnPropertyChanged(nameof(Series));
+            }
+        }
+        public PublishingHouse PublishingHouse
+        {
+            get => publishingHouse; set
+            {
+                publishingHouse = value;
+                OnPropertyChanged(nameof(PublishingHouse));
+            }
+        }
+        public Language Language
+        {
+            get => language; set
+            {
+                language = value;
+                OnPropertyChanged(nameof(Language));
+            }
+        }
+        public StoragePlace StoragePlace { get => storagePlace; set
+            {
+                storagePlace = value;
+                OnPropertyChanged(nameof(StoragePlace));
+            }
+        }
+        public int? PublishmentYear
+        {
+            get => publishmentYear;
+            set
+            {
+                publishmentYear = value;
+                OnPropertyChanged(nameof(PublishmentYear));
+            }
+        }
+
         public IList<Borrowing> Borrowing { get; set; }
         public string LastBorrowName => this.Borrowing.Count < 1 ? string.Empty : this.Borrowing[0].ReturnDate == null ? string.Empty : $"{this.Borrowing[0].FirstName} {this.Borrowing[0].LastName}";
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            {
+                PropertyChangedEventHandler handler = PropertyChanged;
+                handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }
