@@ -217,7 +217,7 @@ namespace Athena {
                 SeriesList.Remove(series);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
-                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -229,7 +229,7 @@ namespace Athena {
                 PublishingHouses.Remove(publisher);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
-                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
@@ -241,7 +241,7 @@ namespace Athena {
                 StoragePlaces.Remove(storagePlace);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
-                MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }
