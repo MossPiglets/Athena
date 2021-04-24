@@ -130,5 +130,13 @@ namespace Athena {
             BorrowedBooksListWindow borrowedBook = new BorrowedBooksListWindow();
             borrowedBook.Show();
         }
+
+        private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+            Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
+            EditBookWindow editBook = new EditBookWindow(book);
+            editBook.Show();
+        }
     }
 }
