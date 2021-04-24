@@ -39,7 +39,8 @@
                 </TextBox>
             </Grid>
             <TextBlock x:Name="SeriesExistsTextBlock" Margin=" 0 10 0 0" Visibility="Collapsed" Text="Taka seria już istnieje." FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
-            <Button Margin="10" Content="Dodaj" Command="Save" IsEnabled="{Binding ElementName=SeriesNameTextBox, Path=Text.Length, Mode=OneWay}">
+            <Button Margin="10" Content="Dodaj" Command="Save" IsEnabled="{Binding ElementName=SeriesNameTextBox, 
+                Path=Text.Length, Mode=OneWay}">
                 <Button.CommandBindings>
                     <CommandBinding Command="Save" Executed="Save_Executed" CanExecute="Save_CanExecute"/>
                 </Button.CommandBindings>
