@@ -47,14 +47,17 @@ namespace Athena {
             };
             ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
                 if(e.NewItems != null) {
-                    foreach (var item in e?.NewItems)
+                    foreach (Book item in e?.NewItems)
                     {
-                        Books.Add(Mapper.Instance.Map<BookInListView>(item));
+                        if (Books.All(b => b.Id != item.Id))
+                        {
+                            Books.Add(Mapper.Instance.Map<BookInListView>(item));
+                        }
                     }
                 }
                 else if (e.Action == NotifyCollectionChangedAction.Remove){
                     var book = (Book)e.OldItems[0];
-                    var bookInList = Books.Single(b => b.Id == book.Id);
+                    var bookInList = Books.First(b => b.Id == book.Id);
                     Books.Remove(bookInList); 
                 } 
             };
@@ -149,6 +152,14 @@ namespace Athena {
         {
             BorrowedBooksListWindow borrowedBook = new BorrowedBooksListWindow();
             borrowedBook.Show();
+        }
+
+        private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+            Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
+            EditBookWindow editBook = new EditBookWindow(book);
+            editBook.Show();
         }
     }
 }

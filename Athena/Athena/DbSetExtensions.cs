@@ -18,21 +18,21 @@ namespace Athena {
             dbSet.Load();
             return new ObservableCollection<StoragePlace>(dbSet.Local
                 .ToList()
-                .OrderBy(a => a.StoragePlaceName));
+                .OrderBy(a => a?.StoragePlaceName));
         }
 
         public static ObservableCollection<PublishingHouse> LoadAsObservableCollection(this DbSet<PublishingHouse> dbSet) {
             dbSet.Load();
             return new ObservableCollection<PublishingHouse>(dbSet.Local
                 .ToList()
-                .OrderBy(a => a.PublisherName));
+                .OrderBy(a => a?.PublisherName));
         }
 
         public static ObservableCollection<Series> LoadAsObservableCollection(this DbSet<Series> dbSet) {
             dbSet.Load();
             return new ObservableCollection<Series>(dbSet.Local
                 .ToList()
-                .OrderBy(a => a.SeriesName));
+                .OrderBy(a => a?.SeriesName));
         }
 
         public static ObservableCollection<Category> LoadAsObservableCollection(
