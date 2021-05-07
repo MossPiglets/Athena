@@ -148,12 +148,6 @@ namespace Athena {
             BookList.ItemsSource = fillteredBooks;
         }
 
-        private void OpenBorrowedBooksListWindowButton_Click(object sender, RoutedEventArgs e)
-        {
-            BorrowedBooksListWindow borrowedBook = new BorrowedBooksListWindow();
-            borrowedBook.Show();
-        }
-
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
