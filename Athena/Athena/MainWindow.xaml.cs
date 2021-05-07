@@ -50,9 +50,7 @@ namespace Athena {
                     foreach (Book item in e?.NewItems)
                     {
                         if (Books.All(b => b.Id != item.Id)) {
-                            Application.Current.Dispatcher.Invoke((Action) delegate {
-                                Books.Add(Mapper.Instance.Map<BookInListView>(item));
-                            });
+                            Application.Current.Dispatcher.Invoke(() => Books.Add(Mapper.Instance.Map<BookInListView>(item)));
                         }
                     }
                 }
