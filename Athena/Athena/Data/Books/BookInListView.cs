@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Athena.Annotations;
@@ -77,7 +78,7 @@ namespace Athena.Data.Books
         }
 
         public IList<Borrowing> Borrowing { get; set; }
-        public string LastBorrowName => this.Borrowing.Count < 1 ? string.Empty : this.Borrowing[0].ReturnDate != null ? string.Empty : $"{this.Borrowing[0].FirstName} {this.Borrowing[0].LastName}";
+        public string LastBorrowName => this.Borrowing.Count < 1 ? string.Empty : this.Borrowing.Last().ReturnDate != null ? string.Empty : $"{this.Borrowing.Last().FirstName} {this.Borrowing.Last().LastName}";
 
         public event PropertyChangedEventHandler PropertyChanged;
         [NotifyPropertyChangedInvocator]
