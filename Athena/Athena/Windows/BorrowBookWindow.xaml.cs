@@ -49,11 +49,7 @@ namespace Athena {
             return builder.ToString();
         }
 
-        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-            e.CanExecute = !Validation.GetHasError(FirstName);
-        }
-
-        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void Borrow_OnClick(object sender, RoutedEventArgs e) {
             BorrowingView.Id = Guid.NewGuid();
             BorrowingView.BorrowDate = Calendar.SelectedDate.Value;
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
@@ -61,5 +57,11 @@ namespace Athena {
             ApplicationDbContext.Instance.SaveChanges();
             this.Close();
         }
+
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = !Validation.GetHasError(FirstName);
+        }
+
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) { }
     }
 }

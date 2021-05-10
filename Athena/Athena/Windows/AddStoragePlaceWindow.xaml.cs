@@ -16,6 +16,14 @@ namespace Athena.Windows
         }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
+        }
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = !Validation.GetHasError(StoragePlaceTextBox);
+        }
+
+        private void AddStoragePlaceButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
             if (!ApplicationDbContext.Instance.StoragePlaces.Any(a => a.StoragePlaceName.ToLower() == StoragePlaceTextBox.Text.ToLower()))
             {
                 ApplicationDbContext.Instance.Entry(new StoragePlace { StoragePlaceName = StoragePlaceTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
@@ -28,10 +36,6 @@ namespace Athena.Windows
             {
                 StoragePlaceExistsTextBlock.Visibility = Visibility.Visible;
             }
-        }
-        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e)
-        {
-            e.CanExecute = !Validation.GetHasError(StoragePlaceTextBox);
         }
     }
 }
