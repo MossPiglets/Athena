@@ -13,8 +13,6 @@ namespace Athena.Windows
     public partial class ReturnWindow
     {
         public Borrowing Borrowing{ get; set; }
-        public Button Button { get; set; }
-
       
         public ReturnWindow(Book book)
         {
