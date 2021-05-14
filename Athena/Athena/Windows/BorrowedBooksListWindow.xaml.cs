@@ -32,7 +32,7 @@ namespace Athena.Windows {
             Button button = (Button) sender;
             Borrowing borrowedBook = (Borrowing) button.DataContext;
             Book book = borrowedBook.Book;
-            ReturnWindow returnWindow = new ReturnWindow(book);
+            ReturnWindow returnWindow = new ReturnWindow(book, button);
             returnWindow.Show();
         }
     }

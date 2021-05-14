@@ -13,13 +13,15 @@ namespace Athena.Windows
     public partial class ReturnWindow
     {
         public Borrowing Borrowing{ get; set; }
+        public Button Button { get; set; }
 
       
-        public ReturnWindow(Book book)
+        public ReturnWindow(Book book, Button button)
         {
             InitializeComponent();
             this.DataContext = this;
             Title.Text = book.Title;
+            Button = button;
             var authors = ToAuthorsNames(book);
             if (!authors.IsNullOrEmpty())
             {
@@ -59,7 +61,12 @@ namespace Athena.Windows
             Borrowing.ReturnDate = Calendar.SelectedDate.Value;
             ApplicationDbContext.Instance.Entry(Borrowing).State = EntityState.Modified;
             ApplicationDbContext.Instance.SaveChanges();
+            HideReturnButton();
             this.Close();
+        }
+
+        private void HideReturnButton() {
+            Button.Visibility = Visibility.Hidden;
         }
     }
 }
