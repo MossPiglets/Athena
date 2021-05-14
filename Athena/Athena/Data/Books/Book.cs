@@ -17,7 +17,7 @@ namespace Athena.Data.Books {
         public IList<Author> Authors { get; set; }
         public Series.Series Series { get; set; }
         public PublishingHouse PublishingHouse { get; set; }
-        public ICollection<Category> Categories { get; set; }
+        public IList<Category> Categories { get; set; }
         public StoragePlace StoragePlace { get; set; }
         public IList<Borrowing> Borrowing { get; set; }
     }
