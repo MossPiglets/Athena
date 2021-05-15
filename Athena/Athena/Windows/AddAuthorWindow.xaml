@@ -41,7 +41,7 @@
             </Grid>
             <TextBlock x:Name="AuthorExistsTextBlock" Visibility="Collapsed" Text="Taki autor już istnieje." Margin=" 0 10 0 0" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
 
-            <Button Margin="10" Content="Dodaj" IsEnabled="{Binding ElementName=AuthorLastNameTextBox, Path=Text.Length, Mode=OneWay}" IsDefault="True">
+            <Button Margin="10" Content="Dodaj" Command="Save" IsEnabled="{Binding ElementName=AuthorLastNameTextBox, Path=Text.Length, Mode=OneWay}" IsDefault="True">
                 <Button.CommandBindings>
                     <CommandBinding Command="Save" 
                                     Executed="Save_Executed" CanExecute="Save_CanExecute"/>

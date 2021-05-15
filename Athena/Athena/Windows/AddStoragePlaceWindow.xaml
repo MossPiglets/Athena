@@ -41,7 +41,7 @@
             <TextBlock Margin="0 10 0 0" Text="Komentarz:" HorizontalAlignment="Center"/>
             <TextBox Margin="0 5 0 0" MinWidth="250" MinHeight="50" TextWrapping="Wrap"/>
             <TextBlock x:Name="StoragePlaceExistsTextBlock" Visibility="Collapsed" Text="Takie miejsce przechowywania już istnieje." Margin=" 0 10 0 0" FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
-            <Button Margin="50 10" Content="Dodaj" IsDefault="True" IsEnabled="{Binding ElementName=StoragePlaceTextBox, Path=Text.Length, Mode=OneWay}">
+            <Button Margin="50 10" Content="Dodaj" Command="Save" IsDefault="True" IsEnabled="{Binding ElementName=StoragePlaceTextBox, Path=Text.Length, Mode=OneWay}">
                 <Button.CommandBindings>
                     <CommandBinding Command="Save" 
                                     Executed="Save_Executed" CanExecute="Save_CanExecute"/>
