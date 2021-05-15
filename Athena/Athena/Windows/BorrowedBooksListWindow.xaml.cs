@@ -33,6 +33,7 @@ namespace Athena.Windows {
             Borrowing borrowedBook = (Borrowing) button.DataContext;
             Book book = borrowedBook.Book;
             ReturnWindow returnWindow = new ReturnWindow(book);
+            returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
             returnWindow.Show();
         }
     }

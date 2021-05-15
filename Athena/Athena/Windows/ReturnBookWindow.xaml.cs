@@ -57,7 +57,11 @@ namespace Athena.Windows
             Borrowing.ReturnDate = Calendar.SelectedDate.Value;
             ApplicationDbContext.Instance.Entry(Borrowing).State = EntityState.Modified;
             ApplicationDbContext.Instance.SaveChanges();
+            BookReturned?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
+
+        public event EventHandler BookReturned;
+
     }
 }
