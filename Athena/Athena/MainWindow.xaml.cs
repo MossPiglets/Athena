@@ -34,10 +34,6 @@ namespace Athena {
                 .Load();
             Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local.ToObservableCollection());
 
-            if (!Books.IsNullOrEmpty()) {
-                ImportButton.Visibility = Visibility.Collapsed;
-            }
-
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
                 if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified)
                 {
