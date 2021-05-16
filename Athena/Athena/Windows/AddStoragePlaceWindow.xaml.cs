@@ -24,11 +24,10 @@ namespace Athena.Windows
 
         private void AddStoragePlaceButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            using var context = new ApplicationDbContext();
-            if (!context.StoragePlaces.Any(a => a.StoragePlaceName.ToLower() == StoragePlaceTextBox.Text.ToLower()))
+            if (!ApplicationDbContext.Instance.StoragePlaces.Any(a => a.StoragePlaceName.ToLower() == StoragePlaceTextBox.Text.ToLower()))
             {
-                context.Entry(new StoragePlace { StoragePlaceName = StoragePlaceTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
-                context.SaveChanges();
+                ApplicationDbContext.Instance.Entry(new StoragePlace { StoragePlaceName = StoragePlaceTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
+                ApplicationDbContext.Instance.SaveChanges();
 
                 this.Close();
             }

@@ -23,10 +23,9 @@ namespace Athena.Windows {
         }
 
         public void Execute(object book) {
-            using var context = new ApplicationDbContext();
             Book bookModel = Mapper.Instance.Map<Book>(book);
-            ContextTracker.AttackBookRelatedEntries(bookModel, context);
-            var bookFromDb = context.Books
+            ContextTracker.AttackBookRelatedEntries(bookModel);
+            var bookFromDb = ApplicationDbContext.Instance.Books
                 .Include(a => a.Authors)
                 .Include(a => a.Categories)
                 .Include(a => a.PublishingHouse)
@@ -34,7 +33,7 @@ namespace Athena.Windows {
                 .Include(a => a.StoragePlace)
                 .Single(a => a.Id == bookModel.Id);
             Mapper.Instance.Map(bookModel, bookFromDb);
-            context.SaveChanges();
+            ApplicationDbContext.Instance.SaveChanges();
         }
 
         public event EventHandler CanExecuteChanged {

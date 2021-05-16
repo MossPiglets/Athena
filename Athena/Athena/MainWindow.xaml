@@ -38,7 +38,7 @@
         </DockPanel>
         
         <TextBox Grid.Row="1" Grid.Column="0" x:Name="SearchTextBox" Margin="10 10 10 10" adonisExtensions:WatermarkExtension.Watermark="Wyszukaj..." TextChanged="SearchTextBox_TextChanged" />
-			<ListView Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
+			<ListView MouseDoubleClick="BookList_MouseDoubleClick" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
                         <MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>

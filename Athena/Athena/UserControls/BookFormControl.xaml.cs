@@ -24,7 +24,6 @@ namespace Athena {
         public string Title { get; set; }
         public string ButtonContent { get; set; }
         public ICommand ButtonCommand { get; set; }
-        private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
         public ObservableCollection<StoragePlace> StoragePlaces { get; set; }
         public ObservableCollection<PublishingHouse> PublishingHouses { get; set; }
@@ -45,12 +44,12 @@ namespace Athena {
         }
 
         private void OnLoaded(object sender, RoutedEventArgs e) {
-            ApplicationDbContext = new ApplicationDbContext();
-            Authors = ApplicationDbContext.Authors.LoadAsObservableCollection();
-            StoragePlaces = ApplicationDbContext.StoragePlaces.LoadAsObservableCollection();
-            PublishingHouses = ApplicationDbContext.PublishingHouses.LoadAsObservableCollection();
-            SeriesList = ApplicationDbContext.Series.LoadAsObservableCollection();
-            Categories = ApplicationDbContext.Categories.LoadAsObservableCollection();
+
+            Authors = ApplicationDbContext.Instance.Authors.LoadAsObservableCollection();
+            StoragePlaces = ApplicationDbContext.Instance.StoragePlaces.LoadAsObservableCollection();
+            PublishingHouses = ApplicationDbContext.Instance.PublishingHouses.LoadAsObservableCollection();
+            SeriesList = ApplicationDbContext.Instance.Series.LoadAsObservableCollection();
+            Categories = ApplicationDbContext.Instance.Categories.LoadAsObservableCollection();
 
             if (!BookView.Authors.IsNullOrEmpty()) {
                 ConfigureAuthorsComboBoxes();
@@ -204,44 +203,45 @@ namespace Athena {
 
         private void MenuItemDeleteAuthor_OnClick(object sender, RoutedEventArgs e) {
             var author = (Author) AuthorCombobox.SelectedItem;
-            ApplicationDbContext.Authors.Remove(author);
-            ApplicationDbContext.SaveChanges();
+            ApplicationDbContext.Instance.Authors.Remove(author);
+            ApplicationDbContext.Instance.SaveChanges();
             Authors.Remove(author);
         }
 
         private void MenuItemDeleteSeries_Click(object sender, RoutedEventArgs e) {
             var series = (Series) SeriesCombobox.SelectedItem;
             try {
-                ApplicationDbContext.Series.Remove(series);
-                ApplicationDbContext.SaveChanges();
+                ApplicationDbContext.Instance.Series.Remove(series);
+                ApplicationDbContext.Instance.SaveChanges();
                 SeriesList.Remove(series);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
-                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                MessageBox.Show("Istnieją książki należące do tej serii, nie można jej usunąć.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
         private void MenuItemDeletePublisher_OnClick(object sender, RoutedEventArgs e) {
+
             var publisher = (PublishingHouse) PublisherComboBox.SelectedItem;
             try {
-                ApplicationDbContext.PublishingHouses.Remove(publisher);
-                ApplicationDbContext.SaveChanges();
+                ApplicationDbContext.Instance.PublishingHouses.Remove(publisher);
+                ApplicationDbContext.Instance.SaveChanges();
                 PublishingHouses.Remove(publisher);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
-                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                MessageBox.Show("Ten wydawca jest przypisany do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 
         private void MenuItemDeleteStoragePlace_OnClick(object sender, RoutedEventArgs e) {
             var storagePlace = (StoragePlace) StoragePlaceComboBox.SelectedItem;
             try {
-                ApplicationDbContext.StoragePlaces.Remove(storagePlace);
-                ApplicationDbContext.SaveChanges();
+                ApplicationDbContext.Instance.StoragePlaces.Remove(storagePlace);
+                ApplicationDbContext.Instance.SaveChanges();
                 StoragePlaces.Remove(storagePlace);
             }
             catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
-                MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
     }

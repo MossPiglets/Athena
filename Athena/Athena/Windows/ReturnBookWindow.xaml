@@ -27,7 +27,7 @@
                     </Style>
                 </Calendar.CalendarDayButtonStyle>
             </Calendar>
-            <Button x:Name="ReturnBookButton" Margin="10" Content="Zwróć" Click="ReturnBorrowedBook_Click" />
+            <Button x:Name="ReturnBookButton" Margin="10" IsDefault="True" Content="Zwróć" Click="ReturnBorrowedBook_Click" />
         </StackPanel>
     </Border>
 </controls:AdonisWindow>
