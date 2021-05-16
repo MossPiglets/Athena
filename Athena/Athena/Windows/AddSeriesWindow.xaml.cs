@@ -25,10 +25,9 @@ namespace Athena.Windows
             InitializeComponent();
         }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
-            using var context = new ApplicationDbContext();
-            if (!context.Series.Any(s => s.SeriesName.ToLower() == SeriesNameTextBox.Text.ToLower())) {
-                context.Entry(new Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
-                context.SaveChanges();
+            if (!ApplicationDbContext.Instance.Series.Any(s => s.SeriesName.ToLower() == SeriesNameTextBox.Text.ToLower())) {
+                ApplicationDbContext.Instance.Entry(new Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
+                ApplicationDbContext.Instance.SaveChanges();
                 this.Close();
             }
             else {

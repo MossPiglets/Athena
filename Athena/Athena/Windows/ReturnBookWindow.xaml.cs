@@ -13,7 +13,6 @@ namespace Athena.Windows
     public partial class ReturnWindow
     {
         public Borrowing Borrowing{ get; set; }
-
       
         public ReturnWindow(Book book)
         {
@@ -56,11 +55,14 @@ namespace Athena.Windows
 
         private void ReturnBorrowedBook_Click(object sender, RoutedEventArgs e)
         {
-            using var context = new ApplicationDbContext();
             Borrowing.ReturnDate = Calendar.SelectedDate.Value;
-            context.Entry(Borrowing).State = EntityState.Modified;
-            context.SaveChanges();
+            ApplicationDbContext.Instance.Entry(Borrowing).State = EntityState.Modified;
+            ApplicationDbContext.Instance.SaveChanges();
+            BookReturned?.Invoke(this, EventArgs.Empty);
             this.Close();
         }
+
+        public event EventHandler BookReturned;
+
     }
 }

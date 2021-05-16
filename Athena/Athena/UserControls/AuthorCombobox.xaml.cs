@@ -10,14 +10,12 @@ namespace Athena {
     /// Interaction logic for AuthorAdding.xaml
     /// </summary>
     public partial class AuthorAdding : UserControl {
-        private ApplicationDbContext ApplicationDbContext { get; set; }
         public ObservableCollection<Author> Authors { get; set; }
 
         public AuthorAdding() {
             InitializeComponent();
-            ApplicationDbContext = new ApplicationDbContext();
-            ApplicationDbContext.Authors.Load();
-            Authors = ApplicationDbContext.Authors.Local.ToObservableCollection();
+            ApplicationDbContext.Instance.Authors.Load();
+            Authors = ApplicationDbContext.Instance.Authors.Local.ToObservableCollection();
         }
 
 
