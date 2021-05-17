@@ -80,10 +80,8 @@ namespace Athena {
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            //Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             var book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             ApplicationDbContext.Instance.Books.Remove(book);
-            //ApplicationDbContext.Instance.Entry(book).State = EntityState.Deleted;
             ApplicationDbContext.Instance.SaveChanges();
         }
 
@@ -153,7 +151,6 @@ namespace Athena {
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
