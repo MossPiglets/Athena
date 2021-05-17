@@ -60,31 +60,20 @@ namespace Athena {
                     var bookInList = Books.First(b => b.Id == book.Id);
                     Books.Remove(bookInList); 
                 }
-                //ResizeGridViewColumns(BooksGridView);
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
-
-
-        private void HandleColumnHeaderSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+        public void ResizeGridViewColumns(GridView gridView)
         {
-            if (sizeChangedEventArgs.NewSize.Width <= 60)
+            foreach (GridViewColumn column in gridView.Columns)
             {
-                sizeChangedEventArgs.Handled = true;
-                ((GridViewColumnHeader)sender).Column.Width = 60;
+                if (double.IsNaN(column.Width))
+                {
+                    column.Width = column.ActualWidth;
+                }
+                column.Width = double.NaN;
             }
         }
-        //public void ResizeGridViewColumns(GridView gridView)
-        //{
-        //    foreach (GridViewColumn column in gridView.Columns)
-        //    {
-        //        if (double.IsNaN(column.Width))
-        //        {
-        //            column.Width = column.ActualWidth;
-        //        }
-        //        column.Width = double.NaN;
-        //    }
-        //}
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
@@ -137,6 +126,7 @@ namespace Athena {
             worker.RunWorkerCompleted += (o, args) => {
                 ImportText.Visibility = Visibility.Hidden;
                 ProgressBarStatus.Visibility = Visibility.Hidden;
+                ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
         }

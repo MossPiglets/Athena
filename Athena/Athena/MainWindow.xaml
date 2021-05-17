@@ -48,13 +48,7 @@
 				</ListView.ContextMenu>
 				<ListView.View>
 					<GridView x:Name="BooksGridView" >
-                    <GridViewColumn Header="Tytuł" DisplayMemberBinding="{Binding Title}" >
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock MinWidth="100" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    <GridViewColumn Header="Tytuł" DisplayMemberBinding="{Binding Title}" />
                     <GridViewColumn Header="Autor">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
