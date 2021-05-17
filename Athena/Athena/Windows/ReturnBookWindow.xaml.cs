@@ -25,7 +25,6 @@ namespace Athena.Windows
                 Author.Text = authors;
             }
 
-            Borrowing = new Borrowing();
             Borrowing = book.Borrowing.Last();
             Calendar.SelectedDate = DateTime.Today;
             Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(1), DateTime.Today.AddDays(1).AddYears(1000)));
