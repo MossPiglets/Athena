@@ -1,6 +1,4 @@
-using Athena.Data;
 using Athena.Windows;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows;
 using Athena.Import;
@@ -10,16 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using Athena.Data.Books;
 using System.Linq;
-using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
-using AdonisUI.Controls;
-using MessageBox = AdonisUI.Controls.MessageBox;
-using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
-using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
 using System.Windows.Input;
 
-namespace Athena {
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -68,7 +62,6 @@ namespace Athena {
             this.Closed += (sender, args) => Application.Current.Shutdown();
             ApplicationDbContext.Instance.Borrowings.Local.CollectionChanged += (sender, e) => {  };
         }
-
         private static RoutedUICommand _menuItemBorrow_Click;
         public static RoutedUICommand MenuItemBorrow_Click
         {
@@ -76,7 +69,7 @@ namespace Athena {
             {
                 if (_menuItemBorrow_Click == null)
                 {
-                    _menuItemBorrow_Click = new RoutedUICommand("My command", "MyCommand", typeof(MainWindow));
+                    _menuItemBorrow_Click = new RoutedUICommand("MenuItemBorrow_Click", "MenuItemBorrow_Click", typeof(MainWindow));
                 }
                 return _menuItemBorrow_Click;
             }
@@ -87,7 +80,6 @@ namespace Athena {
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
         }
-
         private void cb_MenuItemBorrow_Click_CanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
             //if (((BookInListView)BookList.SelectedValue).Borrowing.Count > 0 && ((BookInListView)BookList.SelectedValue).Borrowing[0].ReturnDate == null && !((BookInListView)BookList.SelectedValue).Borrowing[0].FirstName.IsNullOrEmpty())
@@ -100,8 +92,6 @@ namespace Athena {
                 e.CanExecute = true;
             }
         }
-        
-
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
@@ -109,10 +99,8 @@ namespace Athena {
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            //Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             var book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             ApplicationDbContext.Instance.Books.Remove(book);
-            //ApplicationDbContext.Instance.Entry(book).State = EntityState.Deleted;
             ApplicationDbContext.Instance.SaveChanges();
         }
 
@@ -182,7 +170,6 @@ namespace Athena {
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
