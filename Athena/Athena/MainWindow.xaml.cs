@@ -13,6 +13,10 @@ using System.Linq;
 using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
+using AdonisUI.Controls;
+using MessageBox = AdonisUI.Controls.MessageBox;
+using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
+using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
 
 namespace Athena {
     /// <summary>
@@ -65,8 +69,15 @@ namespace Athena {
 
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
-            BorrowForm borrowForm = new BorrowForm(book);
-            borrowForm.Show();
+            if (!((BookInListView)BookList.SelectedItem).LastBorrowName.IsNullOrEmpty())
+            {
+                MessageBox.Show("Nie mo¿na wypo¿yczyæ tej ksi¹¿ki, poniewa¿ jest ju¿ wypo¿yczona.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                BorrowForm borrowForm = new BorrowForm(book);
+                borrowForm.Show();
+            }
         }
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
