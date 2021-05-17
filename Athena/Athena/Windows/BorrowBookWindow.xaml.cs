@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
+using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,7 +31,6 @@ namespace Athena {
             BorrowingView.Book = book;
             Calendar.SelectedDate = DateTime.Today;
             Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(1), DateTime.Today.AddDays(1).AddYears(1000)));
-            
         }
 
         public string ToAuthorsNames(Book book) {
