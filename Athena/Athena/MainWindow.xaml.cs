@@ -60,7 +60,6 @@ namespace Athena
                 } 
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
-            ApplicationDbContext.Instance.Borrowings.Local.CollectionChanged += (sender, e) => {  };
         }
         private static RoutedUICommand _menuItemBorrow_Click;
         public static RoutedUICommand MenuItemBorrow_Click {
@@ -77,8 +76,11 @@ namespace Athena
             borrowForm.Show();
         }
         private void cb_MenuItemBorrow_Click_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-            Book book = ApplicationDbContext.Instance.Books.Include(b => b.Borrowing).Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
-            if (book.Borrowing.Any(b => b.ReturnDate == null)) { 
+            var borrowings = ApplicationDbContext.Instance.Borrowings
+                                           .Include(b => b.Book)
+                                           .Where(b => b.Book.Id == ((BookInListView)BookList.SelectedItem).Id)
+                                           .ToList();
+            if (borrowings.Any(b => b.ReturnDate == null)) {
                 e.CanExecute = false;
             }
             else {
