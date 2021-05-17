@@ -11,8 +11,6 @@ using System.Windows;
 namespace Athena.Windows {
     public partial class BorrowedBooksListWindow {
         public ObservableCollection<Borrowing> Borrowings { get; set; }
-        public ObservableCollection<Book> Books { get; set; }
-
         public BorrowedBooksListWindow() {
             InitializeComponent();
             this.DataContext = this;
