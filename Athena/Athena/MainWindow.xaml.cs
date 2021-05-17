@@ -13,6 +13,9 @@ using System.Linq;
 using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
+using Athena.EnumLocalizations;
+using System.ComponentModel;
+using System.Reflection;
 
 namespace Athena {
     /// <summary>
@@ -142,7 +145,7 @@ namespace Athena {
                                             (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
-                                            (b.Categories.Any(a => a.Name.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            (b.Categories.Any(c =>((DescriptionAttribute[]) c.Name.GetType().GetMember(c.Name.ToString()).FirstOrDefault().GetCustomAttributes(typeof(DescriptionAttribute), false))[0].Description.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
                                             );
                                             
             BookList.ItemsSource = fillteredBooks;
