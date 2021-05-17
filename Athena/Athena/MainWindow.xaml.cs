@@ -13,6 +13,7 @@ using System.Linq;
 using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
+using System.Windows.Controls;
 
 namespace Athena {
     /// <summary>
@@ -58,11 +59,32 @@ namespace Athena {
                     var book = (Book)e.OldItems[0];
                     var bookInList = Books.First(b => b.Id == book.Id);
                     Books.Remove(bookInList); 
-                } 
+                }
+                //ResizeGridViewColumns(BooksGridView);
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
 
+
+        private void HandleColumnHeaderSizeChanged(object sender, SizeChangedEventArgs sizeChangedEventArgs)
+        {
+            if (sizeChangedEventArgs.NewSize.Width <= 60)
+            {
+                sizeChangedEventArgs.Handled = true;
+                ((GridViewColumnHeader)sender).Column.Width = 60;
+            }
+        }
+        //public void ResizeGridViewColumns(GridView gridView)
+        //{
+        //    foreach (GridViewColumn column in gridView.Columns)
+        //    {
+        //        if (double.IsNaN(column.Width))
+        //        {
+        //            column.Width = column.ActualWidth;
+        //        }
+        //        column.Width = double.NaN;
+        //    }
+        //}
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
