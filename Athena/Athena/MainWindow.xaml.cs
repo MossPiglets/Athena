@@ -77,8 +77,8 @@ namespace Athena
             borrowForm.Show();
         }
         private void cb_MenuItemBorrow_Click_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-            //if (((BookInListView)BookList.SelectedValue).Borrowing.Count > 0 && ((BookInListView)BookList.SelectedValue).Borrowing[0].ReturnDate == null && !((BookInListView)BookList.SelectedValue).Borrowing[0].FirstName.IsNullOrEmpty())
-            if(!((BookInListView)BookList.SelectedValue).LastBorrowName.IsNullOrEmpty()) {
+            Book book = ApplicationDbContext.Instance.Books.Include(b => b.Borrowing).Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+            if (book.Borrowing.Any(b => b.ReturnDate == null)) { 
                 e.CanExecute = false;
             }
             else {
