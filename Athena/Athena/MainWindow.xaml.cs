@@ -56,6 +56,14 @@ namespace Athena {
                     Books.Remove(bookInList); 
                 } 
             };
+            ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
+                if (Books.Count > 0) {
+                    Application.Current.Dispatcher.Invoke(() =>ImportButton.Visibility = Visibility.Hidden);
+                }
+                else {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Visible);
+                }
+            };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
 
