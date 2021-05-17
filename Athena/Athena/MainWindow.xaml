@@ -13,6 +13,11 @@
     <Window.Style>
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
+    <Window.CommandBindings>
+        <CommandBinding Command="local:MainWindow.MenuItemBorrow_Click"
+                        CanExecute="cb_MenuItemBorrow_Click_CanExecute"
+                        Executed="cb_MenuItemBorrow_Click_Executed" />
+    </Window.CommandBindings>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -41,7 +46,7 @@
 			<ListView MouseDoubleClick="BookList_MouseDoubleClick" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
 				<ListView.ContextMenu>
 					<ContextMenu>
-                        <MenuItem Header="Wypożycz" Click="MenuItemBorrow_Click"/>
+                    <MenuItem Header="Wypożycz" Command="local:MainWindow.MenuItemBorrow_Click"/>
                         <MenuItem Header="Edytuj" Click="MenuItemEdit_Click"/>
 						<MenuItem Header="Usuń" Click="MenuItemDelete_Click" />
 					</ContextMenu>

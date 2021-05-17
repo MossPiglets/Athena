@@ -17,6 +17,7 @@ using AdonisUI.Controls;
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
+using System.Windows.Input;
 
 namespace Athena {
     /// <summary>
@@ -65,20 +66,41 @@ namespace Athena {
                 } 
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
+            ApplicationDbContext.Instance.Borrowings.Local.CollectionChanged += (sender, e) => {  };
         }
 
-        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
-            Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
-            if (!((BookInListView)BookList.SelectedItem).LastBorrowName.IsNullOrEmpty())
+        private static RoutedUICommand _menuItemBorrow_Click;
+        public static RoutedUICommand MenuItemBorrow_Click
+        {
+            get
             {
-                MessageBox.Show("Nie mo¿na wypo¿yczyæ tej ksi¹¿ki, poniewa¿ jest ju¿ wypo¿yczona.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                if (_menuItemBorrow_Click == null)
+                {
+                    _menuItemBorrow_Click = new RoutedUICommand("My command", "MyCommand", typeof(MainWindow));
+                }
+                return _menuItemBorrow_Click;
+            }
+        }
+        private void cb_MenuItemBorrow_Click_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+            BorrowForm borrowForm = new BorrowForm(book);
+            borrowForm.Show();
+        }
+
+        private void cb_MenuItemBorrow_Click_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            //if (((BookInListView)BookList.SelectedValue).Borrowing.Count > 0 && ((BookInListView)BookList.SelectedValue).Borrowing[0].ReturnDate == null && !((BookInListView)BookList.SelectedValue).Borrowing[0].FirstName.IsNullOrEmpty())
+            if(!((BookInListView)BookList.SelectedValue).LastBorrowName.IsNullOrEmpty())
+            {
+                e.CanExecute = false;
             }
             else
             {
-                BorrowForm borrowForm = new BorrowForm(book);
-                borrowForm.Show();
+                e.CanExecute = true;
             }
         }
+        
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
