@@ -42,7 +42,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Languages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Langugaes.pl-PL.resx">
+    <EmbeddedResource Update="Resources\Languages.pl-PL.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Langugaes.pl-PL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
