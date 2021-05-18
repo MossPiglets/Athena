@@ -10,8 +10,7 @@ using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
-using System.Reflection;
-using System.ComponentModel.DataAnnotations;
+using Athena.Data.CategoriesFolder;
 
 namespace Athena
 {
@@ -142,8 +141,7 @@ namespace Athena
                                             (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
-                                            //(b.Categories.Any(c =>((DescriptionAttribute[]) c.Name.GetType().GetMember(c.Name.ToString()).FirstOrDefault().GetCustomAttributes(typeof(DescriptionAttribute), false))[0].Description.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
-                                            (b.Categories.Any(c => c.Name.GetType().GetMember(c.Name.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            (b.Categories.Any(c => c.GetDescription().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
                                             );
                                             
             BookList.ItemsSource = fillteredBooks;
