@@ -111,7 +111,7 @@ namespace Athena.Data {
         AM,
         [LocalizedDescription("AZ", typeof(Languages))]
         AZ,
-        [LocalizedDescription("Inne", typeof(Languages))]
-        Inne
+        [LocalizedDescription("Other", typeof(Languages))]
+        Other
     }
 }
