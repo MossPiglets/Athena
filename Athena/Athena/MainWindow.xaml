@@ -15,8 +15,8 @@
     </Window.Style>
     <Window.CommandBindings>
         <CommandBinding Command="local:MainWindow.MenuItemBorrow_Click"
-                        CanExecute="cb_MenuItemBorrow_Click_CanExecute"
-                        Executed="cb_MenuItemBorrow_Click_Executed" />
+                        CanExecute="cb_MenuItemBorrow_CanExecute"
+                        Executed="cb_MenuItemBorrow_Executed" />
     </Window.CommandBindings>
 
     <Grid>
