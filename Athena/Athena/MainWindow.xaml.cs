@@ -1,23 +1,20 @@
-using Athena.Data;
-using Athena.Windows;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows;
-using Athena.Import;
-using Castle.Core.Internal;
-using Microsoft.Win32;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.ObjectModel;
-using Athena.Data.Books;
-using System.Linq;
-using Athena.Data.Series;
 using System;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using Athena.EnumLocalizations;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using Athena.Data.Books;
+using Athena.Import;
+using Athena.Windows;
+using Castle.Core.Internal;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 
-namespace Athena {
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -145,7 +142,8 @@ namespace Athena {
                                             (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
-                                            (b.Categories.Any(c =>((DescriptionAttribute[]) c.Name.GetType().GetMember(c.Name.ToString()).FirstOrDefault().GetCustomAttributes(typeof(DescriptionAttribute), false))[0].Description.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            //(b.Categories.Any(c =>((DescriptionAttribute[]) c.Name.GetType().GetMember(c.Name.ToString()).FirstOrDefault().GetCustomAttributes(typeof(DescriptionAttribute), false))[0].Description.Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            (b.Categories.Any(c => c.Name.GetType().GetMember(c.Name.ToString()).First().GetCustomAttribute<DisplayAttribute>().GetName().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
                                             );
                                             
             BookList.ItemsSource = fillteredBooks;
