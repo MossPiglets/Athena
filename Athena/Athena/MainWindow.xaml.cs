@@ -62,12 +62,12 @@ namespace Athena
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
         public static RoutedUICommand MenuItemBorrow_Click = new RoutedUICommand("MenuItemBorrow_Click", "MenuItemBorrow_Click", typeof(MainWindow));
-        private void cb_MenuItemBorrow_Executed(object sender, ExecutedRoutedEventArgs e) {
+        private void MenuItemBorrow_Executed(object sender, ExecutedRoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
         }
-        private void cb_MenuItemBorrow_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+        private void MenuItemBorrow_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             var borrowings = ApplicationDbContext.Instance.Borrowings
                                            .Include(b => b.Book)
                                            .Where(b => b.Book.Id == ((BookInListView)BookList.SelectedItem).Id)
