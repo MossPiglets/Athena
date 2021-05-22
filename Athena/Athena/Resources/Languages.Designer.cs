@@ -22,14 +22,14 @@ namespace Athena.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LanguagesISO {
+    internal class Languages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LanguagesISO() {
+        internal Languages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Athena.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Athena.Resources.LanguagesISO", typeof(LanguagesISO).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Athena.Resources.Languages", typeof(Languages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -295,15 +295,6 @@ namespace Athena.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inne.
-        /// </summary>
-        internal static string Inne {
-            get {
-                return ResourceManager.GetString("Inne", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to IT.
         /// </summary>
         internal static string IT {
@@ -399,6 +390,15 @@ namespace Athena.Resources {
         internal static string NN {
             get {
                 return ResourceManager.GetString("NN", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        internal static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         

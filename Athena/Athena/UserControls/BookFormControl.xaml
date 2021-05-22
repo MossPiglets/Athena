@@ -9,16 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600">
 
-    <UserControl.Resources>
-        <ObjectDataProvider
-            MethodName="GetValues"
-            ObjectType="{x:Type Data:Language}"
-            x:Key="EnumLanguage">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Data:Language" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
+    
     <Border Padding="10">
         <StackPanel>
             <!-- Book Info-->
@@ -78,7 +69,7 @@
                 <ComboBox x:Name="AuthorCombobox"
                           ItemsSource="{Binding Path=Authors, UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="0 0 52 0 "
-                          Height="25" SelectionChanged="AuthorCombobox_OnSelectionChanged" >
+                          Height="25" SelectionChanged="AuthorCombobox_OnSelectionChanged" LostFocus="AuthorCombobox_LostFocus">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Usuń" Click="MenuItemDeleteAuthor_OnClick"/>
@@ -122,7 +113,7 @@
                          Grid.Column="3" />
                 <ComboBox Name="SeriesCombobox" ItemsSource="{Binding SeriesList}" Text="{Binding BookView.Series.SeriesName}" 
                           SelectedItem="{Binding Path=BookView.Series}" IsEditable="True" SelectionChanged="Series_OnSelectionChanged" Grid.Column="1"
-                          Height="25" Margin="0 0 19 0">
+                          Height="25" Margin="0 0 19 0" LostFocus="SeriesCombobox_LostFocus">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem x:Name="ComboBoxDeleteSeries"  Header="Usuń" Click="MenuItemDeleteSeries_Click"/>
@@ -155,7 +146,7 @@
                           Text="{Binding BookView.PublishingHouse.PublisherName}"
                           ItemsSource="{Binding Path=PublishingHouses,  UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" SelectionChanged="PublishingHouseCombobox_OnSelectionChanged"
-                          Grid.Row="0" Grid.Column="1" Height="25" Margin="0 0 48 0">
+                          Grid.Row="0" Grid.Column="1" Height="25" Margin="0 0 48 0" LostFocus="PublisherComboBox_LostFocus">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Usuń" Click="MenuItemDeletePublisher_OnClick"/>
@@ -180,7 +171,8 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBox Text="{Binding BookView.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="25" />
-                <ComboBox Name="LanguageComboBox" IsEditable="True" SelectedItem="{Binding Path=BookView.Language}" SelectionChanged="LanguageComboBox_OnSelectionChanged" Height="25" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
+                <ComboBox Name="LanguageComboBox" IsEditable="True" SelectedItem="{Binding Path=BookView.Language}" 
+                          SelectionChanged="LanguageComboBox_OnSelectionChanged" Height="25" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" LostFocus="LanguageComboBox_LostFocus"/>
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
@@ -203,7 +195,7 @@
                 <ComboBox Name="StoragePlaceComboBox" Text="{Binding Path=BookView.StoragePlace.StoragePlaceName}"
                           ItemsSource="{Binding Path=StoragePlaces, UpdateSourceTrigger=PropertyChanged}"
                           IsEditable="True" SelectionChanged="StoragePlace_OnSelectionChanged" Grid.Row="0" Grid.Column="1" 
-                           Height="25" Margin="0 0 0 0" >
+                           Height="25" Margin="0 0 0 0" LostFocus="StoragePlaceComboBox_LostFocus">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Usuń" Click="MenuItemDeleteStoragePlace_OnClick"/>

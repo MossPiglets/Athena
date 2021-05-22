@@ -1,10 +1,17 @@
 using Athena.Windows;
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using Athena.Data.Books;
 using Athena.Import;
+using Athena.Windows;
 using Castle.Core.Internal;
-using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using Athena.Data.CategoriesFolder;
 using System.Collections.ObjectModel;
 using Athena.Data.Books;
 using System.Linq;
@@ -166,7 +173,8 @@ namespace Athena
             var fillteredBooks = Books.Where(b => b.Title.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
                                             (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
-                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
+                                            (b.Categories.Any(c => c.GetDescription().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
                                             );
                                             
             BookList.ItemsSource = fillteredBooks;

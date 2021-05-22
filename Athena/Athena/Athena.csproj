@@ -26,15 +26,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Categories.resx</DependentUpon>
     </Compile>
-    <Compile Update="Resources\LanguagesISO.Designer.cs">
+    <Compile Update="Resources\Languages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>LanguagesISO.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Resources\Langugaes.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Langugaes.resx</DependentUpon>
+      <DependentUpon>Languages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -43,13 +38,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>categories.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\LanguagesISO.resx">
+    <EmbeddedResource Update="Resources\Languages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LanguagesISO.Designer.cs</LastGenOutput>
+      <LastGenOutput>Languages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Resources\Langugaes.resx">
+    <EmbeddedResource Update="Resources\Languages.pl-PL.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Langugaes.Designer.cs</LastGenOutput>
+      <LastGenOutput>Langugaes.pl-PL.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 
