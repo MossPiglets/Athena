@@ -7,8 +7,12 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+                       xmlns:converters="clr-namespace:Athena.Converters"
                        mc:Ignorable="d"
                        Title="Athena" Height="580" SizeToContent="Width">
+    <Window.Resources>
+        <converters:EmptyListVisibilityConverter x:Key="EmptyListVisibilityConverter" />
+    </Window.Resources>
 
     <Window.Style>
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
@@ -52,9 +56,9 @@
 					</ContextMenu>
 				</ListView.ContextMenu>
 				<ListView.View>
-					<GridView >
-						<GridViewColumn Header="Tytuł" Width="Auto"  DisplayMemberBinding="{Binding Title}" />
-                        <GridViewColumn Header="Autor" Width="Auto" >
+					<GridView x:Name="BooksGridView">
+                    <GridViewColumn Header="Tytuł" Width="Auto" DisplayMemberBinding="{Binding Title}" />
+                    <GridViewColumn Header="Autor" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
@@ -68,8 +72,8 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        <GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series.SeriesName}" />
-						<GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
+                    <GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series.SeriesName}" />
+                    <GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
 						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
 						<GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}" />
                         <GridViewColumn Header="Miejce przechowywania" Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" />
@@ -78,7 +82,7 @@
 
 				</ListView.View>
 			</ListView>
-            <Button Name ="ImportButton"  Content="Importuj" Click="ImportData" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <Button Name ="ImportButton"  Content="Importuj" Click="ImportData" Visibility="{Binding Path=Books, Converter={StaticResource EmptyListVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
 			<TextBlock Name ="ImportText" Visibility="Hidden"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">Importowanie...</TextBlock>
 			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" Visibility="Hidden" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" />
         </Grid>

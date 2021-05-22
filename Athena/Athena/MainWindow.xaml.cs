@@ -11,6 +11,7 @@ using System.Linq;
 using System;
 using System.Collections.Specialized;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Athena
 {
@@ -33,10 +34,6 @@ namespace Athena
                 .Load();
             Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local.ToObservableCollection());
 
-            if (!Books.IsNullOrEmpty()) {
-                ImportButton.Visibility = Visibility.Collapsed;
-            }
-
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
                 if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified)
                 {
@@ -57,12 +54,31 @@ namespace Athena
                     var book = (Book)e.OldItems[0];
                     var bookInList = Books.First(b => b.Id == book.Id);
                     Books.Remove(bookInList); 
-                } 
+                }
+            };
+            ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
+                if (Books.Count > 0) {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Hidden);
+                }
+                else {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Visible);
+                }
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
         public static RoutedUICommand MenuItemBorrow_Click = new RoutedUICommand("MenuItemBorrow_Click", "MenuItemBorrow_Click", typeof(MainWindow));
-        private void MenuItemBorrow_Executed(object sender, ExecutedRoutedEventArgs e) {
+        public void ResizeGridViewColumns(GridView gridView)
+        {
+            foreach (GridViewColumn column in gridView.Columns)
+            {
+                if (double.IsNaN(column.Width))
+                {
+                    column.Width = column.ActualWidth;
+                }
+                column.Width = double.NaN;
+            }
+        }
+        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
@@ -123,6 +139,7 @@ namespace Athena
             worker.RunWorkerCompleted += (o, args) => {
                 ImportText.Visibility = Visibility.Hidden;
                 ProgressBarStatus.Visibility = Visibility.Hidden;
+                ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
         }
