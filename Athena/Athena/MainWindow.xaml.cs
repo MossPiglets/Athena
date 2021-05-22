@@ -1,20 +1,26 @@
-using Athena.Data;
-using Athena.Windows;
-using System.Collections.Generic;
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows;
+using Athena.Data.Books;
 using Athena.Import;
+using Athena.Windows;
 using Castle.Core.Internal;
-using Microsoft.Win32;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
+using Athena.Data.CategoriesFolder;
 using System.Collections.ObjectModel;
 using Athena.Data.Books;
 using System.Linq;
 using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
+using System.Windows.Controls;
 
-namespace Athena {
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -33,10 +39,6 @@ namespace Athena {
                 .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
                 .Load();
             Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local.ToObservableCollection());
-
-            if (!Books.IsNullOrEmpty()) {
-                ImportButton.Visibility = Visibility.Collapsed;
-            }
 
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
                 if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified)
@@ -58,11 +60,29 @@ namespace Athena {
                     var book = (Book)e.OldItems[0];
                     var bookInList = Books.First(b => b.Id == book.Id);
                     Books.Remove(bookInList); 
-                } 
+                }
+            };
+            ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
+                if (Books.Count > 0) {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Hidden);
+                }
+                else {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Visible);
+                }
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
-
+        public void ResizeGridViewColumns(GridView gridView)
+        {
+            foreach (GridViewColumn column in gridView.Columns)
+            {
+                if (double.IsNaN(column.Width))
+                {
+                    column.Width = column.ActualWidth;
+                }
+                column.Width = double.NaN;
+            }
+        }
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
@@ -76,10 +96,8 @@ namespace Athena {
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            //Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             var book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             ApplicationDbContext.Instance.Books.Remove(book);
-            //ApplicationDbContext.Instance.Entry(book).State = EntityState.Deleted;
             ApplicationDbContext.Instance.SaveChanges();
         }
 
@@ -115,6 +133,7 @@ namespace Athena {
             worker.RunWorkerCompleted += (o, args) => {
                 ImportText.Visibility = Visibility.Hidden;
                 ProgressBarStatus.Visibility = Visibility.Hidden;
+                ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
         }
@@ -141,7 +160,8 @@ namespace Athena {
             var fillteredBooks = Books.Where(b => b.Title.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
                                             (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
                                             (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
-                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
+                                            (b.Categories.Any(c => c.GetDescription().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
                                             );
                                             
             BookList.ItemsSource = fillteredBooks;
@@ -149,7 +169,6 @@ namespace Athena {
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();

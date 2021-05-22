@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
+using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,7 +31,6 @@ namespace Athena {
             BorrowingView.Book = book;
             Calendar.SelectedDate = DateTime.Today;
             Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(1), DateTime.Today.AddDays(1).AddYears(1000)));
-            
         }
 
         public string ToAuthorsNames(Book book) {
@@ -49,7 +49,11 @@ namespace Athena {
             return builder.ToString();
         }
 
-        private void Borrow_OnClick(object sender, RoutedEventArgs e) {
+        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            e.CanExecute = !Validation.GetHasError(FirstName);
+        }
+
+        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
             BorrowingView.Id = Guid.NewGuid();
             BorrowingView.BorrowDate = Calendar.SelectedDate.Value;
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
@@ -57,11 +61,5 @@ namespace Athena {
             ApplicationDbContext.Instance.SaveChanges();
             this.Close();
         }
-
-        private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
-            e.CanExecute = !Validation.GetHasError(FirstName);
-        }
-
-        private void Save_Executed(object sender, ExecutedRoutedEventArgs e) { }
     }
 }

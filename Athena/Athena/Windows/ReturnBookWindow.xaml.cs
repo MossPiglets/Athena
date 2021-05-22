@@ -13,7 +13,6 @@ namespace Athena.Windows
     public partial class ReturnWindow
     {
         public Borrowing Borrowing{ get; set; }
-      
         public ReturnWindow(Book book)
         {
             InitializeComponent();
@@ -25,11 +24,10 @@ namespace Athena.Windows
                 Author.Text = authors;
             }
 
-            Borrowing = new Borrowing();
-            Borrowing = book.Borrowing[book.Borrowing.Count() - 1];
+            Borrowing = book.Borrowing.Last();
             Calendar.SelectedDate = DateTime.Today;
             Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(1), DateTime.Today.AddDays(1).AddYears(1000)));
-            Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(-1).AddYears(-1000), (book.Borrowing[book.Borrowing.Count() - 1].BorrowDate).AddDays(-1)));
+            Calendar.BlackoutDates.Add(new CalendarDateRange(DateTime.Today.AddDays(-1).AddYears(-1000), (book.Borrowing.Last().BorrowDate).AddDays(-1)));
         }
 
 

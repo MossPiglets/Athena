@@ -117,166 +117,166 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Afrykanerski" xml:space="preserve">
-    <value>AF</value>
+  <data name="AF" xml:space="preserve">
+    <value>Afrykanerski</value>
   </data>
-  <data name="Albański" xml:space="preserve">
-    <value>SQ</value>
+  <data name="AM" xml:space="preserve">
+    <value>Amharski</value>
   </data>
-  <data name="Amharski" xml:space="preserve">
-    <value>AM</value>
+  <data name="AR" xml:space="preserve">
+    <value>Arabski</value>
   </data>
-  <data name="Angielski" xml:space="preserve">
-    <value>EN</value>
+  <data name="AZ" xml:space="preserve">
+    <value>Azerski</value>
   </data>
-  <data name="Arabski" xml:space="preserve">
-    <value>AR</value>
+  <data name="BA" xml:space="preserve">
+    <value>Duński</value>
   </data>
-  <data name="Azerski" xml:space="preserve">
-    <value>AZ</value>
+  <data name="BE" xml:space="preserve">
+    <value>Białoruski</value>
   </data>
-  <data name="Bengalski" xml:space="preserve">
-    <value>BN</value>
+  <data name="BG" xml:space="preserve">
+    <value>Bułgarski</value>
   </data>
-  <data name="Białoruski" xml:space="preserve">
-    <value>BE</value>
+  <data name="BN" xml:space="preserve">
+    <value>Bengalski</value>
   </data>
-  <data name="Bośniacki" xml:space="preserve">
-    <value>BS</value>
+  <data name="BR" xml:space="preserve">
+    <value>Bretoński</value>
   </data>
-  <data name="Bretoński" xml:space="preserve">
-    <value>BR</value>
+  <data name="BS" xml:space="preserve">
+    <value>Bośniacki</value>
   </data>
-  <data name="Bułgarski" xml:space="preserve">
-    <value>BG</value>
+  <data name="CA" xml:space="preserve">
+    <value>Kataloński</value>
   </data>
-  <data name="Chiński" xml:space="preserve">
-    <value>ZH</value>
+  <data name="CS" xml:space="preserve">
+    <value>Czeski</value>
   </data>
-  <data name="Chorwacki" xml:space="preserve">
-    <value>HR</value>
+  <data name="CY" xml:space="preserve">
+    <value>Walijski</value>
   </data>
-  <data name="Czeski" xml:space="preserve">
-    <value>CS</value>
+  <data name="DE" xml:space="preserve">
+    <value>Niemiecki</value>
   </data>
-  <data name="Duński" xml:space="preserve">
-    <value>DA</value>
+  <data name="EL" xml:space="preserve">
+    <value>Grecki</value>
   </data>
-  <data name="Esperanto" xml:space="preserve">
-    <value>EO</value>
+  <data name="EN" xml:space="preserve">
+    <value>Angielski</value>
   </data>
-  <data name="Estoński" xml:space="preserve">
-    <value>ET</value>
+  <data name="EO" xml:space="preserve">
+    <value>Esperanto</value>
   </data>
-  <data name="Fiński" xml:space="preserve">
-    <value>FI</value>
+  <data name="ES" xml:space="preserve">
+    <value>Hiszpański</value>
   </data>
-  <data name="Francuski" xml:space="preserve">
-    <value>FR</value>
+  <data name="ET" xml:space="preserve">
+    <value>Estoński</value>
   </data>
-  <data name="Galicyjski" xml:space="preserve">
-    <value>GL</value>
+  <data name="FI" xml:space="preserve">
+    <value>Fiński</value>
   </data>
-  <data name="Grecki" xml:space="preserve">
-    <value>EL</value>
+  <data name="FR" xml:space="preserve">
+    <value>Francuski</value>
   </data>
-  <data name="Hebrajski" xml:space="preserve">
-    <value>HE</value>
+  <data name="GA" xml:space="preserve">
+    <value>Irlandzki</value>
   </data>
-  <data name="Hiszpański" xml:space="preserve">
-    <value>ES</value>
+  <data name="GL" xml:space="preserve">
+    <value>Galicyjski</value>
   </data>
-  <data name="Holenderski" xml:space="preserve">
-    <value>NL</value>
+  <data name="HE" xml:space="preserve">
+    <value>Hebrajski</value>
   </data>
-  <data name="Inne" xml:space="preserve">
-    <value>Inne</value>
+  <data name="HR" xml:space="preserve">
+    <value>Chorwacki</value>
   </data>
-  <data name="Irlandzki" xml:space="preserve">
-    <value>GA</value>
+  <data name="HU" xml:space="preserve">
+    <value>Węgierski</value>
   </data>
-  <data name="Japoński" xml:space="preserve">
-    <value>JA</value>
+  <data name="IT" xml:space="preserve">
+    <value>Włoski</value>
   </data>
-  <data name="Kataloński" xml:space="preserve">
-    <value>CA</value>
+  <data name="JA" xml:space="preserve">
+    <value>Japoński</value>
   </data>
-  <data name="Koreański" xml:space="preserve">
-    <value>KO</value>
+  <data name="KO" xml:space="preserve">
+    <value>Koreański</value>
   </data>
-  <data name="Litewski" xml:space="preserve">
-    <value>LT</value>
+  <data name="LT" xml:space="preserve">
+    <value>Litewski</value>
   </data>
-  <data name="Macedoński" xml:space="preserve">
-    <value>MK</value>
+  <data name="LV" xml:space="preserve">
+    <value>Łotewski</value>
   </data>
-  <data name="Malajski" xml:space="preserve">
-    <value>MS</value>
+  <data name="MK" xml:space="preserve">
+    <value>Macedoński</value>
   </data>
-  <data name="Mongolski" xml:space="preserve">
-    <value>MN</value>
+  <data name="MN" xml:space="preserve">
+    <value>Mongolski</value>
   </data>
-  <data name="Nepalski" xml:space="preserve">
-    <value>NE</value>
+  <data name="MS" xml:space="preserve">
+    <value>Malajski</value>
   </data>
-  <data name="Niemiecki" xml:space="preserve">
-    <value>DE</value>
+  <data name="NE" xml:space="preserve">
+    <value>Nepalski</value>
   </data>
-  <data name="Norweski" xml:space="preserve">
-    <value>NN</value>
+  <data name="NL" xml:space="preserve">
+    <value>Holenderski</value>
   </data>
-  <data name="Polski" xml:space="preserve">
-    <value>PL</value>
+  <data name="NN" xml:space="preserve">
+    <value>Norweski</value>
   </data>
-  <data name="Portugalski" xml:space="preserve">
-    <value>PT</value>
+  <data name="Other" xml:space="preserve">
+    <value>Inny</value>
   </data>
-  <data name="Rosyjski" xml:space="preserve">
-    <value>RU</value>
+  <data name="PL" xml:space="preserve">
+    <value>Polski</value>
   </data>
-  <data name="Rumuński" xml:space="preserve">
-    <value>RO</value>
+  <data name="PT" xml:space="preserve">
+    <value>Portugalski</value>
   </data>
-  <data name="Serbski" xml:space="preserve">
-    <value>SR</value>
+  <data name="RO" xml:space="preserve">
+    <value>Rumuński</value>
   </data>
-  <data name="Serbsko-Chorwacki" xml:space="preserve">
-    <value>SH</value>
+  <data name="RU" xml:space="preserve">
+    <value>Rosyjski</value>
   </data>
-  <data name="Suahili" xml:space="preserve">
-    <value>SW</value>
+  <data name="SH" xml:space="preserve">
+    <value>Serbsko-Chorwacki</value>
   </data>
-  <data name="Szwedzki" xml:space="preserve">
-    <value>SV</value>
+  <data name="SK" xml:space="preserve">
+    <value>Słowacki</value>
   </data>
-  <data name="Słowacki" xml:space="preserve">
-    <value>SK</value>
+  <data name="SL" xml:space="preserve">
+    <value>Słoweński</value>
   </data>
-  <data name="Słoweński" xml:space="preserve">
-    <value>SL</value>
+  <data name="SQ" xml:space="preserve">
+    <value>Albański</value>
   </data>
-  <data name="Tajski" xml:space="preserve">
-    <value>TH</value>
+  <data name="SR" xml:space="preserve">
+    <value>Serbski</value>
   </data>
-  <data name="Turecki" xml:space="preserve">
-    <value>TR</value>
+  <data name="SV" xml:space="preserve">
+    <value>Szwedzki</value>
   </data>
-  <data name="Ukraiński" xml:space="preserve">
-    <value>UK</value>
+  <data name="SW" xml:space="preserve">
+    <value>Suahili</value>
   </data>
-  <data name="Walijski" xml:space="preserve">
-    <value>CY</value>
+  <data name="TH" xml:space="preserve">
+    <value>Tajski</value>
   </data>
-  <data name="Wietnamski" xml:space="preserve">
-    <value>VI</value>
+  <data name="TR" xml:space="preserve">
+    <value>Turecki</value>
   </data>
-  <data name="Węgierski" xml:space="preserve">
-    <value>HU</value>
+  <data name="UK" xml:space="preserve">
+    <value>Ukraiński</value>
   </data>
-  <data name="Włoski" xml:space="preserve">
-    <value>IT</value>
+  <data name="VI" xml:space="preserve">
+    <value>Wietnamski</value>
   </data>
-  <data name="Łotewski" xml:space="preserve">
-    <value>LV</value>
+  <data name="ZH" xml:space="preserve">
+    <value>Chiński</value>
   </data>
 </root>

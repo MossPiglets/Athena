@@ -9,16 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600">
 
-    <UserControl.Resources>
-        <ObjectDataProvider
-            MethodName="GetValues"
-            ObjectType="{x:Type Data:Language}"
-            x:Key="EnumLanguage">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Data:Language" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
+    
     <Border Padding="10">
         <StackPanel>
             <!-- Book Info-->
