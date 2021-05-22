@@ -9,16 +9,7 @@
              mc:Ignorable="d"
              d:DesignHeight="580" d:DesignWidth="600">
 
-    <UserControl.Resources>
-        <ObjectDataProvider
-            MethodName="GetValues"
-            ObjectType="{x:Type Data:Language}"
-            x:Key="EnumLanguage">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="Data:Language" />
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
-    </UserControl.Resources>
+    
     <Border Padding="10">
         <StackPanel>
             <!-- Book Info-->
@@ -180,7 +171,7 @@
                     </TextBox.Text>
                 </TextBox>
                 <TextBox Text="{Binding BookView.ISBN}" Grid.Row="1" Grid.Column="1" Margin="0 7 18 0" Height="25" />
-                <ComboBox Name="LanguageComboBox" IsEditable="True" SelectedItem="{Binding Path=BookView.Language}" SelectionChanged="LanguageComboBox_OnSelectionChanged" Height="25" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
+                <ComboBox Name="LanguageComboBox" IsEditable="False" SelectedItem="{Binding Path=BookView.Language}" SelectionChanged="LanguageComboBox_OnSelectionChanged" Height="25" Grid.Row="0" Grid.Column="3" Margin="0 0 19 0" />
             </Grid>
 
             <Grid Margin="5 15 10 0 ">
