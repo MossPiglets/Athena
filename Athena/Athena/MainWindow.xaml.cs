@@ -13,6 +13,7 @@ using System.Linq;
 using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
+using System.Windows.Controls;
 
 namespace Athena {
     /// <summary>
@@ -54,7 +55,7 @@ namespace Athena {
                     var book = (Book)e.OldItems[0];
                     var bookInList = Books.First(b => b.Id == book.Id);
                     Books.Remove(bookInList); 
-                } 
+                }
             };
             ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
                 if (Books.Count > 0) {
@@ -66,7 +67,17 @@ namespace Athena {
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
-
+        public void ResizeGridViewColumns(GridView gridView)
+        {
+            foreach (GridViewColumn column in gridView.Columns)
+            {
+                if (double.IsNaN(column.Width))
+                {
+                    column.Width = column.ActualWidth;
+                }
+                column.Width = double.NaN;
+            }
+        }
         private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
@@ -117,6 +128,7 @@ namespace Athena {
             worker.RunWorkerCompleted += (o, args) => {
                 ImportText.Visibility = Visibility.Hidden;
                 ProgressBarStatus.Visibility = Visibility.Hidden;
+                ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
         }
