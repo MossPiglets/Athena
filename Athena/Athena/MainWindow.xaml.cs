@@ -34,10 +34,6 @@ namespace Athena {
                 .Load();
             Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local.ToObservableCollection());
 
-            if (!Books.IsNullOrEmpty()) {
-                ImportButton.Visibility = Visibility.Collapsed;
-            }
-
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
                 if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified)
                 {
@@ -60,6 +56,14 @@ namespace Athena {
                     Books.Remove(bookInList); 
                 } 
             };
+            ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
+                if (Books.Count > 0) {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Hidden);
+                }
+                else {
+                    Application.Current.Dispatcher.Invoke(() => ImportButton.Visibility = Visibility.Visible);
+                }
+            };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
 
@@ -76,10 +80,8 @@ namespace Athena {
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            //Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             var book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             ApplicationDbContext.Instance.Books.Remove(book);
-            //ApplicationDbContext.Instance.Entry(book).State = EntityState.Deleted;
             ApplicationDbContext.Instance.SaveChanges();
         }
 
@@ -149,7 +151,6 @@ namespace Athena {
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            //Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
