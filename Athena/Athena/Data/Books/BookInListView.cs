@@ -19,6 +19,8 @@ namespace Athena.Data.Books
         private int? publishmentYear;
         private Language language;
         private StoragePlace storagePlace;
+        public IList<Category> Categories { get; set; }
+
 
         public Guid Id
         {
@@ -61,7 +63,9 @@ namespace Athena.Data.Books
                 OnPropertyChanged(nameof(Language));
             }
         }
-        public StoragePlace StoragePlace { get => storagePlace; set
+        public StoragePlace StoragePlace
+        {
+            get => storagePlace; set
             {
                 storagePlace = value;
                 OnPropertyChanged(nameof(StoragePlace));
