@@ -85,7 +85,7 @@ namespace Athena
                 column.Width = double.NaN;
             }
         }
-        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
+        private void MenuItemBorrow_Executed(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
