@@ -1,3 +1,4 @@
+using Athena.Windows;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -14,9 +15,9 @@ using Athena.Data.CategoriesFolder;
 using System.Collections.ObjectModel;
 using Athena.Data.Books;
 using System.Linq;
-using Athena.Data.Series;
 using System;
 using System.Collections.Specialized;
+using System.Windows.Input;
 using System.Windows.Controls;
 
 namespace Athena
@@ -72,6 +73,7 @@ namespace Athena
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
+        public static RoutedUICommand MenuItemBorrow_Click = new RoutedUICommand("MenuItemBorrow_Click", "MenuItemBorrow_Click", typeof(MainWindow));
         public void ResizeGridViewColumns(GridView gridView)
         {
             foreach (GridViewColumn column in gridView.Columns)
@@ -83,12 +85,23 @@ namespace Athena
                 column.Width = double.NaN;
             }
         }
-        private void MenuItemBorrow_Click(object sender, RoutedEventArgs e) {
+        private void MenuItemBorrow_Executed(object sender, RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
         }
-
+        private void MenuItemBorrow_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            var borrowings = ApplicationDbContext.Instance.Borrowings
+                                           .Include(b => b.Book)
+                                           .Where(b => b.Book.Id == ((BookInListView)BookList.SelectedItem).Id)
+                                           .ToList();
+            if (borrowings.Any(b => b.ReturnDate == null)) {
+                e.CanExecute = false;
+            }
+            else {
+                e.CanExecute = true;
+            }
+        }
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
