@@ -126,6 +126,7 @@ namespace Athena {
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
+                SearchTextBox.Text = string.Empty;
             }
         }
 
