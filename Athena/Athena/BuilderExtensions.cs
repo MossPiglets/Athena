@@ -25,6 +25,7 @@ namespace Athena
             entity
                 .HasMany(a => a.Borrowing)
                 .WithOne(a => a.Book)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
             entity
                 .HasMany(a => a.Categories)
