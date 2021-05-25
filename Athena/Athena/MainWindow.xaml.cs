@@ -91,6 +91,9 @@ namespace Athena
             borrowForm.Show();
         }
         private void MenuItemBorrow_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
+            if (BookList.SelectedItem == null) {
+                return;
+            }
             var borrowings = ApplicationDbContext.Instance.Borrowings
                                            .Include(b => b.Book)
                                            .Where(b => b.Book.Id == ((BookInListView)BookList.SelectedItem).Id)
