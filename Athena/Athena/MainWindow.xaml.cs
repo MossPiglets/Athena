@@ -112,6 +112,7 @@ namespace Athena
             var book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             ApplicationDbContext.Instance.Books.Remove(book);
             ApplicationDbContext.Instance.SaveChanges();
+            SearchTextBox.Text = string.Empty;
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
