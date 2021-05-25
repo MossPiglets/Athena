@@ -13,7 +13,7 @@ namespace Athena
 {
     public class ConfirmBookDeleteMessageBox
     {
-        public bool CreateMessageBox() {
+        public bool Show() {
             var messageBox = new MessageBoxModel {
                 Text = "Czy na pewno chcesz usunąć książkę?",
                 Caption = "Info",

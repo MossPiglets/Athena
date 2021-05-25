@@ -120,7 +120,7 @@ namespace Athena {
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
             var messageBoxGenerator = new ConfirmBookDeleteMessageBox();
-            var decision = messageBoxGenerator.CreateMessageBox();
+            var decision = messageBoxGenerator.Show();
             if (decision) {
                 var book = ApplicationDbContext.Instance.Books.Single(b
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
