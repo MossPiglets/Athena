@@ -19,9 +19,13 @@ using System;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Windows.Controls;
+using AdonisUI.Controls;
+using MessageBox = AdonisUI.Controls.MessageBox;
+using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
+using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
+using MessageBoxResult = AdonisUI.Controls.MessageBoxResult;
 
-namespace Athena
-{
+namespace Athena {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -39,28 +43,28 @@ namespace Athena
                 .Include(b => b.Categories)
                 .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
                 .Load();
-            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local.ToObservableCollection());
+            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local
+                .ToObservableCollection());
 
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
-                if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified)
-                {
+                if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified) {
                     var bookInList = Books.Single(b => b.Id == book.Id);
                     Mapper.Instance.Map(book, bookInList);
                 }
             };
             ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
-                if(e.NewItems != null) {
-                    foreach (Book item in e?.NewItems)
-                    {
+                if (e.NewItems != null) {
+                    foreach (Book item in e?.NewItems) {
                         if (Books.All(b => b.Id != item.Id)) {
-                            Application.Current.Dispatcher.Invoke(() => Books.Add(Mapper.Instance.Map<BookInListView>(item)));
+                            Application.Current.Dispatcher.Invoke(()
+                                => Books.Add(Mapper.Instance.Map<BookInListView>(item)));
                         }
                     }
                 }
-                else if (e.Action == NotifyCollectionChangedAction.Remove){
-                    var book = (Book)e.OldItems[0];
+                else if (e.Action == NotifyCollectionChangedAction.Remove) {
+                    var book = (Book) e.OldItems[0];
                     var bookInList = Books.First(b => b.Id == book.Id);
-                    Books.Remove(bookInList); 
+                    Books.Remove(bookInList);
                 }
             };
             ApplicationDbContext.Instance.Books.Local.CollectionChanged += (sender, e) => {
@@ -73,28 +77,32 @@ namespace Athena
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
         }
-        public static RoutedUICommand MenuItemBorrow_Click = new RoutedUICommand("MenuItemBorrow_Click", "MenuItemBorrow_Click", typeof(MainWindow));
-        public void ResizeGridViewColumns(GridView gridView)
-        {
-            foreach (GridViewColumn column in gridView.Columns)
-            {
-                if (double.IsNaN(column.Width))
-                {
+
+        public static RoutedUICommand MenuItemBorrow_Click =
+            new RoutedUICommand("MenuItemBorrow_Click", "MenuItemBorrow_Click", typeof(MainWindow));
+
+        public void ResizeGridViewColumns(GridView gridView) {
+            foreach (GridViewColumn column in gridView.Columns) {
+                if (double.IsNaN(column.Width)) {
                     column.Width = column.ActualWidth;
                 }
+
                 column.Width = double.NaN;
             }
         }
+
         private void MenuItemBorrow_Executed(object sender, RoutedEventArgs e) {
-            Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+            Book book = ApplicationDbContext.Instance.Books.Single(b
+                => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
             borrowForm.Show();
         }
+
         private void MenuItemBorrow_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             var borrowings = ApplicationDbContext.Instance.Borrowings
-                                           .Include(b => b.Book)
-                                           .Where(b => b.Book.Id == ((BookInListView)BookList.SelectedItem).Id)
-                                           .ToList();
+                .Include(b => b.Book)
+                .Where(b => b.Book.Id == ((BookInListView) BookList.SelectedItem).Id)
+                .ToList();
             if (borrowings.Any(b => b.ReturnDate == null)) {
                 e.CanExecute = false;
             }
@@ -102,33 +110,40 @@ namespace Athena
                 e.CanExecute = true;
             }
         }
+
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
-            Book book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+            Book book = ApplicationDbContext.Instance.Books.Single(b
+                => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            var book = ApplicationDbContext.Instance.Books.Single(b => b.Id == ((BookInListView)BookList.SelectedItem).Id);
-            ApplicationDbContext.Instance.Books.Remove(book);
-            ApplicationDbContext.Instance.SaveChanges();
+            var messageBoxGenerator = new ConfirmBookDeleteMessageBox();
+            var decision = messageBoxGenerator.CreateMessageBox();
+            if (decision) {
+                var book = ApplicationDbContext.Instance.Books.Single(b
+                    => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+                ApplicationDbContext.Instance.Books.Remove(book);
+                ApplicationDbContext.Instance.SaveChanges();
+            }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e) {
             this.Close();
         }
 
-        private void OpenBorrowedBookList_Click(object sender, RoutedEventArgs e)
-        {
+        private void OpenBorrowedBookList_Click(object sender, RoutedEventArgs e) {
             BorrowedBooksListWindow borrowedBooks = new BorrowedBooksListWindow();
             borrowedBooks.Show();
         }
-        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
+
+        private void AddBook_Click(object sender, System.Windows.RoutedEventArgs e) {
             AddBookWindow addBook = new AddBookWindow();
             addBook.Show();
         }
+
         private void ImportData(object sender, RoutedEventArgs e) {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.ShowDialog();
@@ -162,29 +177,31 @@ namespace Athena
             dataImporter.ImportFromSpreadsheet(fileName);
         }
 
-        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
+        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
             var text = SearchTextBox.Text;
             if (text.Length == 0)
                 BookList.ItemsSource = Books;
             if (text.Length < 3)
                 return;
-            var fillteredBooks = Books.Where(b => b.Title.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
-                                            (b.Series?.SeriesName != null && b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
-                                            (b.PublishingHouse?.PublisherName != null && b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
-                                            (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
-                                            (b.Categories.Any(c => c.GetDescription().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
-                                            );
-                                            
+            var fillteredBooks = Books.Where(b
+                => b.Title.Contains(text, StringComparison.CurrentCultureIgnoreCase) ||
+                   (b.Series?.SeriesName != null &&
+                    b.Series.SeriesName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
+                   (b.PublishingHouse?.PublisherName != null &&
+                    b.PublishingHouse.PublisherName.Contains(text, StringComparison.CurrentCultureIgnoreCase)) ||
+                   (b.Authors.Any(a => a.ToString().Contains(text, StringComparison.CurrentCultureIgnoreCase))) ||
+                   (b.Categories.Any(c
+                       => c.GetDescription().Contains(text, StringComparison.CurrentCultureIgnoreCase)))
+            );
+
             BookList.ItemsSource = fillteredBooks;
         }
 
-        private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
+        private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
         }
     }
 }
+
