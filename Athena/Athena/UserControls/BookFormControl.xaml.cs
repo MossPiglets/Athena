@@ -12,7 +12,6 @@ using Athena.Data.Series;
 using Athena.EnumLocalizations;
 using Athena.Windows;
 using Castle.Core.Internal;
-using AdonisUI.Controls;
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
@@ -90,7 +89,9 @@ namespace Athena {
 		}
 
 		private void AddAuthor_Click(object sender, RoutedEventArgs e) {
-			new AddAuthorWindow().Show();
+            var addAuthorWindow = new AddAuthorWindow();
+			addAuthorWindow.AuthorAdded += (_, e) => Authors.Add(e.Entity);
+			addAuthorWindow.Show();
 		}
 
 		private void AddPublisher_Click(object sender, RoutedEventArgs e) {
