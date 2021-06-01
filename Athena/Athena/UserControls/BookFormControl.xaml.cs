@@ -13,6 +13,7 @@ using Athena.EnumLocalizations;
 using Athena.Windows;
 using Castle.Core.Internal;
 using AdonisUI.Controls;
+using Athena.EventManagers.EventArgs;
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
@@ -60,7 +61,9 @@ namespace Athena {
 
 			CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
 			LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-		}
+
+
+        }
 
 		private void ConfigureAuthorsComboBoxes() {
 			AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
@@ -98,8 +101,10 @@ namespace Athena {
 		}
 
 		private void AddStoragePlace_Click(object sender, RoutedEventArgs e) {
-			new AddStoragePlaceWindow().Show();
-		}
+			var storagePlaceWindow = new AddStoragePlaceWindow();
+			storagePlaceWindow.StoragePlaceAdded += (_, e) => StoragePlaces.Add(e.StoragePlace);
+			storagePlaceWindow.Show();
+        }
 
 		private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
 			var authorAddingUserControl = new AuthorAdding();

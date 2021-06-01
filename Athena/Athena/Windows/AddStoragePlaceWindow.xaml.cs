@@ -5,6 +5,7 @@ using System.Linq;
 using Athena.Data;
 using System;
 using System.Windows;
+using Athena.EventManagers.EventArgs;
 
 namespace Athena.Windows
 {
@@ -16,10 +17,12 @@ namespace Athena.Windows
         }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!ApplicationDbContext.Instance.StoragePlaces.Any(a => a.StoragePlaceName.ToLower() == StoragePlaceTextBox.Text.ToLower()))
-            {
-                ApplicationDbContext.Instance.Entry(new StoragePlace { StoragePlaceName = StoragePlaceTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
+            if (!ApplicationDbContext.Instance.StoragePlaces.Any(a => a.StoragePlaceName.ToLower() == StoragePlaceTextBox.Text.ToLower())) {
+                var storagePlace = new StoragePlace
+                    { StoragePlaceName = StoragePlaceTextBox.Text, Id = Guid.NewGuid() };
+                ApplicationDbContext.Instance.Entry(storagePlace).State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
+                StoragePlaceAdded?.Invoke(this, new StoragePlaceAddedEventArgs {StoragePlace = storagePlace});
 
                 this.Close();
             }
@@ -33,5 +36,7 @@ namespace Athena.Windows
         {
             e.CanExecute = !Validation.GetHasError(StoragePlaceTextBox);
         }
+
+        public event EventHandler<StoragePlaceAddedEventArgs> StoragePlaceAdded;
     }
 }

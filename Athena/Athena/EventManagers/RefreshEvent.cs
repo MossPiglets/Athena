@@ -8,6 +8,7 @@ using Athena.Data.Series;
 using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 
 namespace Athena.EventManagers
 {
@@ -18,7 +19,7 @@ namespace Athena.EventManagers
         {
             OnDataBaseModified += ListRefresh;
         }
-        private void ListRefresh(object sender, EventArgs e)
+        private void ListRefresh(object sender, System.EventArgs e)
         {
             MessageBox.Show("Działam!");
         }
