@@ -27,7 +27,7 @@ namespace Athena.Windows
                 };
                 ApplicationDbContext.Instance.Entry(author).State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
-                AuthorAdded?.Invoke(this, new EntityAddedEventArgs<Author>{t = author});
+                AuthorAdded?.Invoke(this, new EntityAddedEventArgs<Author>{Entity = author});
                 this.Close();
             }
             else

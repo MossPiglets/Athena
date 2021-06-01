@@ -4,6 +4,6 @@ using System.Text;
 
 namespace Athena.EventManagers {
     public class EntityAddedEventArgs<T> : EventArgs {
-        public T t { get; set; }
+        public T Entity { get; set; }
     }
 }

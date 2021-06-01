@@ -92,7 +92,7 @@ namespace Athena {
 
 		private void AddAuthor_Click(object sender, RoutedEventArgs e) {
             var addAuthorWindow = new AddAuthorWindow();
-			addAuthorWindow.AuthorAdded += (_, e) => Authors.Add(e.t);
+			addAuthorWindow.AuthorAdded += (_, e) => Authors.Add(e.Entity);
 			addAuthorWindow.Show();
 		}
 
