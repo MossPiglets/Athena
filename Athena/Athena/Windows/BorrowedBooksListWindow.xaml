@@ -65,7 +65,7 @@
                                         DisplayMemberBinding="{Binding Book.PublishingHouse.PublisherName}" />
                         <GridViewColumn Header="Rok wydania" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.PublishmentYear}" />
-                        <GridViewColumn Header="Miejce Składowania" Width="Auto"
+                        <GridViewColumn Header="Miejce przechowywania" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" />
                         <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" DisplayMemberBinding="{Binding }">
                             <GridViewColumn.CellTemplate>
