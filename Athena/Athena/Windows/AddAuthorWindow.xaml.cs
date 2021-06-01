@@ -5,7 +5,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
 using Athena.EventManagers;
-using Athena.EventManagers.EventsArguments;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Windows
