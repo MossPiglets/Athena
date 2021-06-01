@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data;
+using Athena.EventManagers.EventsArguments;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Windows
@@ -19,10 +20,13 @@ namespace Athena.Windows
         }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            if (!ApplicationDbContext.Instance.Authors.Any(a => a.FirstName.ToLower() == AuthorFirstNameTextBox.Text.ToLower() && a.LastName.ToLower() == AuthorLastNameTextBox.Text.ToLower()))
-            {
-                ApplicationDbContext.Instance.Entry(new Author { FirstName = AuthorFirstNameTextBox.Text, LastName = AuthorLastNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
+            if (!ApplicationDbContext.Instance.Authors.Any(a => a.FirstName.ToLower() == AuthorFirstNameTextBox.Text.ToLower() && a.LastName.ToLower() == AuthorLastNameTextBox.Text.ToLower())) {
+                var author = new Author {
+                    FirstName = AuthorFirstNameTextBox.Text, LastName = AuthorLastNameTextBox.Text, Id = Guid.NewGuid()
+                };
+                ApplicationDbContext.Instance.Entry(author).State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
+                AuthorAdded?.Invoke(this, new AuthorAddedEventArgs{Author = author});
                 this.Close();
             }
             else
@@ -34,5 +38,7 @@ namespace Athena.Windows
         {
             e.CanExecute = !Validation.GetHasError(AuthorLastNameTextBox);
         }
+
+        public event EventHandler<AuthorAddedEventArgs> AuthorAdded;
     }
 }
