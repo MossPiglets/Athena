@@ -16,10 +16,13 @@ using System.Collections.ObjectModel;
 using Athena.Data.Books;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Windows.Controls;
 using AdonisUI.Controls;
+using Athena.Data.Borrowings;
+using Athena.EventManagers;
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
@@ -95,6 +98,7 @@ namespace Athena {
             Book book = ApplicationDbContext.Instance.Books.Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
+            borrowForm.BookBorrowed += (_, e) => Books.First(a => a.Id == e.Entity.Book.Id).Borrowing.Add(e.Entity);
             borrowForm.Show();
         }
 
@@ -125,8 +129,13 @@ namespace Athena {
             var messageBoxGenerator = new ConfirmBookDeleteMessageBox();
             var decision = messageBoxGenerator.Show();
             if (decision) {
-                var book = ApplicationDbContext.Instance.Books.Single(b
+                var book = ApplicationDbContext.Instance.Books
+                    .Include(a => a.Borrowing)
+                    .Single(b
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+                var myBook = Books.First(a => a.Id == book.Id);
+                var borrowings = myBook.Borrowing;
+                BookRemoved?.Invoke(this, new EntityAddedEventArgs<IList<Borrowing>>{Entity = borrowings});
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
                 SearchTextBox.Text = string.Empty;
@@ -206,6 +215,8 @@ namespace Athena {
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
         }
+
+        public static event EventHandler<EntityAddedEventArgs<IList<Borrowing>>> BookRemoved;
     }
 }
 

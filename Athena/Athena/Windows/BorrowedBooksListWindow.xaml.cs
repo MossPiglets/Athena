@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Athena.Data.Borrowings;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
+using Athena.EventManagers;
+using Castle.Core.Internal;
 
 
 namespace Athena.Windows {
@@ -26,7 +29,8 @@ namespace Athena.Windows {
             BorrowedBookList.ItemsSource = Borrowings;
             if (Borrowings.Count == 0) {
                 TextBlock.Visibility = Visibility.Visible;
-            }
+            } 
+            MainWindow.BookRemoved += RemoveBookFromBorrowings;
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -37,6 +41,16 @@ namespace Athena.Windows {
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
             returnWindow.Show();
+        }
+
+        private void RemoveBookFromBorrowings(object sender, EntityAddedEventArgs<IList<Borrowing>> e) {
+            if (e.Entity.IsNullOrEmpty()) {
+                return;
+            }
+
+            foreach (var borrowing in e.Entity) {
+                Borrowings.Remove(borrowing);
+            }
         }
     }
 }
