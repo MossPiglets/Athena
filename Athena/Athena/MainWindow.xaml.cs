@@ -115,7 +115,13 @@ namespace Athena {
         }
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
-            Book book = ApplicationDbContext.Instance.Books.Single(b
+            Book book = ApplicationDbContext.Instance.Books
+                .Include(a => a.Categories)
+                .Include(b => b.Series)
+                .Include(b => b.PublishingHouse)
+                .Include(b => b.StoragePlace)
+                .Include(b => b.Authors)
+                .Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
