@@ -98,7 +98,6 @@ namespace Athena {
             Book book = ApplicationDbContext.Instance.Books.Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             BorrowForm borrowForm = new BorrowForm(book);
-            borrowForm.BookBorrowed += (_, e) => Books.First(a => a.Id == e.Entity.Book.Id).Borrowing.Add(e.Entity);
             borrowForm.Show();
         }
 
@@ -133,9 +132,10 @@ namespace Athena {
                     .Include(a => a.Borrowing)
                     .Single(b
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
-                var myBook = Books.First(a => a.Id == book.Id);
-                var borrowings = myBook.Borrowing;
-                BookRemoved?.Invoke(this, new EntityAddedEventArgs<IList<Borrowing>>{Entity = borrowings});
+                book.Borrowing = ApplicationDbContext.Instance.Borrowings
+                    .Include(a => a.Book)
+                    .Where(a => a.Book.Id == book.Id)
+                    .ToList();
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
                 SearchTextBox.Text = string.Empty;
@@ -216,7 +216,6 @@ namespace Athena {
             editBook.Show();
         }
 
-        public static event EventHandler<EntityAddedEventArgs<IList<Borrowing>>> BookRemoved;
     }
 }
 

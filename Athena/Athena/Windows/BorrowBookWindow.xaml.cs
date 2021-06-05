@@ -59,11 +59,8 @@ namespace Athena {
             BorrowingView.BorrowDate = Calendar.SelectedDate.Value;
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
             ApplicationDbContext.Instance.Entry(borrowing).State = EntityState.Added;
-            BookBorrowed?.Invoke(this, new EntityAddedEventArgs<Borrowing>{Entity = borrowing});
             ApplicationDbContext.Instance.SaveChanges();
             this.Close();
         }
-
-        public event EventHandler<EntityAddedEventArgs<Borrowing>> BookBorrowed;
     }
 }

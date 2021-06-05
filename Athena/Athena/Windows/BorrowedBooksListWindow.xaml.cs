@@ -30,7 +30,6 @@ namespace Athena.Windows {
             if (Borrowings.Count == 0) {
                 TextBlock.Visibility = Visibility.Visible;
             } 
-            MainWindow.BookRemoved += RemoveBookFromBorrowings;
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -41,16 +40,6 @@ namespace Athena.Windows {
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
             returnWindow.Show();
-        }
-
-        private void RemoveBookFromBorrowings(object sender, EntityAddedEventArgs<IList<Borrowing>> e) {
-            if (e.Entity.IsNullOrEmpty()) {
-                return;
-            }
-
-            foreach (var borrowing in e.Entity) {
-                Borrowings.Remove(borrowing);
-            }
         }
     }
 }
