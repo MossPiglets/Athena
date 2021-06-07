@@ -35,8 +35,8 @@ namespace Athena {
 
         public string ToAuthorsNames(Book book) {
             StringBuilder builder = new StringBuilder();
-            if (book.Authors.Count > 0) {
-                for (int i = 0; i < book.Authors.Count; i++) {
+            if (book?.Authors != null && book?.Authors.Count > 0) {
+                for (int i = 0; i < book.Authors.Count; i++) { 
                     var authorsList = book.Authors.ToList();
                     if (i == 0) {
                         builder.Append($"{authorsList[i].FirstName} {authorsList[i].LastName}");
