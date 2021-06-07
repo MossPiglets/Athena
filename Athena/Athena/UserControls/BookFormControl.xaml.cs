@@ -95,7 +95,9 @@ namespace Athena {
 		}
 
 		private void AddPublisher_Click(object sender, RoutedEventArgs e) {
-			new AddPublisherWindow().Show();
+			var addPublisherWindow = new AddPublisherWindow();
+			addPublisherWindow.PublisherAdded += (_, e) => PublishingHouses.Add(e.Entity);
+			addPublisherWindow.Show();
 		}
 
 		private void AddStoragePlace_Click(object sender, RoutedEventArgs e) {
