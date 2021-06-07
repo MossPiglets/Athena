@@ -31,15 +31,13 @@ namespace Athena.Windows {
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
             Button button = (Button) sender;
-            BorrowingView borrowing = (BorrowingView) button.DataContext;
+            var borrowing = (BorrowingView) button.DataContext;
             Book book = borrowing.Book;
             book.Borrowing.Add(Mapper.Instance.Map<Borrowing>(borrowing));
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
-            //returnWindow.BookReturned += (sender, e) => Borrowings.Last(b => b.Book.Id == book.Id).ReturnDate = ((ReturnWindow)sender).Borrowing.ReturnDate; //ApplicationDbContext.Instance.Borrowings.AsNoTracking().Single(b => b.Id == borrowing.Id).ReturnDate;
-            //returnWindow.BookReturned += (sender, e) => BorrowedBookList.ItemsSource = Borrowings;
-            //Borrowings.Single(b => b.Book.Id == book.Id).ReturnDate = ApplicationDbContext.Instance.Borrowings.Single(b => b.Book.Id == book.Id).ReturnDate;
-            //Tu zrobić update
+            returnWindow.BookReturned += (sender, e) => Borrowings.Last(b => b.Book.Id == book.Id).ReturnDate = ApplicationDbContext.Instance.Borrowings.Single(b => b.Id == borrowing.Id).ReturnDate;
+            returnWindow.BookReturned += (sender, e) => BorrowedBookList.ItemsSource = Borrowings;
             returnWindow.Show();
         }
     }

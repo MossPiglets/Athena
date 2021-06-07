@@ -73,8 +73,8 @@
                                     <TextBlock>
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="BorrowingView.FirstName" />
-                                                <Binding Path="BorrowingView.LastName" />
+                                                <Binding Path="Borrowing.FirstName" />
+                                                <Binding Path="Borrowing.LastName" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
