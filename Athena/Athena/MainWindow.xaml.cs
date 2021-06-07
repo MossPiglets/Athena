@@ -20,6 +20,7 @@ using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Windows.Controls;
 using AdonisUI.Controls;
+using Athena.EventManagers;
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
@@ -118,6 +119,8 @@ namespace Athena {
             Book book = ApplicationDbContext.Instance.Books.Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
+            editBook.BookEdited += (o, e) 
+                => Books[Books.IndexOf(Books.First(a => a.Id == e.Entity.Id))] = Mapper.Instance.Map<BookInListView>(e.Entity);
             editBook.Show();
         }
 
