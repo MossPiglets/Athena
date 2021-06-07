@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using Athena.Data.CategoriesFolder;
 using System.Collections.ObjectModel;
-using Athena.Data.Books;
 using System.Linq;
 using System;
 using System.Collections.Generic;
