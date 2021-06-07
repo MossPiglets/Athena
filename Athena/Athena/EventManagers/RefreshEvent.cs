@@ -19,7 +19,7 @@ namespace Athena.EventManagers
         {
             OnDataBaseModified += ListRefresh;
         }
-        private void ListRefresh(object sender, System.EventArgs e)
+        private void ListRefresh(object sender, EventArgs e)
         {
             MessageBox.Show("Działam!");
         }
