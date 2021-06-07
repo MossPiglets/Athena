@@ -56,17 +56,17 @@ namespace Athena.Windows
             var borrowing = await ApplicationDbContext.Instance.Borrowings.FindAsync(Borrowing.Id);
             borrowing.ReturnDate = Calendar.SelectedDate;
             await ApplicationDbContext.Instance.SaveChangesAsync();
-            BookReturned?.Invoke(this, new EventArgs<Borrowing>(borrowing));
+            BookReturned?.Invoke(this, new BookReturnedEventArgs<Borrowing>(borrowing));
             this.Close();
         }
-        public class EventArgs<Borrowing> : EventArgs
+        public class BookReturnedEventArgs<Borrowing> : EventArgs
         {
             public Borrowing Value { get; private set; }
-            public EventArgs(Borrowing val)
+            public BookReturnedEventArgs(Borrowing val)
             {
                 Value = val;
             }
         }
-        public event EventHandler<EventArgs<Borrowing>> BookReturned;
+        public event EventHandler<BookReturnedEventArgs<Borrowing>> BookReturned;
     }
 }
