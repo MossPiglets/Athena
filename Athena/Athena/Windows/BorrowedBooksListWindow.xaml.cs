@@ -36,7 +36,7 @@ namespace Athena.Windows {
             book.Borrowing.Add(Mapper.Instance.Map<Borrowing>(borrowing));
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
-            returnWindow.BookReturned += (sender, e) => Borrowings.Last(b => b.Book.Id == book.Id).ReturnDate = e.Value.ReturnDate; 
+            returnWindow.BookReturned += (sender, e) => Borrowings.Single(b => b.Id == borrowing.Id).ReturnDate = e.Value.ReturnDate; 
             returnWindow.BookReturned += (sender, e) => BorrowedBookList.ItemsSource = Borrowings;
             returnWindow.Show();
         }
