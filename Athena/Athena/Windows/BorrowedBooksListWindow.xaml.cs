@@ -24,9 +24,6 @@ namespace Athena.Windows {
                 .Load();
             Borrowings = ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection();
             BorrowedBookList.ItemsSource = Borrowings;
-            if (Borrowings.Count == 0) {
-                TextBlock.Visibility = Visibility.Visible;
-            }
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {

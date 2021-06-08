@@ -9,13 +9,14 @@
                        mc:Ignorable="d"
                        Title="Wypożyczone książki" MinHeight="300" SizeToContent="WidthAndHeight" 
                        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" 
-                       xmlns:converters="clr-namespace:Athena.Converters">
+                       xmlns:converters="clr-namespace:Athena.Converters" >
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
 
     <Window.Resources>
         <converters:NullVisibilityConverter x:Key="NullToVis" />
+        <converters:EmptyListVisibilityConverter x:Key="EmptyListVis"/>
     </Window.Resources>
 
     <Border Padding="10">
@@ -30,7 +31,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center" 
+            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center" ItemsSource="{Binding BorrowedBookList}"
                       Width="Auto">
                 <ListView.Resources>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
@@ -97,7 +98,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="Hidden" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
+            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding BorrowedBookList, Converter={StaticResource EmptyListVis}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
         </Grid>
 
     </Border>
