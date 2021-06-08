@@ -97,7 +97,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding Borrowings, Converter={StaticResource ZeroToVisible}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
+            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding Borrowings.Count, Converter={StaticResource ZeroToVisible}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
         </Grid>
 
     </Border>

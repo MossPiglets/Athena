@@ -1,9 +1,5 @@
-﻿using Castle.Core.Internal;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using System.Globalization;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 
@@ -13,14 +9,17 @@ namespace Athena.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (value == null) ? Visibility.Visible : Visibility.Collapsed;
+            if (int.TryParse(value.ToString(), out int result) && result > 0)
+            {
+                return Visibility.Collapsed;
+            }
+
+            return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
-        }
-    }
-    {
+        }    
     }
 }
