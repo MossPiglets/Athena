@@ -1,5 +1,5 @@
 # Athena
-An application that supports the home database of books, wrote with WPF, C# 8.0, and .Net 5.0.
+An application that supports the home database of books, created using WPF, C# 8.0, and .Net 5.0.
 
 ![Z1](Docs/main_window.png)
 

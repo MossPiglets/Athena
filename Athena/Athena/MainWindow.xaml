@@ -76,8 +76,13 @@
                     <GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
 						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
 						<GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}" />
-                        <GridViewColumn Header="Miejce przechowywania" Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" />
-                        <GridViewColumn Header="Wypożyczone" Width="Auto" DisplayMemberBinding="{Binding LastBorrowName}"/>
+                    <GridViewColumn Width="Auto" DisplayMemberBinding="{Binding StoragePlace.StoragePlaceName}" >
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Miejsce"
+                                       ToolTip="Miejsce przechowywania książki"/>
+                        </GridViewColumn.Header>
+                    </GridViewColumn>
+                    <GridViewColumn Header="Wypożyczone" Width="Auto" DisplayMemberBinding="{Binding LastBorrowName}"/>
                     </GridView>
 
 				</ListView.View>
