@@ -16,7 +16,7 @@
 
     <Window.Resources>
         <converters:NullVisibilityConverter x:Key="NullToVis" />
-        <converters:EmptyListVisibilityConverter x:Key="EmptyListVis"/>
+        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisible"/>
     </Window.Resources>
 
     <Border Padding="10">
@@ -31,13 +31,12 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center" ItemsSource="{Binding BorrowedBookList}"
+            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center"
                       Width="Auto">
                 <ListView.Resources>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource Self}}" 
-                         Value="True">
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"  Value="True">
                                 <Setter Property="IsSelected" Value="True" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -98,7 +97,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding BorrowedBookList, Converter={StaticResource EmptyListVis}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
+            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding Borrowings, Converter={StaticResource ZeroToVisible}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
         </Grid>
 
     </Border>
