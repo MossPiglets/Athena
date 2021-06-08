@@ -59,7 +59,7 @@ namespace Athena {
 
 			CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
 			LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-		}
+        }
 
 		private void ConfigureAuthorsComboBoxes() {
 			AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
@@ -103,8 +103,10 @@ namespace Athena {
 		}
 
 		private void AddStoragePlace_Click(object sender, RoutedEventArgs e) {
-			new AddStoragePlaceWindow().Show();
-		}
+			var storagePlaceWindow = new AddStoragePlaceWindow();
+			storagePlaceWindow.StoragePlaceAdded += (_, e) => StoragePlaces.Add(e.Entity);
+			storagePlaceWindow.Show();
+        }
 
 		private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
 			var authorAddingUserControl = new AuthorAdding();
