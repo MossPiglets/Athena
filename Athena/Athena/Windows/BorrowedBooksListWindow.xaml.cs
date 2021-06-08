@@ -7,7 +7,6 @@ using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
 
-
 namespace Athena.Windows {
     public partial class BorrowedBooksListWindow {
         public ObservableCollection<Borrowing> Borrowings { get; set; }

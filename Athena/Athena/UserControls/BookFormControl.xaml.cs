@@ -59,8 +59,6 @@ namespace Athena {
 
 			CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
 			LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-
-
         }
 
 		private void ConfigureAuthorsComboBoxes() {
