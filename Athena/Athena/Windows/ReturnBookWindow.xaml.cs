@@ -51,16 +51,22 @@ namespace Athena.Windows
             return builder.ToString();
         }
 
-        private void ReturnBorrowedBook_Click(object sender, RoutedEventArgs e)
+        private async void ReturnBorrowedBook_Click(object sender, RoutedEventArgs e)
         {
-            Borrowing.ReturnDate = Calendar.SelectedDate.Value;
-            ApplicationDbContext.Instance.Entry(Borrowing).State = EntityState.Modified;
-            ApplicationDbContext.Instance.SaveChanges();
-            BookReturned?.Invoke(this, EventArgs.Empty);
+            var borrowing = await ApplicationDbContext.Instance.Borrowings.FindAsync(Borrowing.Id);
+            borrowing.ReturnDate = Calendar.SelectedDate;
+            await ApplicationDbContext.Instance.SaveChangesAsync();
+            BookReturned?.Invoke(this, new BookReturnedEventArgs(borrowing));
             this.Close();
         }
-
-        public event EventHandler BookReturned;
-
+        public class BookReturnedEventArgs : EventArgs
+        {
+            public Borrowing Value { get; private set; }
+            public BookReturnedEventArgs(Borrowing val)
+            {
+                Value = val;
+            }
+        }
+        public event EventHandler<BookReturnedEventArgs> BookReturned;
     }
 }
