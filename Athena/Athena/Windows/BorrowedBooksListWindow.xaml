@@ -66,7 +66,12 @@
                         <GridViewColumn Header="Rok wydania" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.PublishmentYear}" />
                         <GridViewColumn Header="Miejce Składowania" Width="Auto"
-                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" />
+                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" >
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Miejsce"
+                                       ToolTip="Miejsce przechowywania książki"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
                         <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
