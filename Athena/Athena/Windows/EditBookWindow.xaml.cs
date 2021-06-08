@@ -13,8 +13,8 @@ namespace Athena.Windows {
             var bookControl = new BookFormControl("Edytuj książkę", "Zapisz", book);
             bookControl.ButtonCommand = new EditBookCommand();
             bookControl.ConfirmButton.Click += (sender, args) => {
-                var bookview = bookControl.BookView;
-                Book book = Mapper.Instance.Map<Book>(bookview);
+                var bookView = bookControl.BookView;
+                Book book = Mapper.Instance.Map<Book>(bookView);
                 BookEdited?.Invoke(this, new EntityAddedEventArgs<Book>{Entity = book});
             };
             Content = bookControl;

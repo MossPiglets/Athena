@@ -119,8 +119,11 @@ namespace Athena {
             Book book = ApplicationDbContext.Instance.Books.Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
-            editBook.BookEdited += (o, e) 
-                => Books[Books.IndexOf(Books.First(a => a.Id == e.Entity.Id))] = Mapper.Instance.Map<BookInListView>(e.Entity);
+            editBook.BookEdited += (o, e) => {
+                var book = Books.First(a => a.Id == e.Entity.Id);
+                Mapper.Instance.Map(e.Entity, book);
+            };
+
             editBook.Show();
         }
 
