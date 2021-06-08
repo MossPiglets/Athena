@@ -7,25 +7,11 @@ using System.Linq;
 using System.Windows;
 using Athena.Data.Books;
 using Athena.Import;
-using Athena.Windows;
-using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using Athena.Data.CategoriesFolder;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Windows.Controls;
-using AdonisUI.Controls;
-using Athena.Data.Borrowings;
-using Athena.EventManagers;
-using MessageBox = AdonisUI.Controls.MessageBox;
-using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
-using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
-using MessageBoxResult = AdonisUI.Controls.MessageBoxResult;
 
 namespace Athena {
     /// <summary>
