@@ -10,9 +10,6 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
 using System.Windows.Input;
 using System.Windows.Controls;
 
@@ -116,6 +113,11 @@ namespace Athena
                 .Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
+            editBook.BookEdited += (o, e) => {
+                var book = Books.First(a => a.Id == e.Entity.Id);
+                Mapper.Instance.Map(e.Entity, book);
+            };
+
             editBook.Show();
         }
 

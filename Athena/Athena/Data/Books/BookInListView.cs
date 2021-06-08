@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -38,7 +39,7 @@ namespace Athena.Data.Books
                 OnPropertyChanged(nameof(Title));
             }
         }
-        public IList<Author> Authors { get; set; }
+        public ObservableCollection<Author> Authors { get; set; }
         public Series.Series Series
         {
             get => series; set
@@ -81,7 +82,7 @@ namespace Athena.Data.Books
             }
         }
 
-        public IList<Borrowing> Borrowing { get; set; }
+        public ObservableCollection<Borrowing> Borrowing { get; set; }
         public string LastBorrowName => this.Borrowing.Count < 1 ? string.Empty : this.Borrowing.Last().ReturnDate != null ? string.Empty : $"{this.Borrowing.Last().FirstName} {this.Borrowing.Last().LastName}";
 
         public event PropertyChangedEventHandler PropertyChanged;
