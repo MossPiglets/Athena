@@ -65,16 +65,21 @@
                                         DisplayMemberBinding="{Binding Book.PublishingHouse.PublisherName}" />
                         <GridViewColumn Header="Rok wydania" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.PublishmentYear}" />
-                        <GridViewColumn Header="Miejce przechowywania" Width="Auto"
-                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" />
-                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" DisplayMemberBinding="{Binding }">
+                        <GridViewColumn Header="Miejce Składowania" Width="Auto"
+                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" >
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Miejsce"
+                                       ToolTip="Miejsce przechowywania książki"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Borrowing.FirstName" />
-                                                <Binding Path="Borrowing.LastName" />
+                                                <Binding Path="FirstName" />
+                                                <Binding Path="LastName" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
