@@ -59,7 +59,7 @@ namespace Athena {
 
 			CategoriesCombobox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();
 			LanguageComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<Language>();
-		}
+        }
 
 		private void ConfigureAuthorsComboBoxes() {
 			AuthorCombobox.SelectedIndex = Authors.IndexOf(BookView.Authors.ToList()[0]);
@@ -85,7 +85,9 @@ namespace Athena {
 
 
 		private void AddSeries_Click(object sender, RoutedEventArgs e) {
-			new AddSeriesWindow().Show();
+			var addSeriesWindow = new AddSeriesWindow();
+			addSeriesWindow.SeriesAdded += (_, e) => SeriesList.Add(e.Entity);
+			addSeriesWindow.Show();
 		}
 
 		private void AddAuthor_Click(object sender, RoutedEventArgs e) {
@@ -95,12 +97,16 @@ namespace Athena {
 		}
 
 		private void AddPublisher_Click(object sender, RoutedEventArgs e) {
-			new AddPublisherWindow().Show();
+			var addPublisherWindow = new AddPublisherWindow();
+			addPublisherWindow.PublisherAdded += (_, e) => PublishingHouses.Add(e.Entity);
+			addPublisherWindow.Show();
 		}
 
 		private void AddStoragePlace_Click(object sender, RoutedEventArgs e) {
-			new AddStoragePlaceWindow().Show();
-		}
+			var storagePlaceWindow = new AddStoragePlaceWindow();
+			storagePlaceWindow.StoragePlaceAdded += (_, e) => StoragePlaces.Add(e.Entity);
+			storagePlaceWindow.Show();
+        }
 
 		private void AddingAuthorCombobox(object sender, RoutedEventArgs e) {
 			var authorAddingUserControl = new AuthorAdding();
@@ -182,8 +188,36 @@ namespace Athena {
 		}
 
 		private void ConfirmButton_Click(object sender, RoutedEventArgs e) {
-			var myWindow = Window.GetWindow(this);
-			myWindow.Close();
+			bool isIncorrect = false;
+			if (!AuthorCombobox.Text.IsNullOrEmpty() && AuthorCombobox.Items.Cast<Author>().All(a => a.ToString() != AuthorCombobox.Text)){
+				AuthorCombobox.Text = string.Empty;
+				MessageBox.Show("Wprowadzony autor nie istnieje. Użyj opcji dodaj autora.", "Info", MessageBoxButton.OK,
+					MessageBoxImage.Information);
+				isIncorrect = true;
+			}
+			if (!SeriesCombobox.Text.IsNullOrEmpty() && SeriesCombobox.Items.Cast<Series>().All(a => a.ToString() != SeriesCombobox.Text)){
+				SeriesCombobox.Text = string.Empty;
+				MessageBox.Show("Wprowadzona seria nie istnieje. Użyj opcji dodaj serię.", "Info", MessageBoxButton.OK,
+					MessageBoxImage.Information);
+				isIncorrect = true;
+			}
+			if (!PublisherComboBox.Text.IsNullOrEmpty() && PublisherComboBox.Items.Cast<PublishingHouse>().All(a => a.ToString() != PublisherComboBox.Text)){
+				PublisherComboBox.Text = string.Empty;
+				MessageBox.Show("Wprowadzone wydawnictwo nie istnieje. Użyj opcji dodaj wydawnictwo.", "Info",
+					MessageBoxButton.OK, MessageBoxImage.Information);
+				isIncorrect = true;
+			}
+			if (!StoragePlaceComboBox.Text.IsNullOrEmpty() && StoragePlaceComboBox.Items.Cast<StoragePlace>().All(a => a.ToString() != StoragePlaceComboBox.Text)) {
+				StoragePlaceComboBox.Text = string.Empty;
+				MessageBox.Show(
+					"Wprowadzone miejsce przechowywania nie istnieje. Użyj opcji dodaj miejsce przechowywania.", "Info",
+					MessageBoxButton.OK, MessageBoxImage.Information);
+				isIncorrect = true;
+			}
+            if (!isIncorrect) {
+				var myWindow = Window.GetWindow(this);
+				myWindow.Close();
+			}
 		}
 
 		private void ComboboxOnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e) {
@@ -244,55 +278,6 @@ namespace Athena {
 			catch (Microsoft.EntityFrameworkCore.DbUpdateException) {
 				MessageBox.Show("To miejsce przechowywania jest przypisane do jakiejś książki, nie można go usunąć.",
 					"Info", MessageBoxButton.OK, MessageBoxImage.Information);
-			}
-		}
-
-		private void AuthorCombobox_LostFocus(object sender, RoutedEventArgs e) {
-			if (AuthorCombobox.Text.IsNullOrEmpty()) {
-				return;
-			}
-
-			if (AuthorCombobox.Items.Cast<Author>().All(a => a.ToString() != AuthorCombobox.Text)) {
-				AuthorCombobox.Text = string.Empty;
-				MessageBox.Show("Wprowadzony autor nie istnieje. Użyj opcji dodaj autora.", "Info", MessageBoxButton.OK,
-					MessageBoxImage.Information);
-			}
-		}
-
-		private void PublisherComboBox_LostFocus(object sender, RoutedEventArgs e) {
-			if (PublisherComboBox.Text.IsNullOrEmpty()) {
-				return;
-			}
-
-			if (PublisherComboBox.Items.Cast<PublishingHouse>().All(a => a.ToString() != PublisherComboBox.Text)) {
-				PublisherComboBox.Text = string.Empty;
-				MessageBox.Show("Wprowadzone wydawnictwo nie istnieje. Użyj opcji dodaj wydawnictwo.", "Info",
-					MessageBoxButton.OK, MessageBoxImage.Information);
-			}
-		}
-
-		private void SeriesCombobox_LostFocus(object sender, RoutedEventArgs e) {
-			if (SeriesCombobox.Text.IsNullOrEmpty()) {
-				return;
-			}
-
-			if (SeriesCombobox.Items.Cast<Series>().All(a => a.ToString() != SeriesCombobox.Text)) {
-				SeriesCombobox.Text = string.Empty;
-				MessageBox.Show("Wprowadzona seria nie istnieje. Użyj opcji dodaj serię.", "Info", MessageBoxButton.OK,
-					MessageBoxImage.Information);
-			}
-		}
-
-		private void StoragePlaceComboBox_LostFocus(object sender, RoutedEventArgs e) {
-			if (StoragePlaceComboBox.Text.IsNullOrEmpty()) {
-				return;
-			}
-
-			if (StoragePlaceComboBox.Items.Cast<StoragePlace>().All(a => a.ToString() != StoragePlaceComboBox.Text)) {
-				StoragePlaceComboBox.Text = string.Empty;
-				MessageBox.Show(
-					"Wprowadzone miejsce przechowywania nie istnieje. Użyj opcji dodaj miejsce przechowywania.", "Info",
-					MessageBoxButton.OK, MessageBoxImage.Information);
 			}
 		}
 	}

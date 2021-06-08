@@ -10,10 +10,9 @@ using System.Windows;
 using Athena.EventManagers;
 using Castle.Core.Internal;
 
-
 namespace Athena.Windows {
     public partial class BorrowedBooksListWindow {
-        public ObservableCollection<Borrowing> Borrowings { get; set; }
+        public ObservableCollection<BorrowingView> Borrowings { get; set; }
         public BorrowedBooksListWindow() {
             InitializeComponent();
             this.DataContext = this;
@@ -25,20 +24,23 @@ namespace Athena.Windows {
                 .Include(a => a.Book)
                 .ThenInclude(a => a.Authors)
                 .Load();
-            Borrowings = ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection();
+            Borrowings = Mapper.Instance.Map<ObservableCollection<BorrowingView>>(ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection());
             BorrowedBookList.ItemsSource = Borrowings;
+
             if (Borrowings.Count == 0) {
                 TextBlock.Visibility = Visibility.Visible;
-            } 
+            }
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
             Button button = (Button) sender;
-            Borrowing borrowing = (Borrowing) button.DataContext;
+            var borrowing = (BorrowingView) button.DataContext;
             Book book = borrowing.Book;
-            book.Borrowing.Add(borrowing);
+            book.Borrowing.Add(Mapper.Instance.Map<Borrowing>(borrowing));
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
+            returnWindow.BookReturned += (sender, e) => Borrowings.Single(b => b.Id == borrowing.Id).ReturnDate = e.Value.ReturnDate; 
+            returnWindow.BookReturned += (sender, e) => BorrowedBookList.ItemsSource = Borrowings;
             returnWindow.Show();
         }
     }

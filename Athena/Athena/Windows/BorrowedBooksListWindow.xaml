@@ -9,13 +9,14 @@
                        mc:Ignorable="d"
                        Title="Wypożyczone książki" MinHeight="300" SizeToContent="WidthAndHeight" 
                        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" 
-                       xmlns:converters="clr-namespace:Athena.Converters">
+                       xmlns:converters="clr-namespace:Athena.Converters" >
     <Window.Style>
         <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
     </Window.Style>
 
     <Window.Resources>
         <converters:NullVisibilityConverter x:Key="NullToVis" />
+        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisible"/>
     </Window.Resources>
 
     <Border Padding="10">
@@ -30,13 +31,12 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center" 
+            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center"
                       Width="Auto">
                 <ListView.Resources>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding IsMouseOver,RelativeSource={RelativeSource Self}}" 
-                         Value="True">
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"  Value="True">
                                 <Setter Property="IsSelected" Value="True" />
                             </DataTrigger>
                         </Style.Triggers>
@@ -65,16 +65,21 @@
                                         DisplayMemberBinding="{Binding Book.PublishingHouse.PublisherName}" />
                         <GridViewColumn Header="Rok wydania" Width="Auto"
                                         DisplayMemberBinding="{Binding Book.PublishmentYear}" />
-                        <GridViewColumn Header="Miejce Składowania" Width="Auto"
-                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" />
-                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" DisplayMemberBinding="{Binding }">
+                        <GridViewColumn Width="Auto"
+                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" >
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Miejsce"
+                                       ToolTip="Miejsce przechowywania książki"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock>
                                         <TextBlock.Text>
                                             <MultiBinding StringFormat="{}{0} {1}">
-                                                <Binding Path="Borrowing.FirstName" />
-                                                <Binding Path="Borrowing.LastName" />
+                                                <Binding Path="FirstName" />
+                                                <Binding Path="LastName" />
                                             </MultiBinding>
                                         </TextBlock.Text>
                                     </TextBlock>
@@ -97,7 +102,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="Hidden" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
+            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding Borrowings.Count, Converter={StaticResource ZeroToVisible}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
         </Grid>
 
     </Border>
