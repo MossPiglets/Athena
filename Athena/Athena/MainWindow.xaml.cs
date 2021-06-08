@@ -125,8 +125,14 @@ namespace Athena
             var messageBoxGenerator = new ConfirmBookDeleteMessageBox();
             var decision = messageBoxGenerator.Show();
             if (decision) {
-                var book = ApplicationDbContext.Instance.Books.Single(b
+                var book = ApplicationDbContext.Instance.Books
+                    .Include(a => a.Borrowing)
+                    .Single(b
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+                book.Borrowing = ApplicationDbContext.Instance.Borrowings
+                    .Include(a => a.Book)
+                    .Where(a => a.Book.Id == book.Id)
+                    .ToList();
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
                 SearchTextBox.Text = string.Empty;
@@ -206,6 +212,7 @@ namespace Athena
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
         }
+
     }
 }
 

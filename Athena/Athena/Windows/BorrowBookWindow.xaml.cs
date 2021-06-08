@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
+using Athena.EventManagers;
 using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;

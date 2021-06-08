@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Athena.Data.Borrowings;
@@ -6,6 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
+using Athena.EventManagers;
+using Castle.Core.Internal;
 
 namespace Athena.Windows {
     public partial class BorrowedBooksListWindow {
@@ -23,6 +26,10 @@ namespace Athena.Windows {
                 .Load();
             Borrowings = Mapper.Instance.Map<ObservableCollection<BorrowingView>>(ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection());
             BorrowedBookList.ItemsSource = Borrowings;
+
+            if (Borrowings.Count == 0) {
+                TextBlock.Visibility = Visibility.Visible;
+            }
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
