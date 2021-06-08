@@ -85,7 +85,9 @@ namespace Athena {
 
 
 		private void AddSeries_Click(object sender, RoutedEventArgs e) {
-			new AddSeriesWindow().Show();
+			var addSeriesWindow = new AddSeriesWindow();
+			addSeriesWindow.SeriesAdded += (_, e) => SeriesList.Add(e.Entity);
+			addSeriesWindow.Show();
 		}
 
 		private void AddAuthor_Click(object sender, RoutedEventArgs e) {
