@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.PublishingHouses;
+using Athena.EventManagers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena.Windows {
@@ -27,9 +29,15 @@ namespace Athena.Windows {
         }
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
             if (!ApplicationDbContext.Instance.PublishingHouses.Any(s => s.PublisherName.ToLower() == PublisherNameTextBox.Text.ToLower())) {
-                ApplicationDbContext.Instance.Entry(new PublishingHouse() {PublisherName = PublisherNameTextBox.Text, Id = Guid.NewGuid()})
+                var publisher = new PublishingHouse()
+                {
+                    PublisherName = PublisherNameTextBox.Text,
+                    Id = Guid.NewGuid()
+                };
+                ApplicationDbContext.Instance.Entry(publisher)
                     .State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
+                PublisherAdded?.Invoke(this, new EntityAddedEventArgs<PublishingHouse> { Entity = publisher });
                 this.Close();
             }
             else {
@@ -40,5 +48,6 @@ namespace Athena.Windows {
         private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = !Validation.GetHasError(PublisherNameTextBox);
         }
+        public event EventHandler<EntityAddedEventArgs<PublishingHouse>> PublisherAdded;
     }
 }

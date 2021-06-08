@@ -1,32 +1,20 @@
+using Athena.Data.Books;
+using Athena.Data.CategoriesFolder;
+using Athena.Import;
 using Athena.Windows;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Athena.Data.Books;
-using Athena.Import;
-using Athena.Windows;
-using Castle.Core.Internal;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Win32;
-using Athena.Data.CategoriesFolder;
-using System.Collections.ObjectModel;
-using Athena.Data.Books;
-using System.Linq;
-using System;
-using System.Collections.Specialized;
 using System.Windows.Input;
 using System.Windows.Controls;
-using AdonisUI.Controls;
-using Athena.EventManagers;
-using MessageBox = AdonisUI.Controls.MessageBox;
-using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
-using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
-using MessageBoxResult = AdonisUI.Controls.MessageBoxResult;
 
-namespace Athena {
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -116,7 +104,13 @@ namespace Athena {
         }
 
         private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
-            Book book = ApplicationDbContext.Instance.Books.Single(b
+            Book book = ApplicationDbContext.Instance.Books
+                .Include(a => a.Categories)
+                .Include(b => b.Series)
+                .Include(b => b.PublishingHouse)
+                .Include(b => b.StoragePlace)
+                .Include(b => b.Authors)
+                .Single(b
                 => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.BookEdited += (o, e) => {
@@ -187,7 +181,7 @@ namespace Athena {
             dataImporter.ImportFromSpreadsheet(fileName);
         }
 
-        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
             var text = SearchTextBox.Text;
             if (text.Length == 0)
                 BookList.ItemsSource = Books;
