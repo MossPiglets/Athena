@@ -1,25 +1,23 @@
+using Athena.Data.Books;
+using Athena.Data.CategoriesFolder;
+using Athena.Import;
 using Athena.Windows;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
-using Athena.Data.Books;
-using Athena.Import;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
-using Athena.Data.CategoriesFolder;
 using System.Windows.Input;
 using System.Windows.Controls;
-using AdonisUI.Controls;
-using MessageBox = AdonisUI.Controls.MessageBox;
-using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
-using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
-using MessageBoxResult = AdonisUI.Controls.MessageBoxResult;
 
-namespace Athena {
+namespace Athena
+{
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -181,7 +179,7 @@ namespace Athena {
             dataImporter.ImportFromSpreadsheet(fileName);
         }
 
-        private void SearchTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e) {
+        private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
             var text = SearchTextBox.Text;
             if (text.Length == 0)
                 BookList.ItemsSource = Books;
