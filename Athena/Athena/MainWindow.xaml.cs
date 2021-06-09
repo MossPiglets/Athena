@@ -161,7 +161,7 @@ namespace Athena
             if (fileName == "") {
                 return;
             }
-
+            MainGrid.Visibility = Visibility.Collapsed;
             BackgroundWorker worker = new BackgroundWorker { WorkerReportsProgress = true };
             ImportButton.Visibility = Visibility.Hidden;
             ImportText.Visibility = Visibility.Visible;
@@ -171,6 +171,7 @@ namespace Athena
             worker.RunWorkerCompleted += (o, args) => {
                 ImportText.Visibility = Visibility.Hidden;
                 ProgressBarStatus.Visibility = Visibility.Hidden;
+                MainGrid.Visibility = Visibility.Visible;
                 ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
