@@ -164,13 +164,11 @@ namespace Athena
             MainGrid.Visibility = Visibility.Collapsed;
             BackgroundWorker worker = new BackgroundWorker { WorkerReportsProgress = true };
             ImportButton.Visibility = Visibility.Hidden;
-            ImportText.Visibility = Visibility.Visible;
-            ProgressBarStatus.Visibility = Visibility.Visible;
+            ImportGrid.Visibility = Visibility.Visible;
             worker.DoWork += worker_DoWork;
             worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += (o, args) => {
-                ImportText.Visibility = Visibility.Hidden;
-                ProgressBarStatus.Visibility = Visibility.Hidden;
+                ImportGrid.Visibility = Visibility.Hidden;
                 MainGrid.Visibility = Visibility.Visible;
                 ResizeGridViewColumns(BooksGridView);
             };
