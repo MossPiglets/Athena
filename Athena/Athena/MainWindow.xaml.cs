@@ -177,17 +177,11 @@ namespace Athena {
                         if (answer) {
                             DataBaseRemove();
                         }
-
-                        ImportGrid.Visibility = Visibility.Hidden;
-                        MainGrid.Visibility = Visibility.Visible;
                         ImportButton.Visibility = Visibility.Visible;
                     }
                 }
-                else {
-                    ImportGrid.Visibility = Visibility.Hidden;
-                    MainGrid.Visibility = Visibility.Visible;
-                }
-
+                ImportGrid.Visibility = Visibility.Hidden;
+                MainGrid.Visibility = Visibility.Visible;
                 ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
