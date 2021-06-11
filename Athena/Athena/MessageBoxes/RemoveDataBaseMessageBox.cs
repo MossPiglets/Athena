@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using AdonisUI.Controls;
-using Athena.Data.Books;
 using MessageBox = AdonisUI.Controls.MessageBox;
-using MessageBoxButton = AdonisUI.Controls.MessageBoxButton;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
 using MessageBoxResult = AdonisUI.Controls.MessageBoxResult;
 
-namespace Athena
+namespace Athena.MessageBoxes
 {
-    public class ConfirmBookDeleteMessageBox
+    public class RemoveDataBaseMessageBox
     {
         public bool Show() {
             var messageBox = new MessageBoxModel {
-                Text = "Czy na pewno chcesz usunąć książkę?",
+                Text = "Baza danych już istnieje. Czy chcesz ją usunąć?",
                 Caption = "Info",
-                Icon = MessageBoxImage.Warning,
+                Icon = MessageBoxImage.Question,
                 Buttons = new [] {
                     MessageBoxButtons.Yes("Tak"),
                     MessageBoxButtons.No("Nie")

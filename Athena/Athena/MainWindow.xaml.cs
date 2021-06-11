@@ -12,6 +12,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Athena.MessageBoxes;
 
 namespace Athena
 {
@@ -184,7 +185,21 @@ namespace Athena
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
-            dataImporter.ImportFromSpreadsheet(fileName);
+            try { dataImporter.ImportFromSpreadsheet(fileName);}
+            catch (ImportException) {
+                var messageBox = new RemoveDataBaseMessageBox();
+                var answer = messageBox.Show();
+                if (answer) {
+                    ApplicationDbContext.Instance.Database.EnsureDeleted();
+
+                }
+                else {
+                    ImportButton.Visibility = Visibility.Visible;
+                    ImportText.Visibility = Visibility.Hidden;
+                    ProgressBarStatus.Visibility = Visibility.Hidden;
+                }
+            }
+            
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
