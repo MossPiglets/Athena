@@ -162,27 +162,15 @@ namespace Athena
             if (fileName == "") {
                 return;
             }
-
+            MainGrid.Visibility = Visibility.Collapsed;
             BackgroundWorker worker = new BackgroundWorker { WorkerReportsProgress = true };
             ImportButton.Visibility = Visibility.Hidden;
-            ImportText.Visibility = Visibility.Visible;
-            ProgressBarStatus.Visibility = Visibility.Visible;
+            ImportGrid.Visibility = Visibility.Visible;
             worker.DoWork += worker_DoWork;
             worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += (o, args) => {
-                if (args.Error.GetType() == typeof(ImportException)) {
-                    var messageBox = new RemoveDataBaseMessageBox();
-                    var answer = messageBox.Show();
-                    if (answer) {
-                        ApplicationDbContext.Instance.Database.EnsureDeleted();
-                        ApplicationDbContext.Instance.Database.EnsureCreated();
-                    }
-                    else {
-                        
-                    }
-                }
-                ImportText.Visibility = Visibility.Hidden;
-                ProgressBarStatus.Visibility = Visibility.Hidden;
+                ImportGrid.Visibility = Visibility.Hidden;
+                MainGrid.Visibility = Visibility.Visible;
                 ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
@@ -196,7 +184,21 @@ namespace Athena
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
             var fileName = (string) e.Argument;
             var dataImporter = new DatabaseImporter();
-            dataImporter.ImportFromSpreadsheet(fileName);
+            try { dataImporter.ImportFromSpreadsheet(fileName);}
+            catch (ImportException) {
+                var messageBox = new RemoveDataBaseMessageBox();
+                var answer = messageBox.Show();
+                if (answer) {
+                    ApplicationDbContext.Instance.Database.EnsureDeleted();
+
+                }
+                else {
+                    ImportButton.Visibility = Visibility.Visible;
+                    ImportText.Visibility = Visibility.Hidden;
+                    ProgressBarStatus.Visibility = Visibility.Hidden;
+                }
+            }
+            
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
