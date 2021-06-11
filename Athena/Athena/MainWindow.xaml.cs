@@ -175,7 +175,7 @@ namespace Athena {
                         var messageBox = new RemoveDataBaseMessageBox();
                         var answer = messageBox.Show();
                         if (answer) {
-                            DataBaseRemove();
+                            ResetDatabase();
                         }
                         ImportButton.Visibility = Visibility.Visible;
                     }
@@ -187,7 +187,7 @@ namespace Athena {
             worker.RunWorkerAsync(argument: fileName);
         }
 
-        private void DataBaseRemove() {
+        private void ResetDatabase() {
             ApplicationDbContext.Instance.Database.EnsureDeleted();
             ApplicationDbContext.Instance.Database.EnsureCreated();
         }
