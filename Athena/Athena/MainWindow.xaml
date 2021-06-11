@@ -90,7 +90,7 @@
 			</ListView>
             <Button Name ="ImportButton"  Content="Importuj" Click="ImportData" Visibility="{Binding Path=Books, Converter={StaticResource EmptyListVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         </Grid>
-        <Grid x:Name="ImportGrid" VerticalAlignment="Center" Visibility="Collapsed">
+        <Grid x:Name="ImportGrid" VerticalAlignment="Center" Visibility="Collapsed" MinWidth="400">
             <Grid.RowDefinitions>
                 <RowDefinition Height = "auto"/>
                 <RowDefinition Height = "auto"/>

@@ -12,9 +12,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Athena.MessageBoxes;
 
-namespace Athena
-{
+namespace Athena {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -91,6 +91,7 @@ namespace Athena
             if (BookList.SelectedItem == null) {
                 return;
             }
+
             var borrowings = ApplicationDbContext.Instance.Borrowings
                 .Include(b => b.Book)
                 .Where(b => b.Book.Id == ((BookInListView) BookList.SelectedItem).Id)
@@ -111,7 +112,7 @@ namespace Athena
                 .Include(b => b.StoragePlace)
                 .Include(b => b.Authors)
                 .Single(b
-                => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+                    => b.Id == ((BookInListView) BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.BookEdited += (o, e) => {
                 var book = Books.First(a => a.Id == e.Entity.Id);
@@ -128,7 +129,7 @@ namespace Athena
                 var book = ApplicationDbContext.Instance.Books
                     .Include(a => a.Borrowing)
                     .Single(b
-                    => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+                        => b.Id == ((BookInListView) BookList.SelectedItem).Id);
                 book.Borrowing = ApplicationDbContext.Instance.Borrowings
                     .Include(a => a.Book)
                     .Where(a => a.Book.Id == book.Id)
@@ -161,18 +162,34 @@ namespace Athena
             if (fileName == "") {
                 return;
             }
+
             MainGrid.Visibility = Visibility.Collapsed;
-            BackgroundWorker worker = new BackgroundWorker { WorkerReportsProgress = true };
+            BackgroundWorker worker = new BackgroundWorker {WorkerReportsProgress = true};
             ImportButton.Visibility = Visibility.Hidden;
             ImportGrid.Visibility = Visibility.Visible;
             worker.DoWork += worker_DoWork;
             worker.ProgressChanged += worker_ProgressChanged;
             worker.RunWorkerCompleted += (o, args) => {
+                if (args.Result != null) {
+                    if (args.Result.GetType() == typeof(ImportException)) {
+                        var messageBox = new RemoveDataBaseMessageBox();
+                        var answer = messageBox.Show();
+                        if (answer) {
+                            ResetDatabase();
+                        }
+                        ImportButton.Visibility = Visibility.Visible;
+                    }
+                }
                 ImportGrid.Visibility = Visibility.Hidden;
                 MainGrid.Visibility = Visibility.Visible;
                 ResizeGridViewColumns(BooksGridView);
             };
             worker.RunWorkerAsync(argument: fileName);
+        }
+
+        private void ResetDatabase() {
+            ApplicationDbContext.Instance.Database.EnsureDeleted();
+            ApplicationDbContext.Instance.Database.EnsureCreated();
         }
 
 
@@ -182,8 +199,13 @@ namespace Athena
 
         private void worker_DoWork(object sender, DoWorkEventArgs e) {
             var fileName = (string) e.Argument;
-            var dataImporter = new DatabaseImporter();
-            dataImporter.ImportFromSpreadsheet(fileName);
+            try {
+                var dataImporter = new DatabaseImporter();
+                dataImporter.ImportFromSpreadsheet(fileName);
+            }
+            catch (ImportException exception) {
+                e.Result = exception;
+            }
         }
 
         private void SearchTextBox_TextChanged(object sender, TextChangedEventArgs e) {
@@ -211,7 +233,5 @@ namespace Athena
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
         }
-
     }
 }
-
