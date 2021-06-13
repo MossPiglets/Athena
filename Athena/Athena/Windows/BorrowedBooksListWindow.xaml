@@ -7,7 +7,7 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Wypożyczone książki" MinHeight="300" SizeToContent="WidthAndHeight" 
+                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight"
                        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" 
                        xmlns:converters="clr-namespace:Athena.Converters" >
     <Window.Style>
@@ -20,7 +20,6 @@
     </Window.Resources>
 
     <Border Padding="10">
-        
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
@@ -32,7 +31,7 @@
             </Grid.ColumnDefinitions>
 
             <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center"
-                      Width="Auto">
+                     Width="Auto" MaxHeight="600" >
                 <ListView.Resources>
                     <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
                         <Style.Triggers>
