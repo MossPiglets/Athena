@@ -7,7 +7,7 @@
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
                        mc:Ignorable="d"
-                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight"
+                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight" MinHeight="300"
                        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" 
                        xmlns:converters="clr-namespace:Athena.Converters" >
     <Window.Style>
