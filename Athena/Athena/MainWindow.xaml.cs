@@ -12,7 +12,10 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Athena.Data;
 using Athena.MessageBoxes;
+using Athena.Resources;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Athena {
     /// <summary>
@@ -232,6 +235,22 @@ namespace Athena {
             Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.Show();
+        }
+
+        private void RemoveDatabase_OnClick(object sender, RoutedEventArgs e) {
+            var firstWarningMessageBox = new RemoveDataBaseMessageBox();
+            var decision = firstWarningMessageBox.Show();
+            if (decision) {
+                var secondWarningMessageBox = new RemoveDatabaseWithBooksMessageBox();
+                var lastDecision = secondWarningMessageBox.Show();
+                if (lastDecision) {
+                    ResetDatabase();
+                    Books.Clear();
+                    ImportButton.Visibility = Visibility.Visible;
+                    ApplicationDbContext.Instance.Entry(ApplicationDbContext.Instance.Categories).State = EntityState.Detached;
+
+                }
+            }
         }
     }
 }

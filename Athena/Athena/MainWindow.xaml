@@ -42,6 +42,7 @@
                     <MenuItem Header="Dodaj nową książkę" Click="AddBook_Click" />
                     <MenuItem Header="Lista wypożyczonych książek" Click="OpenBorrowedBookList_Click"/>
                     <Separator />
+                    <MenuItem Header="Usuń bazę danych" Click="RemoveDatabase_OnClick" />
                     <MenuItem Header="Zamknij" Click="MenuItem_Click"/>
                 </MenuItem>
             </Menu>
