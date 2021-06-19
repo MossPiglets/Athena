@@ -191,6 +191,7 @@ namespace Athena {
         }
 
         private void ResetDatabase() {
+            ApplicationDbContext.Instance.ChangeTracker.Clear();
             ApplicationDbContext.Instance.Database.EnsureDeleted();
             ApplicationDbContext.Instance.Database.EnsureCreated();
         }
@@ -247,7 +248,7 @@ namespace Athena {
                     ResetDatabase();
                     Books.Clear();
                     ImportButton.Visibility = Visibility.Visible;
-                    ApplicationDbContext.Instance.Entry(ApplicationDbContext.Instance.Categories).State = EntityState.Detached;
+                    //ApplicationDbContext.Instance.Entry(ApplicationDbContext.Instance.Categories).State = EntityState.Detached;
 
                 }
             }
