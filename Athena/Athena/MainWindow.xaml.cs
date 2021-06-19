@@ -229,9 +229,11 @@ namespace Athena {
         }
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
-            EditBookWindow editBook = new EditBookWindow(book);
-            editBook.Show();
+            if (BookList.SelectedItem != null){
+                Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
+                EditBookWindow editBook = new EditBookWindow(book);
+                editBook.Show();
+            }
         }
     }
 }
