@@ -12,10 +12,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Athena.Data;
 using Athena.MessageBoxes;
-using Athena.Resources;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Athena {
     /// <summary>
@@ -248,8 +245,6 @@ namespace Athena {
                     ResetDatabase();
                     Books.Clear();
                     ImportButton.Visibility = Visibility.Visible;
-                    //ApplicationDbContext.Instance.Entry(ApplicationDbContext.Instance.Categories).State = EntityState.Detached;
-
                 }
             }
         }

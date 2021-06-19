@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using AdonisUI.Controls;
 using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
@@ -27,7 +25,6 @@ namespace Athena.MessageBoxes
             buttons[1].IsDefault = true;
             MessageBox.Show(messageBox);
             
-
             switch (messageBox.Result) {
                 case MessageBoxResult.No:
                     return false;
