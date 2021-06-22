@@ -188,6 +188,7 @@ namespace Athena {
         }
 
         private void ResetDatabase() {
+            ApplicationDbContext.Instance.ChangeTracker.Clear();
             ApplicationDbContext.Instance.Database.EnsureDeleted();
             ApplicationDbContext.Instance.Database.EnsureCreated();
         }
@@ -233,6 +234,20 @@ namespace Athena {
                 Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
                 EditBookWindow editBook = new EditBookWindow(book);
                 editBook.Show();
+            }
+        }
+
+        private void RemoveDatabase_OnClick(object sender, RoutedEventArgs e) {
+            var firstWarningMessageBox = new RemoveDataBaseMessageBox();
+            var decision = firstWarningMessageBox.Show();
+            if (decision) {
+                var secondWarningMessageBox = new RemoveDatabaseWithBooksMessageBox();
+                var lastDecision = secondWarningMessageBox.Show();
+                if (lastDecision) {
+                    ResetDatabase();
+                    Books.Clear();
+                    ImportButton.Visibility = Visibility.Visible;
+                }
             }
         }
     }
