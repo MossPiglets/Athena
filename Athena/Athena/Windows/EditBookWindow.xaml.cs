@@ -15,16 +15,16 @@ namespace Athena.Windows {
             bookControl.ConfirmButton.Click += (sender, args) => {
                 var bookView = bookControl.BookView;
                 Book book = Mapper.Instance.Map<Book>(bookView);
-                BookEdited?.Invoke(this, new EntityAddedEventArgs<Book>{Entity = book});
+                BookEdited?.Invoke(this, new EntityEventArgs<Book>{Entity = book});
             };
             Content = bookControl;
 
         }
 
-        public event EventHandler<EntityAddedEventArgs<Book>> BookEdited;
+        public event EventHandler<EntityEventArgs<Book>> BookEdited;
 
         public void BookEditedInvoke(Book book) {
-            BookEdited?.Invoke(this, new EntityAddedEventArgs<Book>{Entity = book});
+            BookEdited?.Invoke(this, new EntityEventArgs<Book>{Entity = book});
         }
     }
 

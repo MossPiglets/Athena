@@ -37,7 +37,7 @@ namespace Athena.Windows {
                 ApplicationDbContext.Instance.Entry(publisher)
                     .State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
-                PublisherAdded?.Invoke(this, new EntityAddedEventArgs<PublishingHouse> { Entity = publisher });
+                PublisherAdded?.Invoke(this, new EntityEventArgs<PublishingHouse> { Entity = publisher });
                 this.Close();
             }
             else {
@@ -48,6 +48,6 @@ namespace Athena.Windows {
         private void Save_CanExecute(object sender, CanExecuteRoutedEventArgs e) {
             e.CanExecute = !Validation.GetHasError(PublisherNameTextBox);
         }
-        public event EventHandler<EntityAddedEventArgs<PublishingHouse>> PublisherAdded;
+        public event EventHandler<EntityEventArgs<PublishingHouse>> PublisherAdded;
     }
 }

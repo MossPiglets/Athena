@@ -23,7 +23,7 @@ namespace Athena.Windows
                 
                 ApplicationDbContext.Instance.Entry(new Series { SeriesName = SeriesNameTextBox.Text, Id = Guid.NewGuid() }).State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
-                SeriesAdded?.Invoke(this, new EntityAddedEventArgs<Series> { Entity = series});
+                SeriesAdded?.Invoke(this, new EntityEventArgs<Series> { Entity = series});
                 this.Close();
             }
             else {
@@ -35,7 +35,7 @@ namespace Athena.Windows
             e.CanExecute = !Validation.GetHasError(SeriesNameTextBox);
         }
 
-        public event EventHandler<EntityAddedEventArgs<Series>> SeriesAdded;
+        public event EventHandler<EntityEventArgs<Series>> SeriesAdded;
 
     }
 }
