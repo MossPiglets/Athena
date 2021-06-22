@@ -26,7 +26,7 @@ namespace Athena.Windows
                 };
                 ApplicationDbContext.Instance.Entry(author).State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
-                AuthorAdded?.Invoke(this, new EntityAddedEventArgs<Author>{Entity = author});
+                AuthorAdded?.Invoke(this, new EntityEventArgs<Author>{Entity = author});
                 this.Close();
             }
             else
@@ -39,6 +39,6 @@ namespace Athena.Windows
             e.CanExecute = !Validation.GetHasError(AuthorLastNameTextBox);
         }
 
-        public event EventHandler<EntityAddedEventArgs<Author>> AuthorAdded;
+        public event EventHandler<EntityEventArgs<Author>> AuthorAdded;
     }
 }

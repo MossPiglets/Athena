@@ -22,7 +22,7 @@ namespace Athena.Windows
                     { StoragePlaceName = StoragePlaceTextBox.Text, Id = Guid.NewGuid() };
                 ApplicationDbContext.Instance.Entry(storagePlace).State = EntityState.Added;
                 ApplicationDbContext.Instance.SaveChanges();
-                StoragePlaceAdded?.Invoke(this, new EntityAddedEventArgs<StoragePlace> {Entity = storagePlace});
+                StoragePlaceAdded?.Invoke(this, new EntityEventArgs<StoragePlace> {Entity = storagePlace});
 
                 this.Close();
             }
@@ -37,6 +37,6 @@ namespace Athena.Windows
             e.CanExecute = !Validation.GetHasError(StoragePlaceTextBox);
         }
 
-        public event EventHandler<EntityAddedEventArgs<StoragePlace>> StoragePlaceAdded;
+        public event EventHandler<EntityEventArgs<StoragePlace>> StoragePlaceAdded;
     }
 }
