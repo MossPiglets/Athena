@@ -105,7 +105,7 @@ namespace Athena {
             }
         }
 
-        private async void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             Book book = ApplicationDbContext.Instance.Books
                 .Include(a => a.Categories)
                 .Include(b => b.Series)
@@ -119,6 +119,7 @@ namespace Athena {
                 var book = Books.First(a => a.Id == e.Entity.Id);
                 Mapper.Instance.Map(e.Entity, book);
             };
+
             editBook.Show();
         }
 
