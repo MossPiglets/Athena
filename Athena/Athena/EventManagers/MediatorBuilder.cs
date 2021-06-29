@@ -10,12 +10,9 @@ using System.Reflection;
 using global::Autofac;
 using MediatR.Extensions.Autofac.DependencyInjection;
 
-namespace Athena.EventManagers
-{
-    class MediatorBuilder
-    {
-        public static IMediator Build()
-        {
+namespace Athena.EventManagers {
+    class MediatorBuilder {
+        public static IMediator Build() {
             var builder = new ContainerBuilder();
             // this will add all your Request- and Notificationhandler
             // that are located in the same project as your program-class
