@@ -12,7 +12,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Athena.EventManagers;
 using Athena.MessageBoxes;
+using Hub = MessageHub.MessageHub;
 
 namespace Athena {
     /// <summary>
@@ -123,6 +125,7 @@ namespace Athena {
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
+            var hub = Hub.Instance;
             var messageBoxGenerator = new ConfirmBookDeleteMessageBox();
             var decision = messageBoxGenerator.Show();
             if (decision) {
@@ -136,6 +139,7 @@ namespace Athena {
                     .ToList();
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
+                hub.Publish(new EntityEventArgs<Book>{Entity = book});
                 SearchTextBox.Text = string.Empty;
             }
         }

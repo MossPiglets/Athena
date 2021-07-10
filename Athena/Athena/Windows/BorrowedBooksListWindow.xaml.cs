@@ -34,6 +34,8 @@ namespace Athena.Windows {
             var hub = Hub.Instance;
             var token = hub
                 .Subscribe<EntityEventArgs<Borrowing>>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Entity)));
+            var bookRemoved = hub
+                .Subscribe<EntityEventArgs<Book>>(e => Borrowings.Remove(Borrowings.First(a => a.Book.Id == e.Entity.Id)));
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
