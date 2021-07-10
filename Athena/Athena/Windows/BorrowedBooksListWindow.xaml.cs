@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Athena.Data.Borrowings;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +6,6 @@ using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
 using Athena.EventManagers;
-using Castle.Core.Internal;
 using Hub = MessageHub.MessageHub;
 
 namespace Athena.Windows {
@@ -32,10 +29,17 @@ namespace Athena.Windows {
                 TextBlock.Visibility = Visibility.Visible;
             }
             var hub = Hub.Instance;
-            var token = hub
+            var bookBorrowed = hub
                 .Subscribe<EntityEventArgs<Borrowing>>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Entity)));
-            var bookRemoved = hub
-                .Subscribe<EntityEventArgs<Book>>(e => Borrowings.Remove(Borrowings.First(a => a.Book.Id == e.Entity.Id)));
+            var bookRemoved = hub.Subscribe<EntityEventArgs<Book>>(RemoveBookFromList);
+            var bookEdited = hub.Subscribe<EntityEventArgs<BookView>>(EditBookOnList);
+        }
+
+        private void EditBookOnList(EntityEventArgs<BookView> e) {
+            var book = Borrowings.FirstOrDefault(a => a.Book.Id == e.Entity.Id);
+            if (book != null) {
+                book.Book = Mapper.Instance.Map<Book>(e.Entity);
+            }
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
@@ -48,6 +52,13 @@ namespace Athena.Windows {
             returnWindow.BookReturned += (sender, e) => Borrowings.Single(b => b.Id == borrowing.Id).ReturnDate = e.Value.ReturnDate; 
             returnWindow.BookReturned += (sender, e) => BorrowedBookList.ItemsSource = Borrowings;
             returnWindow.Show();
+        }
+
+        private void RemoveBookFromList(EntityEventArgs<Book> e) {
+            var book = Borrowings.FirstOrDefault(a => a.Book.Id == e.Entity.Id);
+            if (book != null) {
+                Borrowings.Remove(book);
+            }
         }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
 using Athena.EventManagers;
-using Athena.Windows;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 using Hub = MessageHub.MessageHub;
