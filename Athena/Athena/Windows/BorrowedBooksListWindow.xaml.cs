@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows;
 using Athena.EventManagers;
 using Castle.Core.Internal;
+using Hub = MessageHub.MessageHub;
 
 namespace Athena.Windows {
     public partial class BorrowedBooksListWindow {
@@ -30,6 +31,9 @@ namespace Athena.Windows {
             if (Borrowings.Count == 0) {
                 TextBlock.Visibility = Visibility.Visible;
             }
+            var hub = Hub.Instance;
+            var token = hub
+                .Subscribe<EntityEventArgs<Borrowing>>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Entity)));
         }
 
         private void OpenReturnWindow_Click(object sender, System.Windows.RoutedEventArgs e) {
