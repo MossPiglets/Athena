@@ -69,8 +69,7 @@ namespace Athena {
                 }
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
-            var hub = Hub.Instance;
-            hub.Subscribe<BorrowBookMessage>(RefreshBorrowedBook);
+            Hub.Instance.Subscribe<BorrowBookMessage>(RefreshBorrowedBook);
         }
 
         private void RefreshBorrowedBook(BorrowBookMessage e) {
@@ -131,7 +130,6 @@ namespace Athena {
         }
 
         private void MenuItemDelete_Click(object sender, System.Windows.RoutedEventArgs e) {
-            var hub = Hub.Instance;
             var messageBoxGenerator = new ConfirmBookDeleteMessageBox();
             var decision = messageBoxGenerator.Show();
             if (decision) {
@@ -145,7 +143,7 @@ namespace Athena {
                     .ToList();
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
-                hub.Publish(new RemoveBookMessage(){Book = book});
+                Hub.Instance.Publish(new RemoveBookMessage(){Book = book});
                 SearchTextBox.Text = string.Empty;
             }
         }

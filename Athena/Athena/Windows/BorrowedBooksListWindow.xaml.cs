@@ -29,10 +29,9 @@ namespace Athena.Windows {
             if (Borrowings.Count == 0) {
                 TextBlock.Visibility = Visibility.Visible;
             }
-            var hub = Hub.Instance;
-            hub.Subscribe<BorrowBookMessage>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Borrowing)));
-            hub.Subscribe<RemoveBookMessage>(RemoveBookFromList);
-            hub.Subscribe<EditBookMessage>(EditBookOnList);
+            Hub.Instance.Subscribe<BorrowBookMessage>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Borrowing)));
+            Hub.Instance.Subscribe<RemoveBookMessage>(RemoveBookFromList);
+            Hub.Instance.Subscribe<EditBookMessage>(EditBookOnList);
         }
 
         private void EditBookOnList(EditBookMessage e) {

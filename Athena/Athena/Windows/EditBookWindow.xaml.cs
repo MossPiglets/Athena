@@ -18,8 +18,7 @@ namespace Athena.Windows {
                 var bookView = bookControl.BookView;
                 Book book = Mapper.Instance.Map<Book>(bookView);
                 BookEdited?.Invoke(this, new EntityEventArgs<Book>{Entity = book});
-                var hub = Hub.Instance;
-                hub.Publish(new EditBookMessage{BookView = bookView});
+                Hub.Instance.Publish(new EditBookMessage{BookView = bookView});
             };
             Content = bookControl;
 

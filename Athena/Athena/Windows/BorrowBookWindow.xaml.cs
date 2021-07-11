@@ -55,13 +55,12 @@ namespace Athena {
         }
 
         private void Save_Executed(object sender, ExecutedRoutedEventArgs e) {
-            var hub = Hub.Instance;
             BorrowingView.Id = Guid.NewGuid();
             BorrowingView.BorrowDate = Calendar.SelectedDate.Value;
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
             ApplicationDbContext.Instance.Entry(borrowing).State = EntityState.Added;
             ApplicationDbContext.Instance.SaveChanges();
-            hub.Publish(new BorrowBookMessage{Borrowing = borrowing});
+            Hub.Instance.Publish(new BorrowBookMessage{Borrowing = borrowing});
             this.Close();
         }
     }
