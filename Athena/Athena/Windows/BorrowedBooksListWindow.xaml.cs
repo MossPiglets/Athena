@@ -6,6 +6,7 @@ using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
 using Athena.EventManagers;
+using Athena.Messages;
 using Hub = MessageHub.MessageHub;
 
 namespace Athena.Windows {
@@ -29,16 +30,15 @@ namespace Athena.Windows {
                 TextBlock.Visibility = Visibility.Visible;
             }
             var hub = Hub.Instance;
-            var bookBorrowed = hub
-                .Subscribe<EntityEventArgs<Borrowing>>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Entity)));
-            var bookRemoved = hub.Subscribe<EntityEventArgs<Book>>(RemoveBookFromList);
-            var bookEdited = hub.Subscribe<EntityEventArgs<BookView>>(EditBookOnList);
+            hub.Subscribe<BorrowBookMessage>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Borrowing)));
+            hub.Subscribe<RemoveBookMessage>(RemoveBookFromList);
+            hub.Subscribe<EditBookMessage>(EditBookOnList);
         }
 
-        private void EditBookOnList(EntityEventArgs<BookView> e) {
-            var book = Borrowings.FirstOrDefault(a => a.Book.Id == e.Entity.Id);
+        private void EditBookOnList(EditBookMessage e) {
+            var book = Borrowings.FirstOrDefault(a => a.Book.Id == e.BookView.Id);
             if (book != null) {
-                book.Book = Mapper.Instance.Map<Book>(e.Entity);
+                book.Book = Mapper.Instance.Map<Book>(e.BookView);
             }
         }
 
@@ -54,8 +54,8 @@ namespace Athena.Windows {
             returnWindow.Show();
         }
 
-        private void RemoveBookFromList(EntityEventArgs<Book> e) {
-            var book = Borrowings.FirstOrDefault(a => a.Book.Id == e.Entity.Id);
+        private void RemoveBookFromList(RemoveBookMessage e) {
+            var book = Borrowings.FirstOrDefault(a => a.Book.Id == e.Book.Id);
             if (book != null) {
                 Borrowings.Remove(book);
             }

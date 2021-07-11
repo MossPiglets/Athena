@@ -6,6 +6,7 @@ using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
 using Athena.EventManagers;
+using Athena.Messages;
 using Castle.Core.Internal;
 using Microsoft.EntityFrameworkCore;
 using Hub = MessageHub.MessageHub;
@@ -60,7 +61,7 @@ namespace Athena {
             var borrowing = Mapper.Instance.Map<Borrowing>(BorrowingView);
             ApplicationDbContext.Instance.Entry(borrowing).State = EntityState.Added;
             ApplicationDbContext.Instance.SaveChanges();
-            hub.Publish(new EntityEventArgs<Borrowing>{Entity = borrowing});
+            hub.Publish(new BorrowBookMessage{Borrowing = borrowing});
             this.Close();
         }
     }

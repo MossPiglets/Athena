@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using Athena.EventManagers;
 using Athena.MessageBoxes;
+using Athena.Messages;
 using Hub = MessageHub.MessageHub;
 
 namespace Athena {
@@ -139,7 +140,7 @@ namespace Athena {
                     .ToList();
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
-                hub.Publish(new EntityEventArgs<Book>{Entity = book});
+                hub.Publish(new RemoveBookMessage(){Book = book});
                 SearchTextBox.Text = string.Empty;
             }
         }

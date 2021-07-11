@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.EventManagers;
+using Athena.Messages;
 using Microsoft.EntityFrameworkCore;
 using Hub = MessageHub.MessageHub;
 
@@ -18,7 +19,7 @@ namespace Athena.Windows {
                 Book book = Mapper.Instance.Map<Book>(bookView);
                 BookEdited?.Invoke(this, new EntityEventArgs<Book>{Entity = book});
                 var hub = Hub.Instance;
-                hub.Publish<EntityEventArgs<BookView>>(new EntityEventArgs<BookView>{Entity = bookView});
+                hub.Publish(new EditBookMessage{BookView = bookView});
             };
             Content = bookControl;
 
