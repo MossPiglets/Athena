@@ -33,8 +33,9 @@ namespace Athena {
                 .Include(b => b.StoragePlace)
                 .Include(b => b.Authors)
                 .Include(b => b.Categories)
-                .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
+                .Include(b => b.Borrowings.OrderByDescending(b => b.BorrowDate))
                 .Load();
+           
             Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local
                 .ToObservableCollection());
 
@@ -68,6 +69,13 @@ namespace Athena {
                 }
             };
             this.Closed += (sender, args) => Application.Current.Shutdown();
+            var hub = Hub.Instance;
+            hub.Subscribe<BorrowBookMessage>(RefreshBorrowedBook);
+        }
+
+        private void RefreshBorrowedBook(BorrowBookMessage e) {
+            var bookInListView = Books.First(a => a.Id == e.Borrowing.Book.Id);
+            bookInListView.Borrowings.Add(e.Borrowing);
         }
 
         public static RoutedUICommand MenuItemBorrow_Click =
@@ -95,10 +103,7 @@ namespace Athena {
                 return;
             }
 
-            var borrowings = ApplicationDbContext.Instance.Borrowings
-                .Include(b => b.Book)
-                .Where(b => b.Book.Id == ((BookInListView) BookList.SelectedItem).Id)
-                .ToList();
+            var borrowings = ((BookInListView) BookList.SelectedItem).Borrowings;
             if (borrowings.Any(b => b.ReturnDate == null)) {
                 e.CanExecute = false;
             }
@@ -131,10 +136,10 @@ namespace Athena {
             var decision = messageBoxGenerator.Show();
             if (decision) {
                 var book = ApplicationDbContext.Instance.Books
-                    .Include(a => a.Borrowing)
+                    .Include(a => a.Borrowings)
                     .Single(b
                         => b.Id == ((BookInListView) BookList.SelectedItem).Id);
-                book.Borrowing = ApplicationDbContext.Instance.Borrowings
+                book.Borrowings = ApplicationDbContext.Instance.Borrowings
                     .Include(a => a.Book)
                     .Where(a => a.Book.Id == book.Id)
                     .ToList();
