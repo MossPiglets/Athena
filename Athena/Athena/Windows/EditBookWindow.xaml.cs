@@ -23,9 +23,6 @@ namespace Athena.Windows {
 
         public event EventHandler<EntityEventArgs<Book>> BookEdited;
 
-        public void BookEditedInvoke(Book book) {
-            BookEdited?.Invoke(this, new EntityEventArgs<Book>{Entity = book});
-        }
     }
 
     public class EditBookCommand : ICommand {
