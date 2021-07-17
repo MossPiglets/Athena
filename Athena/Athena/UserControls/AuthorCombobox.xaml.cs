@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Athena.Data;
@@ -14,8 +15,7 @@ namespace Athena {
 
         public AuthorAdding() {
             InitializeComponent();
-            ApplicationDbContext.Instance.Authors.Load();
-            Authors = ApplicationDbContext.Instance.Authors.Local.ToObservableCollection();
+            Authors = new ObservableCollection<Author>(ApplicationDbContext.Instance.Authors.AsNoTracking().ToList());
         }
 
 

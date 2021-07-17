@@ -24,16 +24,15 @@ namespace Athena {
         public MainWindow() {
             InitializeComponent();
             this.DataContext = this;
-            ApplicationDbContext.Instance.Books
+            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books
                 .Include(b => b.Series)
                 .Include(b => b.PublishingHouse)
                 .Include(b => b.StoragePlace)
                 .Include(b => b.Authors)
                 .Include(b => b.Categories)
                 .Include(b => b.Borrowing.OrderByDescending(b => b.BorrowDate))
-                .Load();
-            Books = Mapper.Instance.Map<ObservableCollection<BookInListView>>(ApplicationDbContext.Instance.Books.Local
-                .ToObservableCollection());
+                .AsNoTracking().ToList()
+                );
 
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
                 if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified) {
@@ -104,17 +103,24 @@ namespace Athena {
             }
         }
 
-        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
+        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            ShowEditBookWindow();
+        }
+
+        private void ShowEditBookWindow()
+        {
             Book book = ApplicationDbContext.Instance.Books
-                .Include(a => a.Categories)
-                .Include(b => b.Series)
-                .Include(b => b.PublishingHouse)
-                .Include(b => b.StoragePlace)
-                .Include(b => b.Authors)
-                .Single(b
-                    => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+                            .Include(a => a.Categories)
+                            .Include(b => b.Series)
+                            .Include(b => b.PublishingHouse)
+                            .Include(b => b.StoragePlace)
+                            .Include(b => b.Authors)
+                            .Single(b
+                                => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
-            editBook.BookEdited += (o, e) => {
+            editBook.BookEdited += (o, e) =>
+            {
                 var book = Books.First(a => a.Id == e.Entity.Id);
                 Mapper.Instance.Map(e.Entity, book);
             };
@@ -231,9 +237,7 @@ namespace Athena {
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
             if (BookList.SelectedItem != null){
-                Book book = Mapper.Instance.Map<Book>(BookList.SelectedItem);
-                EditBookWindow editBook = new EditBookWindow(book);
-                editBook.Show();
+                ShowEditBookWindow();
             }
         }
 
