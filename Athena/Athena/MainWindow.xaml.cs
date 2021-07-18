@@ -117,14 +117,7 @@ namespace Athena {
                 .Single(b
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
 
-            var authorsWithoutDubles = new List<Author>();
-            foreach (var bookAuthor in book.Authors) {
-                if (!authorsWithoutDubles.Contains(bookAuthor)) {
-                    authorsWithoutDubles.Add(bookAuthor);
-                }
-            }
-
-            book.Authors = authorsWithoutDubles;
+            book.Authors = book.Authors.Distinct().ToList();
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.BookEdited += (o, e) => {
                 var book = Books.First(a => a.Id == e.Entity.Id);

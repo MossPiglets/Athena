@@ -8,14 +8,12 @@ namespace Athena.Data {
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-
         public virtual ICollection<Book> Books { get; set; } = new ObservableCollection<Book>();
-        public override string ToString()
-        {
+
+        public override string ToString() {
             if (string.IsNullOrWhiteSpace(FirstName))
                 return LastName;
-            else
-                return $"{LastName}, {FirstName}";
+            return $"{LastName}, {FirstName}";
         }
 
         public override bool Equals(object? obj) {
@@ -26,7 +24,9 @@ namespace Athena.Data {
 
             return this.Id.Equals(author.Id);
         }
-    }
 
-    
+        public override int GetHashCode() {
+            return (FirstName + LastName).GetHashCode();
+        }
+    }
 }
