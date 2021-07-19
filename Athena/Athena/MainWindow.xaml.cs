@@ -109,8 +109,7 @@ namespace Athena {
             }
         }
 
-        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e)
-        {
+        private void MenuItemEdit_Click(object sender, System.Windows.RoutedEventArgs e) {
             ShowEditBookWindow();
         }
 
@@ -125,8 +124,7 @@ namespace Athena {
                             .Single(b
                                 => b.Id == ((BookInListView)BookList.SelectedItem).Id);
             EditBookWindow editBook = new EditBookWindow(book);
-            editBook.BookEdited += (o, e) =>
-            {
+            editBook.BookEdited += (o, e) => {
                 var book = Books.First(a => a.Id == e.Entity.Id);
                 Mapper.Instance.Map(e.Entity, book);
             };
