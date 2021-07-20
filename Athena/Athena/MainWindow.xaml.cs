@@ -5,6 +5,7 @@ using Athena.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -12,6 +13,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using Athena.Data;
 using Athena.EventManagers;
 using Athena.MessageBoxes;
 using Athena.Messages;
@@ -120,6 +123,8 @@ namespace Athena {
                 .Include(b => b.Authors)
                 .Single(b
                     => b.Id == ((BookInListView) BookList.SelectedItem).Id);
+
+            book.Authors = book.Authors.Distinct().ToList();
             EditBookWindow editBook = new EditBookWindow(book);
             editBook.BookEdited += (o, e) => {
                 var book = Books.First(a => a.Id == e.Entity.Id);
