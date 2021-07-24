@@ -1,11 +1,9 @@
 using Athena.Data.Books;
-using Athena.Data.CategoriesFolder;
 using Athena.Import;
 using Athena.Windows;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -13,9 +11,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Documents;
-using Athena.Data;
-using Athena.EventManagers;
+using Athena.Data.Categories;
 using Athena.MessageBoxes;
 using Athena.Messages;
 using Hub = MessageHub.MessageHub;
@@ -38,7 +34,7 @@ namespace Athena {
                 .Include(b => b.Categories)
                 .Include(b => b.Borrowings.OrderByDescending(b => b.BorrowDate))
                 .AsNoTracking().ToList()
-                );
+            );
 
             ApplicationDbContext.Instance.ChangeTracker.StateChanged += (sender, e) => {
                 if (e.Entry.Entity is Book book && e.NewState == EntityState.Modified) {
@@ -116,16 +112,15 @@ namespace Athena {
             ShowEditBookWindow();
         }
 
-        private void ShowEditBookWindow()
-        {
+        private void ShowEditBookWindow() {
             Book book = ApplicationDbContext.Instance.Books
-                            .Include(a => a.Categories)
-                            .Include(b => b.Series)
-                            .Include(b => b.PublishingHouse)
-                            .Include(b => b.StoragePlace)
-                            .Include(b => b.Authors)
-                            .Single(b
-                                => b.Id == ((BookInListView)BookList.SelectedItem).Id);
+                .Include(a => a.Categories)
+                .Include(b => b.Series)
+                .Include(b => b.PublishingHouse)
+                .Include(b => b.StoragePlace)
+                .Include(b => b.Authors)
+                .Single(b
+                    => b.Id == ((BookInListView) BookList.SelectedItem).Id);
 
             book.Authors = book.Authors.Distinct().ToList();
             EditBookWindow editBook = new EditBookWindow(book);
@@ -151,7 +146,7 @@ namespace Athena {
                     .ToList();
                 ApplicationDbContext.Instance.Books.Remove(book);
                 ApplicationDbContext.Instance.SaveChanges();
-                Hub.Instance.Publish(new RemoveBookMessage(){Book = book});
+                Hub.Instance.Publish(new RemoveBookMessage() {Book = book});
                 SearchTextBox.Text = string.Empty;
             }
         }
@@ -193,9 +188,11 @@ namespace Athena {
                         if (answer) {
                             ResetDatabase();
                         }
+
                         ImportButton.Visibility = Visibility.Visible;
                     }
                 }
+
                 ImportGrid.Visibility = Visibility.Hidden;
                 MainGrid.Visibility = Visibility.Visible;
                 ResizeGridViewColumns(BooksGridView);
@@ -246,7 +243,7 @@ namespace Athena {
         }
 
         private void BookList_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e) {
-            if (BookList.SelectedItem != null){
+            if (BookList.SelectedItem != null) {
                 ShowEditBookWindow();
             }
         }

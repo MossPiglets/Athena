@@ -16,8 +16,8 @@ namespace Athena.EnumLocalizations {
                     if (fi != null) {
                         var attributes =
                             (DescriptionAttribute[]) fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-                        return((attributes.Length > 0) &&
-                               (!String.IsNullOrEmpty(attributes[0].Description)))
+                        return ((attributes.Length > 0) &&
+                                (!String.IsNullOrEmpty(attributes[0].Description)))
                             ? attributes[0].Description
                             : value.ToString();
                     }

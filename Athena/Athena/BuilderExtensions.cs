@@ -1,18 +1,15 @@
-﻿using Athena.Data;
-using Athena.Data.Books;
+﻿using Athena.Data.Books;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Athena
-{
-    public static class BuilderExtensions
-    {
+namespace Athena {
+    public static class BuilderExtensions {
         public static void Configure(this EntityTypeBuilder<Book> entity) {
             entity.HasKey(a => a.Id);
             entity
                 .HasMany(a => a.Authors)
                 .WithMany(a => a.Books);
-                //.UsingEntity(a => a.ToTable("BooksAuthors"));
+            //.UsingEntity(a => a.ToTable("BooksAuthors"));
             entity
                 .HasOne(a => a.Series)
                 .WithMany(a => a.Books);

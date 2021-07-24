@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Athena.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Athena {
+namespace Athena.UserControls {
     /// <summary>
     /// Interaction logic for AuthorAdding.xaml
     /// </summary>

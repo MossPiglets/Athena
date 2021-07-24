@@ -1,5 +1,5 @@
 ﻿using System;
-using Athena.Data;
+using Athena.Data.StoragePlaces;
 
 namespace Athena.Import.Extractors {
     public class StoragePlaceExtractor {

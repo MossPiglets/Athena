@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using System.Windows.Controls;
 using System.Windows.Input;
 using Athena.Data.Books;
 using Athena.EventManagers;
 using Athena.Messages;
+using Athena.UserControls;
 using Microsoft.EntityFrameworkCore;
 using Hub = MessageHub.MessageHub;
 
@@ -17,15 +17,13 @@ namespace Athena.Windows {
             bookControl.ConfirmButton.Click += (sender, args) => {
                 var bookView = bookControl.BookView;
                 Book book = Mapper.Instance.Map<Book>(bookView);
-                BookEdited?.Invoke(this, new EntityEventArgs<Book>{Entity = book});
-                Hub.Instance.Publish(new EditBookMessage{BookView = bookView});
+                BookEdited?.Invoke(this, new EntityEventArgs<Book> {Entity = book});
+                Hub.Instance.Publish(new EditBookMessage {BookView = bookView});
             };
             Content = bookControl;
-
         }
 
         public event EventHandler<EntityEventArgs<Book>> BookEdited;
-
     }
 
     public class EditBookCommand : ICommand {
@@ -47,7 +45,7 @@ namespace Athena.Windows {
                 .Include(a => a.StoragePlace)
                 .Single(a => a.Id == bookModel.Id);
             Mapper.Instance.Map(bookModel, bookFromDb);
-            
+
             ApplicationDbContext.Instance.SaveChanges();
         }
 
@@ -55,7 +53,5 @@ namespace Athena.Windows {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-
-        
     }
 }

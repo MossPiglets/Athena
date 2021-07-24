@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Athena.Data.Books;
 using System.Windows.Controls;
 using System.Windows;
-using Athena.EventManagers;
 using Athena.Messages;
 using Hub = MessageHub.MessageHub;
 
 namespace Athena.Windows {
     public partial class BorrowedBooksListWindow {
         public ObservableCollection<BorrowingView> Borrowings { get; set; }
+
         public BorrowedBooksListWindow() {
             InitializeComponent();
             this.DataContext = this;
@@ -23,13 +23,17 @@ namespace Athena.Windows {
                 .Include(a => a.Book)
                 .ThenInclude(a => a.Authors)
                 .Load();
-            Borrowings = Mapper.Instance.Map<ObservableCollection<BorrowingView>>(ApplicationDbContext.Instance.Borrowings.Local.ToObservableCollection());
+            Borrowings =
+                Mapper.Instance.Map<ObservableCollection<BorrowingView>>(ApplicationDbContext.Instance.Borrowings.Local
+                    .ToObservableCollection());
             BorrowedBookList.ItemsSource = Borrowings;
 
             if (Borrowings.Count == 0) {
                 TextBlock.Visibility = Visibility.Visible;
             }
-            Hub.Instance.Subscribe<BorrowBookMessage>(e => Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Borrowing)));
+
+            Hub.Instance.Subscribe<BorrowBookMessage>(e =>
+                Borrowings.Add(Mapper.Instance.Map<BorrowingView>(e.Borrowing)));
             Hub.Instance.Subscribe<RemoveBookMessage>(RemoveBookFromList);
             Hub.Instance.Subscribe<EditBookMessage>(EditBookOnList);
         }
@@ -48,7 +52,8 @@ namespace Athena.Windows {
             book.Borrowings.Add(Mapper.Instance.Map<Borrowing>(borrowing));
             ReturnWindow returnWindow = new ReturnWindow(book);
             returnWindow.BookReturned += (_, args) => button.Visibility = Visibility.Hidden;
-            returnWindow.BookReturned += (sender, e) => Borrowings.Single(b => b.Id == borrowing.Id).ReturnDate = e.Value.ReturnDate; 
+            returnWindow.BookReturned += (sender, e) =>
+                Borrowings.Single(b => b.Id == borrowing.Id).ReturnDate = e.Value.ReturnDate;
             returnWindow.BookReturned += (sender, e) => BorrowedBookList.ItemsSource = Borrowings;
             returnWindow.Show();
         }

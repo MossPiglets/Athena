@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Athena.Data;
 using Athena.Data.Series;
 
 namespace AthenaTests.Helpers.Data.Lists {

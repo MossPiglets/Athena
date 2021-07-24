@@ -2,10 +2,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class StoragePlaceExtractorTests
-    {
+namespace AthenaTests {
+    public class StoragePlaceExtractorTests {
         [Test]
         public void Extract_ShouldReturnStoragePlace() {
             // Arrange
@@ -18,6 +16,7 @@ namespace AthenaTests
             storagePlace.StoragePlaceName.Should().Be(storagePlaceName);
             storagePlace.Comment.Should().Be(comment);
         }
+
         [Test]
         public void Extract_OnlyNameArgument_ShouldReturnStoragePlace() {
             // Arrange
@@ -29,6 +28,7 @@ namespace AthenaTests
             storagePlace.StoragePlaceName.Should().Be(storagePlaceName);
             storagePlace.Comment.Should().BeNull();
         }
+
         [Test]
         public void Extract_BothArgumentNull_ShouldReturnNull() {
             // Arrange

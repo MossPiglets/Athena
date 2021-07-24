@@ -48,7 +48,7 @@ namespace AthenaTests.Helpers {
                 worksheetCategories.Cells[i + 2, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheetCategories.Cells[i + 2, 1].Style.Fill.BackgroundColor.SetColor(color);
             }
-            
+
 
             var worksheetStoragePlaces = package.Workbook.Worksheets.Add(data.WorksheetStoragePlaces);
             worksheetStoragePlaces.Cells[1, 1].Value = "Nr pudła";

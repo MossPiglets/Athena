@@ -1,14 +1,13 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Athena.Data;
+using Athena.Data.Categories;
 using Athena.EnumLocalizations;
 
-namespace Athena {
+namespace Athena.UserControls {
     /// <summary>
     /// Interaction logic for CategoryAdding.xaml
     /// </summary>
     public partial class CategoryAdding : UserControl {
-
         public CategoryAdding() {
             InitializeComponent();
             CategoryComboBox.ItemsSource = EnumSorter.GetSortedByDescriptions<CategoryName>();

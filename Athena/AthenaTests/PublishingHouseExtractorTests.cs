@@ -2,10 +2,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class PublishingHouseExtractorTests
-    {
+namespace AthenaTests {
+    public class PublishingHouseExtractorTests {
         [Test]
         public void Extractor_ShouldReturnPublishingHouse() {
             // Arrange
@@ -16,6 +14,7 @@ namespace AthenaTests
             publishingHouse.Id.Should().NotBeEmpty();
             publishingHouse.PublisherName.Should().Be(text);
         }
+
         [Test]
         public void Extractor_NameWithSpace_ShouldReturnPublishingHouse() {
             // Arrange
@@ -27,6 +26,7 @@ namespace AthenaTests
             publishingHouse.Id.Should().NotBeEmpty();
             publishingHouse.PublisherName.Should().Be(name);
         }
+
         [Test]
         public void Extractor_ApostropheAndPause_ShouldReturnEmptyPublishingHouse() {
             // Arrange
@@ -36,6 +36,7 @@ namespace AthenaTests
             // Assert
             publishingHouse.Should().BeNull();
         }
+
         [Test]
         public void Extractor_Pause_ShouldReturnEmptyPublishingHouse() {
             // Arrange
@@ -45,6 +46,7 @@ namespace AthenaTests
             // Assert
             publishingHouse.Should().BeNull();
         }
+
         [Test]
         public void Extractor_EmptyName_ShouldReturnEmptyPublishingHouse() {
             // Arrange
@@ -54,6 +56,7 @@ namespace AthenaTests
             // Assert
             publishingHouse.Should().BeNull();
         }
+
         [Test]
         public void Extractor_Null_ShouldReturnEmptyPublishingHouse() {
             // Arrange

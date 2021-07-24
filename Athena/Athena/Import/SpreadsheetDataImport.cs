@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Athena.Data;
 using Athena.Data.Books;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
 using Athena.Data.SpreadsheetData;
+using Athena.Data.StoragePlaces;
 using Athena.Import.Extractors;
 using OfficeOpenXml;
 using Serilog;
@@ -146,7 +147,7 @@ namespace Athena.Import {
                     Categories = bookCategories,
                     VolumeNumber = bookSeriesInfo?.VolumeNumber
                 };
-                
+
                 ImportBookValidator.CheckAuthors(authors, book.Authors);
                 ImportBookValidator.CheckSeries(seriesList, book.Series);
                 ImportBookValidator.CheckPublishingHouse(publishingHouses, book.PublishingHouse);
@@ -175,7 +176,7 @@ namespace Athena.Import {
             }
 
             var authorWithoutDoubles = authors
-                .GroupBy(a => new { a.FirstName, a.LastName })
+                .GroupBy(a => new {a.FirstName, a.LastName})
                 .Select(a => a.First())
                 .ToList();
             return authorWithoutDoubles;
@@ -199,7 +200,7 @@ namespace Athena.Import {
             }
 
             var seriesInfoWithoutDoubles = seriesInfoList
-                .GroupBy(a => new { a.SeriesName, a.VolumeNumber })
+                .GroupBy(a => new {a.SeriesName, a.VolumeNumber})
                 .Select(a => a.First())
                 .ToList();
             return seriesInfoWithoutDoubles;

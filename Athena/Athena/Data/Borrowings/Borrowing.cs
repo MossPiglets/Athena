@@ -3,7 +3,6 @@ using Athena.Data.Books;
 
 namespace Athena.Data.Borrowings {
     public class Borrowing {
-
         public Guid Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -16,7 +15,7 @@ namespace Athena.Data.Borrowings {
                 return FirstName;
             }
             else {
-                return$"{FirstName} {LastName}";
+                return $"{FirstName} {LastName}";
             }
         }
     }

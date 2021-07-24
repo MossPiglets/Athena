@@ -5,16 +5,14 @@ using MessageBox = AdonisUI.Controls.MessageBox;
 using MessageBoxImage = AdonisUI.Controls.MessageBoxImage;
 using MessageBoxResult = AdonisUI.Controls.MessageBoxResult;
 
-namespace Athena.MessageBoxes
-{
-    public class RemoveDatabaseWithBooksMessageBox
-    {
+namespace Athena.MessageBoxes {
+    public class RemoveDatabaseWithBooksMessageBox {
         public bool Show() {
             var messageBox = new MessageBoxModel {
                 Text = "Baza danych zawiera już książki. Czy jesteś absosmerfnie pewien, że chcesz ją usunąć?",
                 Caption = "Info",
                 Icon = MessageBoxImage.Warning,
-                Buttons = new [] {
+                Buttons = new[] {
                     MessageBoxButtons.Yes("Tak"),
                     MessageBoxButtons.No("Nie")
                 },
