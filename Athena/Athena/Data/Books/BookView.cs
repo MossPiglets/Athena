@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Athena.Annotations;
 using Athena.Data.Borrowings;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
+using Athena.Data.StoragePlaces;
+using Athena.Properties;
 
 namespace Athena.Data.Books {
     public class BookView : IDataErrorInfo, INotifyPropertyChanged {
@@ -42,6 +44,7 @@ namespace Athena.Data.Books {
         private BookViewValidator _bookViewValidator;
         private string _title;
         private int? _year;
+
         public BookView() {
             _bookViewValidator = new BookViewValidator();
         }
@@ -69,7 +72,7 @@ namespace Athena.Data.Books {
                 if (firstOrDefault != null) {
                     return _bookViewValidator != null ? firstOrDefault.ErrorMessage : null;
                 }
-                
+
                 return null;
             }
         }

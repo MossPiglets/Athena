@@ -1,4 +1,5 @@
 ﻿using Athena.Data;
+using Athena.Data.Categories;
 
 namespace AthenaTests.Helpers.Data.TestExcel {
     public class CategoriesExcelTestData {

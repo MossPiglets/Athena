@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Athena.Data.Borrowings;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
+using Athena.Data.StoragePlaces;
 
 
 namespace Athena.Data.Books {

@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using Athena.Data;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
+using Athena.Data.StoragePlaces;
 
-namespace AthenaTests.Helpers.Data.Lists
-{
+namespace AthenaTests.Helpers.Data.Lists {
     public class TestListsData {
         public List<Author> Authors = AuthorsListGenerator.Generate();
         public List<Series> SeriesList = SeriesListGenerator.Generate();

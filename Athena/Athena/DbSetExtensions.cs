@@ -1,8 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using Athena.Data;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
+using Athena.Data.StoragePlaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Athena {

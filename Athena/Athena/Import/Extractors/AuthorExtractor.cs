@@ -16,6 +16,7 @@ namespace Athena.Import.Extractors {
             if (text.Contains(" i inni")) {
                 text = text.Replace(" i inni", "");
             }
+
             var regex = new Regex(pattern);
             var matches = regex.Matches(text).ToList();
             if (matches.Count == 0) {

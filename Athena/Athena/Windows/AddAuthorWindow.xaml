@@ -5,11 +5,11 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:local="clr-namespace:Athena.Windows"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
-                       xmlns:Authors="clr-namespace:Athena.Data.Authors"
+                       xmlns:data="clr-namespace:Athena.Data"
                        mc:Ignorable="d"
                        Title="Dodaj autora" Height="200" Width="300">
     <Window.Resources>
-        <Authors:AuthorView x:Key="AuthorsInstance" />
+        <data:AuthorView x:Key="AuthorsInstance" />
     </Window.Resources>
 
     <Border Padding="10">

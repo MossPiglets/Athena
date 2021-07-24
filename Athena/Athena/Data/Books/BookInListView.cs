@@ -4,15 +4,14 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using Athena.Annotations;
 using Athena.Data.Borrowings;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
+using Athena.Data.StoragePlaces;
+using Athena.Properties;
 
-namespace Athena.Data.Books
-{
-    public class BookInListView : INotifyPropertyChanged
-    {
+namespace Athena.Data.Books {
+    public class BookInListView : INotifyPropertyChanged {
         private Guid id;
         private string title;
         private Series.Series series;
@@ -23,60 +22,60 @@ namespace Athena.Data.Books
         private ObservableCollection<Borrowing> _borrowings;
 
         public IList<Category> Categories { get; set; }
-        public Guid Id
-        {
-            get => id; set
-            {
+
+        public Guid Id {
+            get => id;
+            set {
                 id = value;
                 OnPropertyChanged(nameof(Id));
             }
         }
-        public string Title
-        {
-            get => title; set
-            {
+
+        public string Title {
+            get => title;
+            set {
                 title = value;
                 OnPropertyChanged(nameof(Title));
             }
         }
+
         public ObservableCollection<Author> Authors { get; set; }
-        public Series.Series Series
-        {
-            get => series; set
-            {
+
+        public Series.Series Series {
+            get => series;
+            set {
                 series = value;
                 OnPropertyChanged(nameof(Series));
             }
         }
-        public PublishingHouse PublishingHouse
-        {
-            get => publishingHouse; set
-            {
+
+        public PublishingHouse PublishingHouse {
+            get => publishingHouse;
+            set {
                 publishingHouse = value;
                 OnPropertyChanged(nameof(PublishingHouse));
             }
         }
-        public Language Language
-        {
-            get => language; set
-            {
+
+        public Language Language {
+            get => language;
+            set {
                 language = value;
                 OnPropertyChanged(nameof(Language));
             }
         }
-        public StoragePlace StoragePlace
-        {
-            get => storagePlace; set
-            {
+
+        public StoragePlace StoragePlace {
+            get => storagePlace;
+            set {
                 storagePlace = value;
                 OnPropertyChanged(nameof(StoragePlace));
             }
         }
-        public int? PublishmentYear
-        {
+
+        public int? PublishmentYear {
             get => publishmentYear;
-            set
-            {
+            set {
                 publishmentYear = value;
                 OnPropertyChanged(nameof(PublishmentYear));
             }
@@ -87,15 +86,17 @@ namespace Athena.Data.Books
             set {
                 _borrowings = value;
                 _borrowings.CollectionChanged += (sender, args) => OnPropertyChanged(nameof(LastBorrowName));
-            } 
+            }
         }
 
-        public string LastBorrowName => this.Borrowings.Count < 1 ? string.Empty : this.Borrowings.Last().ReturnDate != null ? string.Empty : $"{this.Borrowings.Last().FirstName} {this.Borrowings.Last().LastName}";
+        public string LastBorrowName => this.Borrowings.Count < 1 ? string.Empty :
+            this.Borrowings.Last().ReturnDate != null ? string.Empty :
+            $"{this.Borrowings.Last().FirstName} {this.Borrowings.Last().LastName}";
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) {
             {
                 PropertyChangedEventHandler handler = PropertyChanged;
                 handler?.Invoke(this, new PropertyChangedEventArgs(propertyName));

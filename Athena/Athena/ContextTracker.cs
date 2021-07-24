@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
 using Athena.Data.Books;
-using Microsoft.EntityFrameworkCore;
 
 namespace Athena {
     public class ContextTracker {
@@ -14,7 +12,7 @@ namespace Athena {
             AttachEntry(bookModel.Series);
         }
 
-        private static void AttachEntry( object o) {
+        private static void AttachEntry(object o) {
             if (o == null) return;
 
             try {

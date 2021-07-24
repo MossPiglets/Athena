@@ -4,24 +4,24 @@ using Athena.Data.Borrowings;
 using Athena.Data.Series;
 using Athena.Data.PublishingHouses;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using Athena.EventManagers;
+using Athena.Data.Categories;
+using Athena.Data.StoragePlaces;
 
 namespace Athena {
     public class ApplicationDbContext : DbContext {
         static ApplicationDbContext instance;
         private ApplicationDbContext() { }
-        public static ApplicationDbContext Instance
-        {
+
+        public static ApplicationDbContext Instance {
             get {
-                if (instance == null)
-                    {
+                if (instance == null) {
                     instance = new ApplicationDbContext();
-                    }
-                return instance;
                 }
+
+                return instance;
+            }
         }
+
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
         public DbSet<Series> Series { get; set; }
@@ -39,7 +39,7 @@ namespace Athena {
 
         protected override void OnModelCreating(ModelBuilder builder) {
             base.OnModelCreating(builder);
-            
+
             builder.Entity<Book>().Configure();
 
             builder.Entity<Author>()

@@ -1,10 +1,8 @@
-﻿using Athena.Data;
+﻿using Athena.Data.Categories;
 using Castle.Core.Internal;
 
-namespace Athena.Import.Extractors
-{
-    public class CategoryExtractor
-    {
+namespace Athena.Import.Extractors {
+    public class CategoryExtractor {
         public static Category Extract(string color) {
             if (color.IsNullOrEmpty()) {
                 return null;
@@ -116,6 +114,7 @@ namespace Athena.Import.Extractors
                 default:
                     throw new ExtractorException("Cannot extract color from text", color);
             }
+
             return new Category {
                 Name = categoryName
             };

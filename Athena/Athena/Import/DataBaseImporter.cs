@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Athena.Data;
 using Athena.Data.Books;
+using Athena.Data.Categories;
 using Athena.Data.PublishingHouses;
 using Athena.Data.Series;
+using Athena.Data.StoragePlaces;
 using Castle.Core.Internal;
 
 namespace Athena.Import {
     public class DatabaseImporter : IDisposable {
-
         public void ImportFromSpreadsheet(string fileName) {
             if (IfDatabaseIsNotEmpty()) {
                 throw new ImportException("Database is not empty. Remove sqlite file.");
@@ -49,7 +50,8 @@ namespace Athena.Import {
                 if (!book.Authors.IsNullOrEmpty()) {
                     var bookAuthors = book.Authors.ToList();
                     var collection = authors.Where(a
-                        => bookAuthors.Any(b => b.FirstName == a.FirstName) && bookAuthors.Any(b => b.LastName == a.LastName));
+                        => bookAuthors.Any(b => b.FirstName == a.FirstName) &&
+                           bookAuthors.Any(b => b.LastName == a.LastName));
                     book.Authors = new List<Author>(collection);
                 }
 

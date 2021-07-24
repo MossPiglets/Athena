@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Athena.Data;
 using Athena.Data.Series;
 
 namespace Athena.Import.Extractors {
@@ -10,7 +9,7 @@ namespace Athena.Import.Extractors {
             var pattern = @"(?:(?:(?![a-z])?(?: ?-? ?[Tt]om ))(?<volumeNumber>\d+))| - (\d+)\/\d+";
 
             if (text == "'-" || text == "-" || string.IsNullOrEmpty(text)) {
-                 return null;
+                return null;
             }
 
             var regex = new Regex(pattern);

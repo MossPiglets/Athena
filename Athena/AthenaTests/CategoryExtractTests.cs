@@ -1,5 +1,6 @@
 ﻿using System;
 using Athena.Data;
+using Athena.Data.Categories;
 using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;

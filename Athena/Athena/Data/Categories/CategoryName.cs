@@ -1,107 +1,106 @@
 ﻿using System.ComponentModel;
 using Athena.EnumLocalizations;
-using Athena.Resources;
 
-namespace Athena.Data {
-    [TypeConverter (typeof(EnumDescriptionTypeConverter))]
+namespace Athena.Data.Categories {
+    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum CategoryName {
-        [LocalizedDescription("Album", typeof(Categories))]
+        [LocalizedDescription("Album", typeof(Resources.Categories))]
         Album,
 
-        [LocalizedDescription("Atlas", typeof(Categories))]
+        [LocalizedDescription("Atlas", typeof(Resources.Categories))]
         Atlas,
 
-        [LocalizedDescription("Audiobook", typeof(Categories))]
+        [LocalizedDescription("Audiobook", typeof(Resources.Categories))]
         Audiobook,
 
-        [LocalizedDescription("Biography", typeof(Categories))]
+        [LocalizedDescription("Biography", typeof(Resources.Categories))]
         Biography,
 
-        [LocalizedDescription("Economy", typeof(Categories))]
+        [LocalizedDescription("Economy", typeof(Resources.Categories))]
         Economy,
 
-        [LocalizedDescription("ForChildren", typeof(Categories))]
+        [LocalizedDescription("ForChildren", typeof(Resources.Categories))]
         ForChildren,
 
-        [LocalizedDescription("YoungAdult", typeof(Categories))]
+        [LocalizedDescription("YoungAdult", typeof(Resources.Categories))]
         YoungAdult,
 
-        [LocalizedDescription("Fantasy", typeof(Categories))]
+        [LocalizedDescription("Fantasy", typeof(Resources.Categories))]
         Fantasy,
 
-        [LocalizedDescription("Philosophy", typeof(Categories))]
+        [LocalizedDescription("Philosophy", typeof(Resources.Categories))]
         Philosophy,
 
-        [LocalizedDescription("History", typeof(Categories))]
+        [LocalizedDescription("History", typeof(Resources.Categories))]
         History,
 
-        [LocalizedDescription("Informatics", typeof(Categories))]
+        [LocalizedDescription("Informatics", typeof(Resources.Categories))]
         Informatics,
 
-        [LocalizedDescription("Linguistics", typeof(Categories))]
+        [LocalizedDescription("Linguistics", typeof(Resources.Categories))]
         Linguistics,
 
-        [LocalizedDescription("Classic", typeof(Categories))]
+        [LocalizedDescription("Classic", typeof(Resources.Categories))]
         Classic,
 
-        [LocalizedDescription("Comic", typeof(Categories))]
+        [LocalizedDescription("Comic", typeof(Resources.Categories))]
         Comic,
 
-        [LocalizedDescription("Culinary", typeof(Categories))]
+        [LocalizedDescription("Culinary", typeof(Resources.Categories))]
         Culinary,
 
-        [LocalizedDescription("NonFiction", typeof(Categories))]
+        [LocalizedDescription("NonFiction", typeof(Resources.Categories))]
         NonFiction,
 
-        [LocalizedDescription("LanguageLearning", typeof(Categories))]
+        [LocalizedDescription("LanguageLearning", typeof(Resources.Categories))]
         LanguageLearning,
 
-        [LocalizedDescription("Science", typeof(Categories))]
+        [LocalizedDescription("Science", typeof(Resources.Categories))]
         Science,
 
-        [LocalizedDescription("TextBook", typeof(Categories))]
+        [LocalizedDescription("TextBook", typeof(Resources.Categories))]
         TextBook,
 
-        [LocalizedDescription("Poetry", typeof(Categories))]
+        [LocalizedDescription("Poetry", typeof(Resources.Categories))]
         Poetry,
 
-        [LocalizedDescription("Guide", typeof(Categories))]
+        [LocalizedDescription("Guide", typeof(Resources.Categories))]
         Guide,
 
-        [LocalizedDescription("Law", typeof(Categories))]
+        [LocalizedDescription("Law", typeof(Resources.Categories))]
         Law,
 
-        [LocalizedDescription("Adventure", typeof(Categories))]
+        [LocalizedDescription("Adventure", typeof(Resources.Categories))]
         Adventure,
 
-        [LocalizedDescription("Religion", typeof(Categories))]
+        [LocalizedDescription("Religion", typeof(Resources.Categories))]
         Religion,
 
-        [LocalizedDescription("Romance", typeof(Categories))]
+        [LocalizedDescription("Romance", typeof(Resources.Categories))]
         Romance,
 
-        [LocalizedDescription("PersonalDevelopment", typeof(Categories))]
+        [LocalizedDescription("PersonalDevelopment", typeof(Resources.Categories))]
         PersonalDevelopment,
 
-        [LocalizedDescription("Thriller", typeof(Categories))]
+        [LocalizedDescription("Thriller", typeof(Resources.Categories))]
         Thriller,
 
-        [LocalizedDescription("Sociology", typeof(Categories))]
+        [LocalizedDescription("Sociology", typeof(Resources.Categories))]
         Sociology,
 
-        [LocalizedDescription("Recreation", typeof(Categories))]
+        [LocalizedDescription("Recreation", typeof(Resources.Categories))]
         Recreation,
 
-        [LocalizedDescription("Art", typeof(Categories))]
+        [LocalizedDescription("Art", typeof(Resources.Categories))]
         Art,
 
-        [LocalizedDescription("Tourism", typeof(Categories))]
+        [LocalizedDescription("Tourism", typeof(Resources.Categories))]
         Tourism,
 
-        [LocalizedDescription("Relationship", typeof(Categories))]
+        [LocalizedDescription("Relationship", typeof(Resources.Categories))]
         Relationship,
 
-        [LocalizedDescription("CrimeNovel", typeof(Categories))]
+        [LocalizedDescription("CrimeNovel", typeof(Resources.Categories))]
         CrimeNovel
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Athena.Data;
 using Athena.Data.PublishingHouses;
 
 namespace AthenaTests.Helpers.Data.Lists {
