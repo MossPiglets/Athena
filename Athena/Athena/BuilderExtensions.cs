@@ -9,7 +9,6 @@ namespace Athena {
             entity
                 .HasMany(a => a.Authors)
                 .WithMany(a => a.Books);
-            //.UsingEntity(a => a.ToTable("BooksAuthors"));
             entity
                 .HasOne(a => a.Series)
                 .WithMany(a => a.Books);
