@@ -6,51 +6,109 @@
                        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                        xmlns:local="clr-namespace:Athena"
                        xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       xmlns:adonisExtensions="clr-namespace:AdonisUI.Extensions;assembly=AdonisUI"
+                       xmlns:converters="clr-namespace:Athena.Converters"
                        mc:Ignorable="d"
-                       Title="Athena" Height="580" Width="600">
+                       Title="Athena" Height="580" SizeToContent="Width">
+    <Window.Resources>
+        <converters:EmptyListVisibilityConverter x:Key="EmptyListVisibilityConverter" />
+    </Window.Resources>
 
-	<Window.Style>
+    <Window.Style>
 		<Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
-	</Window.Style>
+    </Window.Style>
+    <Window.CommandBindings>
+        <CommandBinding Command="local:MainWindow.MenuItemBorrow_Click"
+                        CanExecute="MenuItemBorrow_CanExecute"
+                        Executed="MenuItemBorrow_Executed" />
+    </Window.CommandBindings>
 
-	<Border Padding="10">
-		<Grid>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="auto" />
-				<RowDefinition Height="*" />
-				<RowDefinition Height = "*"/>
-			</Grid.RowDefinitions>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*" />
-				<ColumnDefinition Width="auto" />
-			</Grid.ColumnDefinitions>
-			<TextBox Grid.Row="0" Grid.Column="0" />
-			<Button Margin="10 0 10 0" Content="Dodaj książkę" Grid.Row="0" Grid.Column="1" />
-			<ListView Grid.ColumnSpan="2" Grid.Row="1" Margin="10" Name="BookList" Grid.Column="0">
-				<ListView.ContextMenu>
+    <Grid>
+        <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height = "auto"/>
+            <RowDefinition Height = "auto"/>
+            <RowDefinition Height = "*"/>
+			<RowDefinition Height = "*"/>
+        </Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="*" />
+			<ColumnDefinition Width="auto" />
+		</Grid.ColumnDefinitions>
+        
+        <DockPanel Grid.Column="0" Margin="10 0 0 0" ContextMenuService.Placement="MousePoint" >
+            <Menu DockPanel.Dock="Right" VerticalAlignment="Bottom">
+                <MenuItem Header="Akcje">
+                    <MenuItem Header="Dodaj nową książkę" Click="AddBook_Click" />
+                    <MenuItem Header="Lista wypożyczonych książek" Click="OpenBorrowedBookList_Click"/>
+                    <MenuItem Header="Usuń bazę danych" Click="RemoveDatabase_OnClick" />
+                    <Separator />
+                    <MenuItem Header="Zamknij" Click="MenuItem_Click"/>
+                </MenuItem>
+            </Menu>
+        </DockPanel>
+        
+        <TextBox Grid.Row="1" Grid.Column="0" x:Name="SearchTextBox" Margin="10 10 10 10" adonisExtensions:WatermarkExtension.Watermark="Wyszukaj..." TextChanged="SearchTextBox_TextChanged" />
+			<ListView MouseDoubleClick="BookList_MouseDoubleClick" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="2" Margin="10" x:Name="BookList" Grid.Column="0" ItemsSource="{Binding Books}">
+                <ListView.ContextMenu>
 					<ContextMenu>
-						<MenuItem Header="Wypożycz" />
-						<MenuItem Header="Edytuj" />
-						<MenuItem Header="Usuń" />
+                    <MenuItem Header="Wypożycz" Command="local:MainWindow.MenuItemBorrow_Click"/>
+                        <MenuItem Header="Edytuj" Click="MenuItemEdit_Click"/>
+						<MenuItem Header="Usuń" Click="MenuItemDelete_Click" />
 					</ContextMenu>
 				</ListView.ContextMenu>
 				<ListView.View>
-					<GridView>
-						<GridViewColumn Header="Tytuł" Width="Auto" DisplayMemberBinding="{Binding Title}" />
-						<GridViewColumn Header="Autor" Width="Auto" DisplayMemberBinding="{Binding Author}" />
-						<GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series}" />
-						<GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
-						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding Publisher}" />
+					<GridView x:Name="BooksGridView">
+                    <GridViewColumn Header="Tytuł" Width="Auto" DisplayMemberBinding="{Binding Title}" />
+                    <GridViewColumn Header="Autor" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Authors[0].FirstName" />
+                                                <Binding Path="Authors[0].LastName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    <GridViewColumn Header="Seria" Width="Auto" DisplayMemberBinding="{Binding Series.SeriesName}" />
+                    <GridViewColumn Header="Język" Width="Auto" DisplayMemberBinding="{Binding Language}" />
+						<GridViewColumn Header="Wydawca" Width="Auto" DisplayMemberBinding="{Binding PublishingHouse.PublisherName}" />
 						<GridViewColumn Header="Rok wydania" Width="Auto" DisplayMemberBinding="{Binding PublishmentYear}" />
-						<GridViewColumn Header="Miejce Składowania" Width="Auto" DisplayMemberBinding="{Binding StoragePlaceName}" />
-						<GridViewColumn Header="ISBN" Width="Auto" DisplayMemberBinding="{Binding ISBN}" />
-						<GridViewColumn Header="Status" Width="Auto" DisplayMemberBinding="{Binding Status}" />
-					</GridView>
+                        
+                        <GridViewColumn Width="Auto">
+
+                        <GridViewColumn.Header>
+                            <TextBlock Text="Miejsce"
+                                       ToolTip="Miejsce przechowywania książki"/>
+                        </GridViewColumn.Header>
+                            
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock Text ="{Binding StoragePlace.StoragePlaceName}" ToolTip="{Binding StoragePlace.Comment}"/>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        
+                        <GridViewColumn Header="Wypożyczone" Width="Auto" DisplayMemberBinding="{Binding LastBorrowName}"/>
+                    </GridView>
+
 				</ListView.View>
 			</ListView>
-			<Button Name ="ImportButton"  Content="Importuj" Click="ImportData"  HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+            <Button Name ="ImportButton"  Content="Importuj" Click="ImportData" Visibility="{Binding Path=Books, Converter={StaticResource EmptyListVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         </Grid>
-
-	</Border>
-
+        <Grid x:Name="ImportGrid" VerticalAlignment="Center" Visibility="Collapsed" MinWidth="400">
+            <Grid.RowDefinitions>
+                <RowDefinition Height = "auto"/>
+                <RowDefinition Height = "auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Name ="ImportText"  HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="0" >Importowanie...</TextBlock>
+			<ProgressBar Name="ProgressBarStatus" Minimum="0" Maximum="100" IsIndeterminate="True" Height="20" VerticalAlignment="Top" Margin="25 10 25 0" Grid.Row="1"/>
+        </Grid>
+        </Grid>
 </controls:AdonisWindow>

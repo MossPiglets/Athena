@@ -1,0 +1,54 @@
+﻿<controls:AdonisWindow  xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI" x:Class="Athena.Windows.AddSeriesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Athena.Windows"
+        xmlns:Data="clr-namespace:Athena.Data"
+        xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI"
+        xmlns:series="clr-namespace:Athena.Data.Series"
+        mc:Ignorable="d"
+        Title="Dodaj serię" Height="200" Width="300">
+    <Window.Resources>
+        <series:SeriesView x:Key="SeriesInstance" />
+    </Window.Resources>
+    
+        <Border Padding="10">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock FontWeight="Bold" Margin="0 0 0 10" Text="Seria" HorizontalAlignment="Center"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Column="0" Grid.Row="1" Text="Nazwa:"/>
+                <TextBox Name="SeriesNameTextBox"  Grid.Column="1" Grid.Row="1" Margin="15 0 5 0" MinWidth="150">
+                    <TextBox.Text>
+                            <Binding  Path="SeriesName" Source="{StaticResource SeriesInstance}"
+                                 ValidatesOnDataErrors="True"
+                                 UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <ExceptionValidationRule/>
+                                </Binding.ValidationRules>
+                            </Binding>
+                    </TextBox.Text>
+                </TextBox>
+            </Grid>
+            <TextBlock x:Name="SeriesExistsTextBlock" Margin=" 0 10 0 0" Visibility="Collapsed" Text="Taka seria już istnieje." FontWeight="Bold" HorizontalAlignment="Center" Foreground="#f78279"/>
+            <Button Margin="10" Content="Dodaj" Command="Save" IsEnabled="{Binding ElementName=SeriesNameTextBox, Path=Text.Length, Mode=OneWay}" IsDefault="True">
+                <Button.CommandBindings>
+                    <CommandBinding Command="Save" Executed="Save_Executed" CanExecute="Save_CanExecute"/>
+                </Button.CommandBindings>
+            </Button>
+        </StackPanel>
+        </Border>
+
+        <Window.Style>
+            <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+        </Window.Style>
+    
+</controls:AdonisWindow>

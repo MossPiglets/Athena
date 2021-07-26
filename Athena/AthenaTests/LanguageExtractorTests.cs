@@ -4,10 +4,8 @@ using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
+namespace AthenaTests {
     public class LanguageExtractorTests {
-
         [Test]
         public void Extract_Pl_ShouldReturnEnum() {
             // Arrange
@@ -17,15 +15,17 @@ namespace AthenaTests
             // Assert
             language.Should().Be(Language.PL);
         }
+
         [Test]
-        public void Extract_Eng_ShouldReturnEnum() {
+        public void Extract_En_ShouldReturnEnum() {
             // Arrange
-            var text = "ENG";
+            var text = "EN";
             // Act
             var language = LanguageExtractor.Extract(text);
             // Assert
-            language.Should().Be(Language.ENG);
+            language.Should().Be(Language.EN);
         }
+
         [Test]
         public void Extract_Ru_ShouldReturnEnum() {
             // Arrange
@@ -35,6 +35,7 @@ namespace AthenaTests
             // Assert
             language.Should().Be(Language.RU);
         }
+
         [Test]
         public void Extract_Fr_ShouldReturnEnum() {
             // Arrange
@@ -44,6 +45,7 @@ namespace AthenaTests
             // Assert
             language.Should().Be(Language.FR);
         }
+
         [Test]
         public void Extract_De_ShouldReturnEnum() {
             // Arrange
@@ -53,25 +55,27 @@ namespace AthenaTests
             // Assert
             language.Should().Be(Language.DE);
         }
+
         [Test]
-        public void Extract_Ua_ShouldReturnEnum() {
+        public void Extract_Uk_ShouldReturnEnum() {
             // Arrange
-            var text = "UA";
+            var text = "UK";
             // Act
             var language = LanguageExtractor.Extract(text);
             // Assert
-            language.Should().Be(Language.UA);
+            language.Should().Be(Language.UK);
         }
 
         [Test]
         public void Extract_TextWithSpaces_ShouldReturnEnum() {
             // Arrange
-            var text = " UA ";
+            var text = " UK ";
             // Act
             var language = LanguageExtractor.Extract(text);
             // Assert
-            language.Should().Be(Language.UA);
+            language.Should().Be(Language.UK);
         }
+
         [Test]
         public void Extract_Kr_ShouldReturnExtractException() {
             // Arrange
@@ -81,6 +85,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<ExtractorException>("Cannot extract language from text");
         }
+
         [Test]
         public void Extract_EmptyText_ShouldReturnExtractException() {
             // Arrange
@@ -90,6 +95,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<ExtractorException>($"Language is null or empty, [{text}]");
         }
+
         [Test]
         public void Extract_Null_ShouldReturnExtractException() {
             // Arrange

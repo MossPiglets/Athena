@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Athena.Data;
+using Athena.Data.Categories;
+using Athena.Data.PublishingHouses;
+using Athena.Data.Series;
+using Athena.Data.StoragePlaces;
 using Athena.Import;
 using Athena.Import.Extractors;
 using AthenaTests.Helpers.Data.Lists;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class ImportBookValidatorTests
-    {
+namespace AthenaTests {
+    public class ImportBookValidatorTests {
         [Test]
         public void CheckAuthors_ShouldNotThrowExtractorException() {
             // Arrange
@@ -23,6 +25,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckAuthors_EmptyList_ShouldNotThrowExtractorException() {
             // Arrange
@@ -34,6 +37,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckAuthors_Null_ShouldNotThrowExtractorException() {
             // Arrange
@@ -45,6 +49,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckAuthors_AuthorNotAtList_ShouldThrowExtractorException() {
             // Arrange
@@ -56,8 +61,10 @@ namespace AthenaTests
             Action act = () => ImportBookValidator.CheckAuthors(authors, authorsOfOneBook);
             // Assert
             var author = authorsOfOneBook.ToList()[0];
-            act.Should().Throw<ExtractorException>($"Cannot find author on ImportAuthorList, author [{author}]", $"{author.FirstName} {author.LastName}");
+            act.Should().Throw<ExtractorException>($"Cannot find author on ImportAuthorList, author [{author}]",
+                $"{author.FirstName} {author.LastName}");
         }
+
         [Test]
         public void CheckAuthors_DoubleInAuthorsList_ShouldThrowInvalidOperationException() {
             // Arrange
@@ -70,6 +77,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<InvalidOperationException>("Sequence contains more than one element");
         }
+
         [Test]
         public void CheckSeries_ShouldNotThrowExtractorException() {
             // Arrange
@@ -81,6 +89,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckSeries_Null_ShouldNotThrowExtractorException() {
             // Arrange
@@ -92,6 +101,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckSeries_SeriesNotAtSeriesList_ShouldThrowExtractorException() {
             // Arrange
@@ -104,6 +114,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<ExtractorException>($"Cannot find series on ImportSeriesList, series [{series}]");
         }
+
         [Test]
         public void CheckSeries_DoubleInSeriesList_ShouldThrowInvalidOperationException() {
             // Arrange
@@ -116,6 +127,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<InvalidOperationException>("Sequence contains more than one element");
         }
+
         [Test]
         public void CheckPublishingHouse_ShouldNotThrowExtractorException() {
             // Arrange
@@ -127,6 +139,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckPublishingHouse_Null_ShouldNotThrowExtractorException() {
             // Arrange
@@ -138,6 +151,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckPublishingHouse_PublisherNotAtList_ShouldThrowExtractorException() {
             // Arrange
@@ -148,8 +162,11 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckPublishingHouse(publishingHouses, publishingHouse);
             // Assert
-            act.Should().Throw<ExtractorException>($"Cannot find publishing house on ImportPublishingHousesList, publisher [{publishingHouse}]");
+            act.Should()
+                .Throw<ExtractorException>(
+                    $"Cannot find publishing house on ImportPublishingHousesList, publisher [{publishingHouse}]");
         }
+
         [Test]
         public void CheckPublishingHouse_DoubleOnPublishingHouseList_ShouldThrowInvalidOperationException() {
             // Arrange
@@ -162,6 +179,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<InvalidOperationException>("Sequence contains more than one element");
         }
+
         [Test]
         public void CheckStoragePlace_ShouldNotThrowExtractorException() {
             // Arrange
@@ -173,6 +191,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckStoragePlace_Null_ShouldNotThrowExtractorException() {
             // Arrange
@@ -184,6 +203,7 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
         public void CheckStoragePlace_StoragePlaceNotAtList_ShouldThrowExtractorException() {
             // Arrange
@@ -194,8 +214,11 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckStoragePlace(storagePlaces, storagePlace);
             // Assert
-            act.Should().Throw<ExtractorException>($"Cannot find storage place on ImportStoragePlacesList, storage place [{storagePlace}]");
+            act.Should()
+                .Throw<ExtractorException>(
+                    $"Cannot find storage place on ImportStoragePlacesList, storage place [{storagePlace}]");
         }
+
         [Test]
         public void CheckStoragePlace_StoragePlaceNotAtList_ShouldThrowInvalidOperationException() {
             // Arrange
@@ -208,6 +231,7 @@ namespace AthenaTests
             // Assert
             act.Should().Throw<InvalidOperationException>("Sequence contains more than one element");
         }
+
         [Test]
         public void CheckCategory_ShouldNotThrowExtractorException() {
             // Arrange
@@ -219,8 +243,9 @@ namespace AthenaTests
             // Assert
             act.Should().NotThrow();
         }
+
         [Test]
-        public void CheckCategory_Null_ShouldThrowExtractorException() {
+        public void CheckCategory_Null_ShouldNotThrowExtractorException() {
             // Arrange
             var data = new TestListsData();
             var categories = data.Categories;
@@ -228,10 +253,11 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckCategory(categories, bookCategories);
             // Assert
-            act.Should().Throw<ExtractorException>("Category is null or empty");
+            act.Should().NotThrow();
         }
+
         [Test]
-        public void CheckCategory_EmptyList_ShouldThrowExtractorException() {
+        public void CheckCategory_EmptyList_ShouldNotThrowExtractorException() {
             // Arrange
             var data = new TestListsData();
             var categories = data.Categories;
@@ -239,8 +265,9 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckCategory(categories, bookCategories);
             // Assert
-            act.Should().Throw<ExtractorException>("Category is null or empty");
+            act.Should().NotThrow();
         }
+
         [Test]
         public void CheckCategory_CategoryNotAtList_ShouldThrowExtractorException() {
             // Arrange
@@ -251,8 +278,11 @@ namespace AthenaTests
             // Act
             Action act = () => ImportBookValidator.CheckCategory(categories, bookCategories);
             // Assert
-            act.Should().Throw<ExtractorException>($"Cannot find category on ImportCategoriesList, category [{bookCategories}]");
+            act.Should()
+                .Throw<ExtractorException>(
+                    $"Cannot find category on ImportCategoriesList, category [{bookCategories}]");
         }
+
         [Test]
         public void CheckCategory_DoubleInCategoriesList_ShouldThrowInvalidOperationException() {
             // Arrange

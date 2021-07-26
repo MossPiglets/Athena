@@ -1,0 +1,109 @@
+﻿<controls:AdonisWindow x:Class="Athena.Windows.BorrowedBooksListWindow"
+                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                       xmlns:uc="clr-namespace:Athena"
+                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                       xmlns:local="clr-namespace:Athena"
+                       xmlns:controls="clr-namespace:AdonisUI.Controls;assembly=AdonisUI"
+                       mc:Ignorable="d"
+                       Title="Wypożyczone książki" SizeToContent="WidthAndHeight" MinHeight="300"
+                       xmlns:adonisUi="clr-namespace:AdonisUI;assembly=AdonisUI" 
+                       xmlns:converters="clr-namespace:Athena.Converters" >
+    <Window.Style>
+        <Style TargetType="Window" BasedOn="{StaticResource {x:Type Window}}" />
+    </Window.Style>
+
+    <Window.Resources>
+        <converters:NullVisibilityConverter x:Key="NullToVis" />
+        <converters:ZeroToVisibilityConverter x:Key="ZeroToVisible"/>
+    </Window.Resources>
+
+    <Border Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ListView x:Name="BorrowedBookList" Grid.Row="1" Margin="10" Grid.Column="0" HorizontalAlignment="Center"
+                     Width="Auto" MaxHeight="600" >
+                <ListView.Resources>
+                    <Style TargetType="ListViewItem" BasedOn="{StaticResource {x:Type ListViewItem}}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Self}}"  Value="True">
+                                <Setter Property="IsSelected" Value="True" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.Resources>
+                
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Tytuł" Width="Auto"
+                                        DisplayMemberBinding="{Binding Book.Title}" />
+                        <GridViewColumn Header="Autor" Width="Auto" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="Book.Authors[0].FirstName" />
+                                                <Binding Path="Book.Authors[0].LastName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Wydawca" Width="Auto"
+                                        DisplayMemberBinding="{Binding Book.PublishingHouse.PublisherName}" />
+                        <GridViewColumn Header="Rok wydania" Width="Auto"
+                                        DisplayMemberBinding="{Binding Book.PublishmentYear}" />
+                        <GridViewColumn Width="Auto"
+                                        DisplayMemberBinding="{Binding Book.StoragePlace.StoragePlaceName}" >
+                            <GridViewColumn.Header>
+                                <TextBlock Text="Miejsce"
+                                       ToolTip="Miejsce przechowywania książki"/>
+                            </GridViewColumn.Header>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Osoba wypożyczająca" Width="Auto" >
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock>
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0} {1}">
+                                                <Binding Path="FirstName" />
+                                                <Binding Path="LastName" />
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Data wypożyczenia" Width="Auto"
+                                        DisplayMemberBinding="{Binding BorrowDate, StringFormat=dd-MM-yyyy}" />
+                        <GridViewColumn Header="Data zwrotu" Width="Auto"
+                                        DisplayMemberBinding="{Binding ReturnDate, StringFormat=dd-MM-yyyy}" />
+                        <GridViewColumn Header="" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <Button x:Name="OpenReturnBookFormButton" Visibility="{Binding ReturnDate, Converter={StaticResource NullToVis}}" Content="Zwróć książkę" Margin="10 0" HorizontalAlignment="Center" Click="OpenReturnWindow_Click"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock Name="TextBlock" HorizontalAlignment="Center" Visibility="{Binding Borrowings.Count, Converter={StaticResource ZeroToVisible}}" FontWeight="Bold" Grid.Row="2" Grid.Column ="0" >Brak wypożyczonych książek</TextBlock>
+        </Grid>
+
+    </Border>
+
+</controls:AdonisWindow>

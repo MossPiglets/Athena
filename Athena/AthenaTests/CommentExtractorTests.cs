@@ -2,10 +2,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class CommentExtractorTests
-    {
+namespace AthenaTests {
+    public class CommentExtractorTests {
         [Test]
         public void Extract_ShouldReturnComment() {
             // Arrange 
@@ -15,6 +13,7 @@ namespace AthenaTests
             // Assert
             comment.Should().Be(text);
         }
+
         [Test]
         public void Extract_Spaces_ShouldReturnComment() {
             // Arrange 
@@ -25,6 +24,7 @@ namespace AthenaTests
             // Assert
             comment.Should().Be(expectedComment);
         }
+
         [Test]
         public void Extract_EmptyText_ShouldReturnNull() {
             // Arrange 
@@ -34,6 +34,7 @@ namespace AthenaTests
             // Assert
             comment.Should().BeNull();
         }
+
         [Test]
         public void Extract_Null_ShouldReturnNull() {
             // Arrange 
@@ -43,6 +44,7 @@ namespace AthenaTests
             // Assert
             comment.Should().BeNull();
         }
+
         [Test]
         public void Extract_Pause_ShouldReturnNull() {
             // Arrange 
@@ -52,6 +54,7 @@ namespace AthenaTests
             // Assert
             comment.Should().BeNull();
         }
+
         [Test]
         public void Extract_PauseAndApostrophe_ShouldReturnNull() {
             // Arrange 

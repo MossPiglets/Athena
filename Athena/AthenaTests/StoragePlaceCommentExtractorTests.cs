@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Athena.Import.Extractors;
+﻿using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class StoragePlaceCommentExtractorTests
-    {
+namespace AthenaTests {
+    public class StoragePlaceCommentExtractorTests {
         [Test]
         public void Extract_ShouldReturnStoragePlaceComment() {
             // Arrange 
@@ -18,6 +13,7 @@ namespace AthenaTests
             // Assert
             boxName.Should().Be(text);
         }
+
         [Test]
         public void Extract_NameWithPauses_ShouldReturnStoragePlaceComment() {
             // Arrange
@@ -28,6 +24,7 @@ namespace AthenaTests
             // Assert
             boxName.Should().Be(expectedName);
         }
+
         [Test]
         public void Extract_EmptyName_ShouldReturnNull() {
             // Arrange 
@@ -37,6 +34,7 @@ namespace AthenaTests
             // Assert
             storagePlace.Should().Be(null);
         }
+
         [Test]
         public void Extract_Null_ShouldReturnNull() {
             // Arrange 

@@ -2,10 +2,8 @@
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class TitleExtractorTests
-    {
+namespace AthenaTests {
+    public class TitleExtractorTests {
         [Test]
         public void Extract_ShouldReturnTitle() {
             // Arrange 
@@ -15,6 +13,7 @@ namespace AthenaTests
             // Assert
             title.Should().Be(text);
         }
+
         [Test]
         public void Extract_Spaces_ShouldReturnTitle() {
             // Arrange 
@@ -25,6 +24,7 @@ namespace AthenaTests
             // Assert
             title.Should().Be(expectedTitle);
         }
+
         [Test]
         public void Extract_EmptyText_ShouldReturnNull() {
             // Arrange 
@@ -34,6 +34,7 @@ namespace AthenaTests
             // Assert
             title.Should().BeNull();
         }
+
         [Test]
         public void Extract_Null_ShouldReturnNull() {
             // Arrange 

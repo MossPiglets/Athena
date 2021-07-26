@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Athena.Import.Extractors;
+﻿using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace AthenaTests
-{
-    public class IsbnExtractorTests
-    {
+namespace AthenaTests {
+    public class IsbnExtractorTests {
         [Test]
         public void Extract_ShouldReturnIsbn() {
             // Arrange 
@@ -18,6 +13,7 @@ namespace AthenaTests
             // Assert
             isbn.Should().Be(text);
         }
+
         [Test]
         public void Extract_Spaces_ShouldReturnIsbn() {
             // Arrange 
@@ -28,6 +24,7 @@ namespace AthenaTests
             // Assert
             isbn.Should().Be(expectedIsbn);
         }
+
         [Test]
         public void Extract_EmptyText_ShouldReturnNull() {
             // Arrange 
@@ -37,6 +34,7 @@ namespace AthenaTests
             // Assert
             isbn.Should().BeNull();
         }
+
         [Test]
         public void Extract_Null_ShouldReturnNull() {
             // Arrange 
@@ -46,6 +44,7 @@ namespace AthenaTests
             // Assert
             isbn.Should().BeNull();
         }
+
         [Test]
         public void Extract_Pause_ShouldReturnNull() {
             // Arrange 
@@ -55,6 +54,7 @@ namespace AthenaTests
             // Assert
             isbn.Should().BeNull();
         }
+
         [Test]
         public void Extract_PauseAndApostrophe_ShouldReturnNull() {
             // Arrange 

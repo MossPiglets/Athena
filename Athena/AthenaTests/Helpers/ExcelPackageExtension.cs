@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
-using AthenaTests.Helpers.Data;
+﻿using System.IO;
 using AthenaTests.Helpers.Data.TestExcel;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -20,7 +15,7 @@ namespace AthenaTests.Helpers {
             worksheetCatalog.Cells[1, 6].Value = "Miejscowość";
             worksheetCatalog.Cells[1, 7].Value = "ISBN";
             worksheetCatalog.Cells[1, 8].Value = "Język";
-            worksheetCatalog.Cells[1, 9].Value = "Miejsce składowania";
+            worksheetCatalog.Cells[1, 9].Value = "Miejsce przechowywania";
             worksheetCatalog.Cells[1, 10].Value = "Uwagi";
 
             for (int i = 0; i < data.CatalogTestsDataList.Count; i++) {
@@ -53,7 +48,7 @@ namespace AthenaTests.Helpers {
                 worksheetCategories.Cells[i + 2, 1].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheetCategories.Cells[i + 2, 1].Style.Fill.BackgroundColor.SetColor(color);
             }
-            
+
 
             var worksheetStoragePlaces = package.Workbook.Worksheets.Add(data.WorksheetStoragePlaces);
             worksheetStoragePlaces.Cells[1, 1].Value = "Nr pudła";

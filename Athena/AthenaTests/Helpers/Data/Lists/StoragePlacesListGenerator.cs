@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Athena.Data;
+using Athena.Data.StoragePlaces;
 
 namespace AthenaTests.Helpers.Data.Lists {
     public class StoragePlacesListGenerator {

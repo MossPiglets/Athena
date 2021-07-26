@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Athena.Data;
+using Athena.Data.Categories;
 using Athena.Import.Extractors;
 using FluentAssertions;
 using NUnit.Framework;
@@ -387,6 +386,90 @@ namespace AthenaTests {
             category.Should().BeEquivalentTo(expectedCategory);
         }
         [Test]
+        public void Extract_FFDDBB_ShouldReturnCategory() {
+            // Arrange 
+            var prefix = "__";
+            var colorCode = "FFDDBB";
+            var text = $"{prefix}{colorCode}";
+            var expectedCategory = new Category {
+                Name = CategoryName.Audiobook
+            };
+            // Act
+            var category = CategoryExtractor.Extract(text);
+            // Assert
+            category.Should().BeEquivalentTo(expectedCategory);
+        }
+        [Test]
+        public void Extract_92446D_ShouldReturnCategory() {
+            // Arrange 
+            var prefix = "__";
+            var colorCode = "92446D";
+            var text = $"{prefix}{colorCode}";
+            var expectedCategory = new Category {
+                Name = CategoryName.Economy
+            };
+            // Act
+            var category = CategoryExtractor.Extract(text);
+            // Assert
+            category.Should().BeEquivalentTo(expectedCategory);
+        }
+        [Test]
+        public void Extract_666633_ShouldReturnCategory() {
+            // Arrange 
+            var prefix = "__";
+            var colorCode = "666633";
+            var text = $"{prefix}{colorCode}";
+            var expectedCategory = new Category {
+                Name = CategoryName.Philosophy
+            };
+            // Act
+            var category = CategoryExtractor.Extract(text);
+            // Assert
+            category.Should().BeEquivalentTo(expectedCategory);
+        }
+        [Test]
+        public void Extract_9933FF_ShouldReturnCategory() {
+            // Arrange 
+            var prefix = "__";
+            var colorCode = "9933FF";
+            var text = $"{prefix}{colorCode}";
+            var expectedCategory = new Category {
+                Name = CategoryName.PersonalDevelopment
+            };
+            // Act
+            var category = CategoryExtractor.Extract(text);
+            // Assert
+            category.Should().BeEquivalentTo(expectedCategory);
+        }
+        [Test]
+        public void Extract_3333FF_ShouldReturnCategory() {
+            // Arrange 
+            var prefix = "__";
+            var colorCode = "3333FF";
+            var text = $"{prefix}{colorCode}";
+            var expectedCategory = new Category {
+                Name = CategoryName.Relationship
+            };
+            // Act
+            var category = CategoryExtractor.Extract(text);
+            // Assert
+            category.Should().BeEquivalentTo(expectedCategory);
+        }
+        [Test]
+        public void Extract_FF6600_ShouldReturnCategory() {
+            // Arrange 
+            var prefix = "__";
+            var colorCode = "FF6600";
+            var text = $"{prefix}{colorCode}";
+            var expectedCategory = new Category {
+                Name = CategoryName.CrimeNovel
+            };
+            // Act
+            var category = CategoryExtractor.Extract(text);
+            // Assert
+            category.Should().BeEquivalentTo(expectedCategory);
+        }
+        [Test]
         public void Extract_WrongCode_ShouldReturnExtractorException() {
             // Arrange
             var text = "_____";
@@ -400,18 +483,18 @@ namespace AthenaTests {
             // Arrange
             var text = string.Empty;
             // Act
-            Action act = () => CategoryExtractor.Extract(text);
+            var category = CategoryExtractor.Extract(text);
             // Assert
-            act.Should().Throw<ExtractorException>($"Color is null or empty, [{text}]");
+            category.Should().BeNull();
         }
         [Test]
         public void Extract_Null_ShouldReturnExtractorException() {
             // Arrange
             string text = null;
             // Act
-            Action act = () => CategoryExtractor.Extract(text);
+            var category = CategoryExtractor.Extract(text);
             // Assert
-            act.Should().Throw<ExtractorException>($"Color is null or empty, [{text}]");
+            category.Should().BeNull();
         }
     }
 }

@@ -1,6 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Athena.Data;
+using Athena.Data.Categories;
+using Athena.Data.PublishingHouses;
+using Athena.Data.Series;
+using Athena.Data.StoragePlaces;
 using Athena.Import.Extractors;
 using Castle.Core.Internal;
 
@@ -13,9 +17,7 @@ namespace Athena.Import {
 
             foreach (var author in authorsOfOneBook) {
                 var query = authors
-                    .Where(a => a.FirstName == author.FirstName && a.LastName == author.LastName)
-                    .Select(a => a)
-                    .SingleOrDefault();
+                    .SingleOrDefault(a => a.FirstName == author.FirstName && a.LastName == author.LastName);
                 if (query == null) {
                     throw new ExtractorException($"Cannot find author on ImportAuthorList, author [{author}]",
                         $"{author.FirstName} {author.LastName}");
@@ -28,10 +30,12 @@ namespace Athena.Import {
                 return;
             }
 
+            if (string.IsNullOrEmpty(series.SeriesName)) {
+                return;
+            }
+
             var query = seriesList
-                .Where(a => a.SeriesName == series.SeriesName && a.VolumeNumber == series.VolumeNumber)
-                .Select(a => a)
-                .SingleOrDefault();
+                .SingleOrDefault(a => a.SeriesName == series.SeriesName);
             if (query == null) {
                 throw new ExtractorException($"Cannot find series on ImportSeriesList, series [{series}]", $"{series}");
             }
@@ -44,9 +48,7 @@ namespace Athena.Import {
             }
 
             var query = publishingHouses
-                .Where(a => a.PublisherName == publishingHouse.PublisherName)
-                .Select(a => a)
-                .SingleOrDefault();
+                .SingleOrDefault(a => a.PublisherName == publishingHouse.PublisherName);
             if (query == null) {
                 throw new ExtractorException(
                     $"Cannot find publishing house on ImportPublishingHousesList, publisher [{publishingHouse}]",
@@ -60,9 +62,7 @@ namespace Athena.Import {
             }
 
             var query = storagePlaces
-                .Where(a => a.StoragePlaceName == storagePlace.StoragePlaceName)
-                .Select(a => a)
-                .SingleOrDefault();
+                .SingleOrDefault(a => a.StoragePlaceName == storagePlace.StoragePlaceName);
             if (query == null) {
                 throw new ExtractorException(
                     $"Cannot find storage place on ImportStoragePlacesList, storage place [{storagePlace}]",
@@ -79,12 +79,12 @@ namespace Athena.Import {
                 if (category == null) {
                     continue;
                 }
+
                 var query = categories
-                    .Where(a => a.Name == category.Name)
-                    .Select(a => a)
-                    .SingleOrDefault();
+                    .SingleOrDefault(a => a.Name == category.Name);
                 if (query == null) {
-                    throw new ExtractorException($"Cannot find category on ImportCategoriesList, category [{bookCategories}]",
+                    throw new ExtractorException(
+                        $"Cannot find category on ImportCategoriesList, category [{bookCategories}]",
                         $"{bookCategories}");
                 }
             }

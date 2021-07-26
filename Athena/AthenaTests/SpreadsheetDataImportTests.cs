@@ -3,7 +3,6 @@ using System.Linq;
 using Athena.Import;
 using AthenaTests.Helpers;
 using AthenaTests.Helpers.Data.TestExcel;
-using Castle.Core.Internal;
 using FluentAssertions;
 using NUnit.Framework;
 using OfficeOpenXml;
@@ -91,7 +90,7 @@ namespace AthenaTests {
             package.CreateTestsExcel(data);
             using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
-            var seriesList = dataImport.ImportSeriesList();
+            var seriesList = dataImport.ImportSeriesListInfo();
             // Assert
             seriesList.Should().HaveSameCount(data.CatalogTestsDataList);
             for (int i = 0; i < seriesList.Count; i++) {
@@ -114,7 +113,7 @@ namespace AthenaTests {
             package.CreateTestsExcel(data);
             using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
-            var seriesList = dataImport.ImportSeriesList();
+            var seriesList = dataImport.ImportSeriesListInfo();
             // Assert
             seriesList.Should().HaveCount(data.CatalogTestsDataList.Count - 1);
             seriesList.Should().OnlyHaveUniqueItems();
@@ -131,7 +130,7 @@ namespace AthenaTests {
             package.CreateTestsExcel(data);
             using var dataImport = new SpreadsheetDataImport(data.FileName);
             // Act
-            var seriesList = dataImport.ImportSeriesList();
+            var seriesList = dataImport.ImportSeriesListInfo();
             // Assert
             seriesList.Should().BeEmpty();
 
@@ -418,6 +417,53 @@ namespace AthenaTests {
             // Assert
             books.Should().BeEmpty();
 
+            package.File.Delete();
+        }
+
+        [Test]
+        public void LoadData_ShouldReturnSpreadsheetDataList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            var spreadsheetDataList = dataImport.CatalogData;
+            // Act
+            dataImport.LoadData();
+            // Assert
+            spreadsheetDataList.Should().HaveSameCount(data.CatalogTestsDataList);
+            for (int i = 0; i < spreadsheetDataList.Count; i++) {
+                var spreadsheetData = spreadsheetDataList[i];
+                var catalogData = data.CatalogTestsDataList[i];
+                var color = spreadsheetData.Category.Substring(2).Insert(0, "#");
+                spreadsheetData.Title.Should().Be(catalogData.Title);
+                spreadsheetData.Author.Should().Be(catalogData.Author);
+                spreadsheetData.Series.Should().Be(catalogData.Series);
+                spreadsheetData.PublishingHouse.Should().Be(catalogData.PublishingHouse);
+                spreadsheetData.Town.Should().Be(catalogData.Town);
+                spreadsheetData.Year.Should().Be(catalogData.Year);
+                spreadsheetData.Language.Should().Be(catalogData.Language);
+                spreadsheetData.ISBN.Should().Be(catalogData.ISBN);
+                spreadsheetData.StoragePlace.Should().Be(catalogData.StoragePlace);
+                spreadsheetData.Comment.Should().Be(catalogData.Comment);
+                color.Should().Be(catalogData.ColorCode);
+            }
+
+            package.File.Delete();
+        }
+        [Test]
+        public void LoadData_EmptyExcel_ShouldReturnEmptySpreadsheetDataList() {
+            // Arrange
+            using var package = new ExcelPackage();
+            var data = new TestExcelData();
+            data.CatalogTestsDataList.Clear();
+            package.CreateTestsExcel(data);
+            using var dataImport = new SpreadsheetDataImport(data.FileName);
+            var spreadsheetDataList = dataImport.CatalogData;
+            // Act
+            dataImport.LoadData();
+            // Assert
+            spreadsheetDataList.Should().BeEmpty();
             package.File.Delete();
         }
     }

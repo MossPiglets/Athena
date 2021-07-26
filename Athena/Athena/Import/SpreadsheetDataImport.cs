@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Athena.Data;
+using Athena.Data.Books;
+using Athena.Data.Categories;
+using Athena.Data.PublishingHouses;
+using Athena.Data.Series;
+using Athena.Data.SpreadsheetData;
+using Athena.Data.StoragePlaces;
 using Athena.Import.Extractors;
-using Castle.Core.Internal;
 using OfficeOpenXml;
 using Serilog;
 using Serilog.Core;
@@ -12,52 +16,144 @@ using Author = Athena.Data.Author;
 
 namespace Athena.Import {
     public class SpreadsheetDataImport : IDisposable {
-        private ExcelPackage _package;
-        private ExcelWorksheet _catalog;
-        private ExcelWorksheet _categories;
-        private ExcelWorksheet _storagePlaces;
+        private string _fullFilePath;
         private Logger _log;
+        private List<SpreadsheetCatalogData> _spreadsheetCatalogDataList = null;
+        private List<SpreadsheetCategoryData> _spreadsheetCategoryDataList = null;
+        private List<SpreadsheetStoragePlaceData> _spreadsheetStoragePlaceDataList = null;
+
+        public IReadOnlyList<SpreadsheetCatalogData> CatalogData {
+            get {
+                if (_spreadsheetCatalogDataList == null) {
+                    LoadData();
+                }
+
+                return _spreadsheetCatalogDataList.AsReadOnly();
+            }
+        }
+
+        public IReadOnlyList<SpreadsheetCategoryData> CategoryData {
+            get {
+                if (_spreadsheetCategoryDataList == null) {
+                    LoadData();
+                }
+
+                return _spreadsheetCategoryDataList.AsReadOnly();
+            }
+        }
+
+        public IReadOnlyList<SpreadsheetStoragePlaceData> StoragePlaceData {
+            get {
+                if (_spreadsheetStoragePlaceDataList == null) {
+                    LoadData();
+                }
+
+                return _spreadsheetStoragePlaceDataList.AsReadOnly();
+            }
+        }
+
 
         public SpreadsheetDataImport(string fullFilePath) {
+            _fullFilePath = fullFilePath;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
-            _package = new ExcelPackage(new FileInfo(fullFilePath));
-            _catalog = _package.Workbook.Worksheets[0];
-            _categories = _package.Workbook.Worksheets[1];
-            _storagePlaces = _package.Workbook.Worksheets[2];
             _log = new LoggerConfiguration().WriteTo.File("./logs/ImportLog_.txt", rollingInterval: RollingInterval.Day)
                 .CreateLogger();
         }
 
+        public void LoadData() {
+            using var package = new ExcelPackage(new FileInfo(_fullFilePath));
+            var catalog = package.Workbook.Worksheets[0];
+            var categories = package.Workbook.Worksheets[1];
+            var storagePlaces = package.Workbook.Worksheets[2];
+            _spreadsheetCatalogDataList = new List<SpreadsheetCatalogData>();
+            _spreadsheetCategoryDataList = new List<SpreadsheetCategoryData>();
+            _spreadsheetStoragePlaceDataList = new List<SpreadsheetStoragePlaceData>();
+
+            var catalogRowNumber = 2;
+
+            while (catalog.Cells[catalogRowNumber, 1].Value != null) {
+                var catalogData = new SpreadsheetCatalogData {
+                    Title = catalog.Cells[catalogRowNumber, 1].Value.ToString(),
+                    Author = catalog.Cells[catalogRowNumber, 2].Value?.ToString(),
+                    Series = catalog.Cells[catalogRowNumber, 3].Value?.ToString(),
+                    PublishingHouse = catalog.Cells[catalogRowNumber, 4].Value?.ToString(),
+                    Year = catalog.Cells[catalogRowNumber, 5].Value?.ToString(),
+                    Town = catalog.Cells[catalogRowNumber, 6].Value?.ToString(),
+                    ISBN = catalog.Cells[catalogRowNumber, 7].Value?.ToString(),
+                    Language = catalog.Cells[catalogRowNumber, 8].Value.ToString(),
+                    StoragePlace = catalog.Cells[catalogRowNumber, 9].Value?.ToString(),
+                    Comment = catalog.Cells[catalogRowNumber, 10].Value?.ToString(),
+                    Category = catalog.Cells[catalogRowNumber, 2].Style.Fill.BackgroundColor.Rgb
+                };
+                _spreadsheetCatalogDataList.Add(catalogData);
+                catalogRowNumber++;
+            }
+
+            var categoryRowNumber = 2;
+
+            while (categories.Cells[categoryRowNumber, 1].Value != null) {
+                var categoryData = new SpreadsheetCategoryData {
+                    Colour = categories.Cells[categoryRowNumber, 1].Style.Fill.BackgroundColor.Rgb,
+                    Name = categories.Cells[categoryRowNumber, 2].Value.ToString()
+                };
+                _spreadsheetCategoryDataList.Add(categoryData);
+                categoryRowNumber++;
+            }
+
+            var storagePlaceRowNumber = 2;
+            while (storagePlaces.Cells[storagePlaceRowNumber, 1].Value != null) {
+                var storagePlaceData = new SpreadsheetStoragePlaceData {
+                    Name = storagePlaces.Cells[storagePlaceRowNumber, 1].Value.ToString(),
+                    Comment = storagePlaces.Cells[storagePlaceRowNumber, 2].Value.ToString()
+                };
+                _spreadsheetStoragePlaceDataList.Add(storagePlaceData);
+                storagePlaceRowNumber++;
+            }
+        }
+
         public List<Book> ImportBooksList() {
             var authors = ImportAuthorsList();
-            var series = ImportSeriesList();
+            var seriesInfos = ImportSeriesListInfo();
             var publishingHouses = ImportPublishingHousesList();
             var storagePlaces = ImportStoragePlacesList();
             var categories = ImportCategoriesList();
 
+            var seriesList = seriesInfos
+                .GroupBy(a => a.SeriesName)
+                .Select(a => a.First())
+                .Where(a => !string.IsNullOrEmpty(a.SeriesName))
+                .Select(a => a.ToSeries())
+                .ToList();
             List<Book> books = new List<Book>();
-            var index = 2;
-            while (_catalog.Cells[index, 1].Value != null) { var book = new Book {
-                    Id = Guid.NewGuid(),
-                    Title = TitleExtractor.Extract(_catalog.Cells[index, 1].Value.ToString()),
-                    Authors = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value?.ToString()),
-                    Series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString()),
-                    PublishingHouse = PublishingHouseExtractor.Extract(_catalog.Cells[index, 4].Value?.ToString()),
-                    PublishmentYear = YearExtractor.Extract(_catalog.Cells[index, 5].Value?.ToString()),
-                    ISBN = IsbnExtractor.Extract(_catalog.Cells[index, 7].Value?.ToString()),
-                    Language = LanguageExtractor.Extract(_catalog.Cells[index, 8].Value.ToString()),
-                    StoragePlace = StoragePlaceExtractor.Extract(_catalog.Cells[index, 9].Value?.ToString()),
-                    Comment = CommentExtractor.Extract(_catalog.Cells[index, 10].Value?.ToString()),
-                    Categories = new List<Category>()
-                        { CategoryExtractor.Extract(_catalog.Cells[index, 2].Style.Fill.BackgroundColor.Rgb) }
+
+            foreach (var spreadsheetCatalogData in CatalogData) {
+                var bookCategories = new List<Category>() {
+                    CategoryExtractor.Extract(spreadsheetCatalogData.Category)
                 };
+                bookCategories = bookCategories.Where(a => a != null).ToList();
+                var bookSeriesInfo = SeriesInfoExtractor.Extract(spreadsheetCatalogData.Series);
+
+                var book = new Book {
+                    Id = Guid.NewGuid(),
+                    Title = TitleExtractor.Extract(spreadsheetCatalogData.Title),
+                    Authors = AuthorExtractor.Extract(spreadsheetCatalogData.Author),
+                    Series = bookSeriesInfo?.ToSeries(),
+                    PublishingHouse = PublishingHouseExtractor.Extract(spreadsheetCatalogData.PublishingHouse),
+                    PublishmentYear = YearExtractor.Extract(spreadsheetCatalogData.Year),
+                    ISBN = IsbnExtractor.Extract(spreadsheetCatalogData.ISBN),
+                    Language = LanguageExtractor.Extract(spreadsheetCatalogData.Language),
+                    StoragePlace = StoragePlaceExtractor.Extract(spreadsheetCatalogData.StoragePlace),
+                    Comment = CommentExtractor.Extract(spreadsheetCatalogData.Comment),
+                    Categories = bookCategories,
+                    VolumeNumber = bookSeriesInfo?.VolumeNumber
+                };
+
                 ImportBookValidator.CheckAuthors(authors, book.Authors);
-                ImportBookValidator.CheckSeries(series, book.Series);
+                ImportBookValidator.CheckSeries(seriesList, book.Series);
                 ImportBookValidator.CheckPublishingHouse(publishingHouses, book.PublishingHouse);
                 ImportBookValidator.CheckStoragePlace(storagePlaces, book.StoragePlace);
                 ImportBookValidator.CheckCategory(categories, book.Categories);
                 books.Add(book);
-                index++;
             }
 
             return books;
@@ -66,95 +162,81 @@ namespace Athena.Import {
 
         public List<Author> ImportAuthorsList() {
             List<Author> authors = new List<Author>();
-            var index = 2;
-            while (_catalog.Cells[index, 1].Value != null) {
+            foreach (var spreadsheetData in CatalogData) {
                 List<Author> authorsOfOneBook;
                 try {
-                    authorsOfOneBook = AuthorExtractor.Extract(_catalog.Cells[index, 2].Value?.ToString());
+                    authorsOfOneBook = AuthorExtractor.Extract(spreadsheetData.Author);
                 }
                 catch (ExtractorException e) {
                     _log.Error($"Author Extract Error: [{e.Text}]");
-                    index++;
                     continue;
                 }
 
                 authors.AddRange(authorsOfOneBook);
-                index++;
             }
 
             var authorWithoutDoubles = authors
-                .GroupBy(a => new { a.FirstName, a.LastName })
+                .GroupBy(a => new {a.FirstName, a.LastName})
                 .Select(a => a.First())
                 .ToList();
             return authorWithoutDoubles;
         }
 
-        public List<Series> ImportSeriesList() {
-            var index = 2;
-            List<Series> seriesList = new List<Series>();
-            while (_catalog.Cells[index, 1].Value != null) {
-                Series series;
+        public List<SeriesInfo> ImportSeriesListInfo() {
+            List<SeriesInfo> seriesInfoList = new List<SeriesInfo>();
+            foreach (var spreadsheetData in CatalogData) {
+                SeriesInfo seriesInfo;
                 try {
-                    series = SeriesExtractor.Extract(_catalog.Cells[index, 3].Value?.ToString());
+                    seriesInfo = SeriesInfoExtractor.Extract(spreadsheetData.Series);
                 }
                 catch (ExtractorException e) {
                     _log.Error($"Series Extract Error: [{e.Text}]");
-                    index++;
                     continue;
                 }
 
-                seriesList.Add(series);
-                index++;
+                if (seriesInfo != null) {
+                    seriesInfoList.Add(seriesInfo);
+                }
             }
 
-            var seriesWithoutDoubles = seriesList
-                .GroupBy(a => new { a.SeriesName, a.VolumeNumber })
+            var seriesInfoWithoutDoubles = seriesInfoList
+                .GroupBy(a => new {a.SeriesName, a.VolumeNumber})
                 .Select(a => a.First())
                 .ToList();
-            return seriesWithoutDoubles;
+            return seriesInfoWithoutDoubles;
         }
 
         public List<PublishingHouse> ImportPublishingHousesList() {
-            var index = 2;
             List<PublishingHouse> publishingHousesList = new List<PublishingHouse>();
-            while (_catalog.Cells[index, 1].Value != null) {
-                var publishingHouse = PublishingHouseExtractor.Extract(_catalog.Cells[index, 4].Value?.ToString());
-                publishingHousesList.Add(publishingHouse);
-                index++;
+            foreach (var spreadsheetData in CatalogData) {
+                var publishingHouse = PublishingHouseExtractor.Extract(spreadsheetData.PublishingHouse);
+                if (publishingHouse != null) {
+                    publishingHousesList.Add(publishingHouse);
+                }
             }
 
-            var seriesWithoutDoubles = publishingHousesList
+            var publisherWithoutDoubles = publishingHousesList
                 .GroupBy(a => a.PublisherName)
                 .Select(a => a.First())
                 .ToList();
-            return seriesWithoutDoubles;
+            return publisherWithoutDoubles;
         }
 
         public List<StoragePlace> ImportStoragePlacesList() {
-            var indexStoragePlace = 2;
             List<StoragePlace> storagePlaces = new List<StoragePlace>();
-            while (_storagePlaces.Cells[indexStoragePlace, 1].Value != null) {
-                var cells = _storagePlaces.Cells;
-                var storagePlace = StoragePlaceExtractor.Extract(cells[indexStoragePlace, 1].Value.ToString(),
-                    cells[indexStoragePlace, 2].Value.ToString());
-                storagePlaces.Add(storagePlace);
-                indexStoragePlace++;
+            foreach (var spreadsheetStoragePlaceData in StoragePlaceData) {
+                var storagePlace = StoragePlaceExtractor.Extract(spreadsheetStoragePlaceData.Name,
+                    spreadsheetStoragePlaceData.Comment);
+                if (storagePlace != null) {
+                    storagePlaces.Add(storagePlace);
+                }
             }
 
-            var indexCatalog = 2;
-            while (_catalog.Cells[indexCatalog, 1].Value != null) {
-                string cell;
-                try {
-                    cell = _catalog.Cells[indexCatalog, 9].Value.ToString();
+            foreach (var spreadsheetCatalogData in CatalogData) {
+                var storagePlace = StoragePlaceExtractor.Extract(spreadsheetCatalogData.StoragePlace);
+                if (storagePlace != null) {
+                    storagePlaces.Add(storagePlace);
                 }
-                catch (Exception) {
-                    indexCatalog++;
-                    continue;
-                }
-
-                var storagePlace = StoragePlaceExtractor.Extract(cell?.ToString());
-                storagePlaces.Add(storagePlace);
-                indexCatalog++;
             }
 
             var storagePlacesWithoutDoubles = storagePlaces
@@ -167,19 +249,18 @@ namespace Athena.Import {
         }
 
         public List<Category> ImportCategoriesList() {
-            var index = 2;
             List<Category> categories = new List<Category>();
-            while (_categories.Cells[index, 1].Value != null) {
-                var category = CategoryExtractor.Extract(_categories.Cells[index, 1].Style.Fill.BackgroundColor.Rgb);
-                categories.Add(category);
-                index++;
+            foreach (var spreadsheetCategoryData in CategoryData) {
+                var category = CategoryExtractor.Extract(spreadsheetCategoryData.Colour);
+                if (category != null) {
+                    categories.Add(category);
+                }
             }
 
             return categories;
         }
 
         public void Dispose() {
-            _package.Dispose();
             _log.Dispose();
         }
     }
