@@ -1,4 +1,7 @@
-﻿using Athena.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Athena.Data;
 using Athena.Data.Books;
 using Athena.Data.Borrowings;
 using Athena.Data.Series;
@@ -6,6 +9,7 @@ using Athena.Data.PublishingHouses;
 using Microsoft.EntityFrameworkCore;
 using Athena.Data.Categories;
 using Athena.Data.StoragePlaces;
+using Castle.Core.Internal;
 
 namespace Athena {
     public class ApplicationDbContext : DbContext {
@@ -29,6 +33,21 @@ namespace Athena {
         public DbSet<StoragePlace> StoragePlaces { get; set; }
         public DbSet<Borrowing> Borrowings { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public void Seed() {
+            if (instance.Categories.IsNullOrEmpty()) {
+                var categoriesNames = Enum.GetValues(typeof(CategoryName)).Cast<CategoryName>().ToList();
+                var categories = new List<Category>();
+                foreach (var categoryName in categoriesNames) {
+                    categories.Add(new Category {
+                        Name = categoryName
+                    });
+                }
+
+                instance.Categories.AddRange(categories);
+                instance.SaveChanges();
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlite("Data Source=athena.sqlite");
