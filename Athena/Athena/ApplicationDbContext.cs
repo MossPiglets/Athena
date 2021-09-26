@@ -36,13 +36,11 @@ namespace Athena {
 
         public void Seed() {
             if (instance.Categories.IsNullOrEmpty()) {
-                var categoriesNames = Enum.GetValues(typeof(CategoryName)).Cast<CategoryName>().ToList();
-                var categories = new List<Category>();
-                foreach (var categoryName in categoriesNames) {
-                    categories.Add(new Category {
-                        Name = categoryName
-                    });
-                }
+                var categories = Enum.GetValues(typeof(CategoryName))
+                    .Cast<CategoryName>()
+                    .Select(a => new Category {
+                        Name = a
+                    }).ToList();
 
                 instance.Categories.AddRange(categories);
                 instance.SaveChanges();
