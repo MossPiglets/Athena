@@ -35,7 +35,7 @@ You can search by title, author, series, publisher, and category.
 
 ### Usage
 
-1. [Download file]()
+1. [Download file](https://github.com/MossPiglets/Athena/releases/download/1.0.0/Athena.zip)
 2. Unpack it
 3. Choose file <b>Athena</b>
 4. Enjoy :)
